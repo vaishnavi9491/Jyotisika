@@ -90,8 +90,8 @@ const Aquarius = ({ navigation }) => {
           <Fontisto name="language" size={15} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Feather name="phone-call" size={20} color="#000" />
-        </TouchableOpacity>
+            <AntDesign name="customerservice" size={22} color='#000' />
+          </TouchableOpacity>
       </View>
 
       {/* Dropdown */}

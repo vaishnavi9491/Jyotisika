@@ -38,18 +38,20 @@ const CustomDrawer = (props) => {
     return (
         <ScrollView>
             <View style={styles.container}>
-
-                <View style={{ backgroundColor: '#FFCC00', marginBottom: '5%', padding: '4%' }}>
-                    <Image
-                        source={require('../../assets/image/jane.png')}
-                        style={styles.imgStyle}
-                    />
-                    <View style={styles.userInfoContainer}>
-                        <Text style={styles.nameStyle}>Hello {uname}</Text>
-                        <Text style={styles.emailStyle}>abc@gmail.com</Text>
+               
+                    <View style={{ backgroundColor: '#FFCC00', marginBottom: '5%', padding: '4%' }}>
+                    <TouchableOpacity onPress={()=>navigation.navigate('Drawerprofile')}>
+                        <Image
+                            source={require('../../assets/image/jane.png')}
+                            style={styles.imgStyle}
+                        />
+                        </TouchableOpacity>
+                        <View style={styles.userInfoContainer}>
+                            <Text style={styles.nameStyle}>Hello {uname}</Text>
+                            <Text style={styles.emailStyle}>abc@gmail.com</Text>
+                        </View>
                     </View>
-                </View>
-
+                
 
 
                 <DrawerItemList {...props} />

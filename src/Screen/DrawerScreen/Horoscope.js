@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'rea
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import React from 'react';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const Horoscope = ({ navigation }) => {
   return (
@@ -11,15 +11,15 @@ const Horoscope = ({ navigation }) => {
         <View style={styles.header}>
           <Image style={styles.profilePic} source={require('../../assets/image/jane.png')} />
           <Text style={styles.Jtext}>Jyotisika</Text>
-          <TouchableOpacity onPress={()=>navigation.navigate('Wallet')}>
-          <Text style={styles.balance}>₹ 50</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
+            <Text style={styles.balance}>₹ 50</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.settings}>
             <Fontisto name="language" size={15} />
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <Feather name="phone-call" size={20} color='#000' />
+            <AntDesign name="customerservice" size={22} color='#000' />
           </TouchableOpacity>
 
         </View>

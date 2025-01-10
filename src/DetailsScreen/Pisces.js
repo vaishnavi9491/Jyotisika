@@ -83,14 +83,14 @@ const Pisces = ({ navigation }) => {
           <AntDesign name="arrowleft" size={20} color="#000" />
         </TouchableOpacity>
         <Text style={styles.Jtext}>BookPooja</Text>
-        <TouchableOpacity onPress={()=>navigation.navigate('Wallet')}>
-        <Text style={styles.balance}>₹ 50</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
+          <Text style={styles.balance}>₹ 50</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.settings}>
           <Fontisto name="language" size={15} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Feather name="phone-call" size={20} color="#000" />
+          <AntDesign name="customerservice" size={22} color='#000' />
         </TouchableOpacity>
       </View>
 

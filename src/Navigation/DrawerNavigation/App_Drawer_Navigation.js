@@ -28,7 +28,7 @@ const App_Drawer_Navigation = () => {
         name="Home"
         component={BottomTabNavigation}
         options={{
-          headerShown: true,
+          headerShown: false,
           title: 'Home',
           drawerIcon: ({ focused, size }) => (
             <FontAwesome name='home' size={22} color='#000'

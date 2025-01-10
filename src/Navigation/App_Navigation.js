@@ -32,6 +32,9 @@ import Scorpio from '../DetailsScreen/Scorpio';
 import Taurus from '../DetailsScreen/Taurus';
 import Virgo from '../DetailsScreen/Virgo';
 import KundaliMatching from '../DetailsScreen/KundaliMatching';
+import LoveCalculator from '../DetailsScreen/LoveCalculator';
+import Drawerprofile from '../Screen/DrawerScreen/Drawerprofile';
+import Panchang from '../DetailsScreen/Panchang';
 
 
 
@@ -77,6 +80,12 @@ const App_Navigation = () => {
                 component={KundaliMatching}
                 options={{ headerShown: false }}
             />
+            <Stack.Screen
+                name='LoveCalculator'
+                component={LoveCalculator}
+                options={{ headerShown: false }}
+            />
+
 
             <Stack.Screen
                 name='Profile'
@@ -205,6 +214,16 @@ const App_Navigation = () => {
             <Stack.Screen
                 name='Virgo'
                 component={Virgo}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='Drawerprofile'
+                component={Drawerprofile}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='Panchang'
+                component={Panchang}
                 options={{ headerShown: false }}
             />
 

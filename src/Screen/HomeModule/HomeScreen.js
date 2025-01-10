@@ -178,7 +178,7 @@ const HomeScreen = ({ navigation }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.services}>
-        {['Birth Kundali', 'Love', 'KP', 'Pooja'].map((service, index) => (
+        {['Birth Kundali', 'Love', 'KP', 'Pooja', 'Panchang'].map((service, index) => (
           <LinearGradient
             key={index}
             colors={['#F1F1F1', '#FFEAB1']} // Gradient colors
@@ -191,15 +191,22 @@ const HomeScreen = ({ navigation }) => {
               {service === 'Birth Kundali' && (
                 <Icon name="birthday-cake" size={20} color="#FF6347" style={styles.icon} />
               )}
-              {service === 'Love' && (
-                <Icon name="heart" size={20} color="#FF6347" style={styles.icon} />
-              )}
+              <TouchableOpacity onPress={() => navigation.navigate('LoveCalculator')}>
+                {service === 'Love' && (
+                  <Icon name="heart" size={20} color="#FF6347" style={styles.icon} />
+                )}
+              </TouchableOpacity>
               {service === 'KP' && (
                 <Icon name="search" size={20} color="#FF6347" style={styles.icon} />
               )}
               {service === 'Pooja' && (
                 <Icon name="hand-paper-o" size={20} color="#FF6347" style={styles.icon} />
               )}
+              <TouchableOpacity onPress={() => navigation.navigate('Panchang')}>
+                {service === 'Panchang' && (
+                  <Icon name="sun-o" size={20} color="#FF6347" style={styles.icon} />
+                )}
+              </TouchableOpacity>
 
               <Text style={styles.serviceText}>{service}</Text>
             </View>

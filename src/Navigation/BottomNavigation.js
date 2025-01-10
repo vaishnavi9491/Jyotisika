@@ -64,7 +64,7 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconWrapper}>
               <Foundation name="play-video" size={25} color={focused ? '#000' : 'white'} />
-              <Text style={[styles.text, focused && styles.textFocused]}>Pujari</Text>
+              <Text style={[styles.text, focused && styles.textFocused]}>Live</Text>
             </View>
           ),
         }}
@@ -91,7 +91,7 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconWrapper}>
               <FontAwesome6 name="cart-shopping" size={25} color={focused ? '#000' : 'white'} />
-              <Text style={[styles.text, focused && styles.textFocused]}>Pujari</Text>
+              <Text style={[styles.text, focused && styles.textFocused]}>Shop</Text>
             </View>
           ),
         }}

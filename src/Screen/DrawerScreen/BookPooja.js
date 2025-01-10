@@ -13,7 +13,6 @@ import {
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 // const data = [
@@ -87,7 +86,7 @@ const BookPooja = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <Feather name="phone-call" size={20} color='#000' />
+          <AntDesign name="customerservice" size={22} color='#000' />
         </TouchableOpacity>
 
       </View>
@@ -120,20 +119,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-   
+
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-   
+
 
   },
   balance: {
     fontSize: hp('2%'),
     fontWeight: 'bold',
     color: '#000',
-    
+
   },
   Jtext: {
     marginRight: hp('20%'),
