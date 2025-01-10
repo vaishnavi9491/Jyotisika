@@ -150,7 +150,7 @@ const HomeScreen = ({ navigation }) => {
           <Fontisto name="language" size={20} />
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
           <AntDesign name="customerservice" size={22} color='#000' />
         </TouchableOpacity>
 

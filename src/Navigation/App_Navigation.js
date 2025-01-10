@@ -32,6 +32,8 @@ import Scorpio from '../DetailsScreen/Scorpio';
 import Taurus from '../DetailsScreen/Taurus';
 import Virgo from '../DetailsScreen/Virgo';
 import KundaliMatching from '../DetailsScreen/KundaliMatching';
+import QuestionCategory from '../Screen/GetSupport/QuestionCategory';
+import QuestionScreen from '../Screen/GetSupport/QuestionScreen';
 
 
 
@@ -207,7 +209,17 @@ const App_Navigation = () => {
                 component={Virgo}
                 options={{ headerShown: false }}
             />
-
+            {/* GET SUPPORT */}
+            <Stack.Screen
+                name='QuestionCategory'
+                component={QuestionCategory}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='QuestionScreen'
+                component={QuestionScreen}
+                options={{ headerShown: false }}
+            />
 
         </Stack.Navigator>
 
