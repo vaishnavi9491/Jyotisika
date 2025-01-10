@@ -35,6 +35,8 @@ import KundaliMatching from '../DetailsScreen/KundaliMatching';
 import LoveCalculator from '../DetailsScreen/LoveCalculator';
 import Drawerprofile from '../Screen/DrawerScreen/Drawerprofile';
 import Panchang from '../DetailsScreen/Panchang';
+import QuestionCategory from '../Screen/GetSupport/QuestionCategory';
+import QuestionScreen from '../Screen/GetSupport/QuestionScreen';
 
 
 
@@ -227,6 +229,17 @@ const App_Navigation = () => {
                 options={{ headerShown: false }}
             />
 
+            {/* GET SUPPORT */}
+            <Stack.Screen
+                name='QuestionCategory'
+                component={QuestionCategory}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='QuestionScreen'
+                component={QuestionScreen}
+                options={{ headerShown: false }}
+            />
 
         </Stack.Navigator>
 
