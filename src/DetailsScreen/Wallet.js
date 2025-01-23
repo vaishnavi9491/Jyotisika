@@ -144,7 +144,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const WalletScreen = ({ navigation }) => {
+const WalletScreen = ({ navigation, showCoupons }) => {
   const [walletOptions, setWalletOptions] = useState([]);
 
   useEffect(() => {
@@ -202,6 +202,7 @@ const WalletScreen = ({ navigation }) => {
               navigation.navigate('PaymentInformation', {
                 amount: option.amount,
                 extra: option.extra,
+                showCoupons: true,
               })
             }
           >

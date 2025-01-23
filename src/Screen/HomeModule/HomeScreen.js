@@ -179,38 +179,36 @@ const HomeScreen = ({ navigation }) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.services}>
         {['Birth Kundali', 'Love', 'KP', 'Pooja', 'Panchang'].map((service, index) => (
-          <LinearGradient
-            key={index}
-            colors={['#F1F1F1', '#FFEAB1']} // Gradient colors
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.serviceCard}
-          >
+          <View
+          key={index}
+          style={[styles.serviceCard, { backgroundColor: '#F2F2F7' }]} // Simple gray background color
+        >
             <View style={styles.iconTextContainer}>
               {/* Adding icons based on the service */}
               {service === 'Birth Kundali' && (
-                <Icon name="birthday-cake" size={20} color="#FF6347" style={styles.icon} />
+                <Icon name="birthday-cake" size={16} color="#FF6347" style={styles.icon} />
               )}
               <TouchableOpacity onPress={() => navigation.navigate('LoveCalculator')}>
                 {service === 'Love' && (
-                  <Icon name="heart" size={20} color="#FF6347" style={styles.icon} />
+                  <Icon name="heart" size={16} color="#FF6347" style={styles.icon} />
                 )}
               </TouchableOpacity>
               {service === 'KP' && (
-                <Icon name="search" size={20} color="#FF6347" style={styles.icon} />
+                <Icon name="search" size={16} color="#FF6347" style={styles.icon} />
               )}
               {service === 'Pooja' && (
-                <Icon name="hand-paper-o" size={20} color="#FF6347" style={styles.icon} />
+                <Icon name="hand-paper-o" size={16} color="#FF6347" style={styles.icon} />
               )}
               <TouchableOpacity onPress={() => navigation.navigate('Panchang')}>
                 {service === 'Panchang' && (
-                  <Icon name="sun-o" size={20} color="#FF6347" style={styles.icon} />
+                  <Icon name="sun-o" size={16} color="#FF6347" style={styles.icon} />
                 )}
               </TouchableOpacity>
 
-              <Text style={styles.serviceText}>{service}</Text>
+              <Text style={[styles.serviceText, { fontSize: 12 }]}>{service}</Text>
             </View>
-          </LinearGradient>
+            </View>
+        
         ))}
       </ScrollView>
 
@@ -300,7 +298,8 @@ const HomeScreen = ({ navigation }) => {
                     styles.chatStyle,
                     activeButton === pujari.id && styles.chatActive,
                   ]}
-                  onPress={() => handleChatPress(pujari.id)}
+                  // onPress={() => handleChatPress(pujari.id)}
+                  onPress={() => navigation.navigate('LiveChat')}
                 >
                   <Text
                     style={[

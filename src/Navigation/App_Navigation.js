@@ -37,6 +37,13 @@ import Drawerprofile from '../Screen/DrawerScreen/Drawerprofile';
 import Panchang from '../DetailsScreen/Panchang';
 import QuestionCategory from '../Screen/GetSupport/QuestionCategory';
 import QuestionScreen from '../Screen/GetSupport/QuestionScreen';
+import Purchaseview from '../DetailsScreen/Purchasesview';
+import LiveChat from '../ChatSection/LiveChat';
+import RecentChat from '../ChatSection/RecentChat';
+import OnlineOfflineBookPooja from '../Screen/Pujari/OnlineOfflineBookPooja';
+import PujariProfile from '../Screen/Pujari/PujariProfile';
+import BookPoojaform from '../Screen/Pujari/BookPoojaform';
+
 
 
 
@@ -73,7 +80,7 @@ const App_Navigation = () => {
             {/*HomeModule*/}
 
             <Stack.Screen
-                name='HomeScreen'
+                name='Home'
                 component={HomeScreen}
                 options={{ headerShown: false }}
             />
@@ -92,6 +99,11 @@ const App_Navigation = () => {
             <Stack.Screen
                 name='Profile'
                 component={ProfileScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='LiveChat'
+                component={LiveChat}
                 options={{ headerShown: false }}
             />
 
@@ -228,6 +240,11 @@ const App_Navigation = () => {
                 component={Panchang}
                 options={{ headerShown: false }}
             />
+            <Stack.Screen
+                name='Purchaseview'
+                component={Purchaseview}
+                options={{ headerShown: false }}
+            />
 
             {/* GET SUPPORT */}
             <Stack.Screen
@@ -240,8 +257,31 @@ const App_Navigation = () => {
                 component={QuestionScreen}
                 options={{ headerShown: false }}
             />
+            <Stack.Screen
+                name='RecentChat'
+                component={RecentChat}
+                options={{ headerShown: false }}
+            />
+            {/*Pujari */}
+            <Stack.Screen
+                name='OnlineOfflineBookPooja'
+                component={OnlineOfflineBookPooja}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='PujariProfile'
+                component={PujariProfile}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+            name='BookPoojaform'
+            component={BookPoojaform}
+            options={{ headerShown: false }}
+            
+            />
 
         </Stack.Navigator>
+
 
     )
 }

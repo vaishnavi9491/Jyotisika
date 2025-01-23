@@ -53,7 +53,7 @@ const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Animated.Image
-        source={require('../../assets/image/j.jpeg')}
+        source={require('../../assets/image/Jyotisika.png')}
         resizeMode='contain'
         style={[
           styles.imageStyle,

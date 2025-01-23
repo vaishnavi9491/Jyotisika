@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   View,
@@ -7,7 +8,6 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Dimensions,
   Linking,
   Alert,
 } from "react-native";
@@ -15,7 +15,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 const PaymentInformation = ({ route, navigation }) => {
-  const { amount, extra } = route.params;
+  const { amount, extra, showCoupons } = route.params;  // Destructure showCoupons
 
   const gst = (amount * 0.18).toFixed(2); // GST calculation (18%)
   const payableAmount = (amount + parseFloat(gst)).toFixed(2);
@@ -32,51 +32,55 @@ const PaymentInformation = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Header */}
-      <View style={styles.paymentInfo}>
-        <TouchableOpacity onPress={() => navigation.navigate("Wallet")}>
-          <AntDesign name="arrowleft" size={24} color="#000" style={styles.arrowIcon} />
-        </TouchableOpacity>
-        <Text style={styles.paymentTitle}>Payment Information</Text>
-      </View>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Header */}
+        <View style={styles.paymentInfo}>
+          <TouchableOpacity onPress={() => navigation.navigate("Wallet")}>
+            <AntDesign name="arrowleft" size={24} color="#000" style={styles.arrowIcon} />
+          </TouchableOpacity>
+          <Text style={styles.paymentTitle}>Payment Information</Text>
+        </View>
 
-      {/* Payment Details */}
-      <View style={styles.detailsContainer}>
-        <View style={styles.row}>
-          <Text style={styles.label}>Recharge Amount</Text>
-          <Text style={styles.value}>₹{amount}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>GST (18%)</Text>
-          <Text style={styles.value}>₹{gst}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={[styles.label, styles.bold]}>Payable Amount</Text>
-          <Text style={[styles.value, styles.bold]}>₹{payableAmount}</Text>
-        </View>
-      </View>
-
-      {/* Coupon Section */}
-      <View style={styles.couponContainer}>
-        <Text style={styles.couponTitle}>Available Coupons</Text>
-        <View style={styles.couponBox}>
-          <Text style={styles.couponText}>100% Extra on recharge of ₹50</Text>
-          <Text style={styles.couponSubtext}>
-            ✅ Rs. 50 cashback in wallet with this recharge
-          </Text>
-          <View style={styles.inputRow}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter Coupon code"
-              placeholderTextColor="#aaa"
-            />
-            <TouchableOpacity style={styles.applyButton}>
-              <Text style={styles.applyButtonText}>APPLY</Text>
-            </TouchableOpacity>
+        {/* Payment Details */}
+        <View style={styles.detailsContainer}>
+          <View style={styles.row}>
+            <Text style={styles.label}>Recharge Amount</Text>
+            <Text style={styles.value}>₹{amount}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>GST (18%)</Text>
+            <Text style={styles.value}>₹{gst}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={[styles.label, styles.bold]}>Payable Amount</Text>
+            <Text style={[styles.value, styles.bold]}>₹{payableAmount}</Text>
           </View>
         </View>
-      </View>
+
+        {/* Show Available Coupons only if showCoupons is true */}
+        {showCoupons && (
+          <View style={styles.couponContainer}>
+            <Text style={styles.couponTitle}>Available Coupons</Text>
+            <View style={styles.couponBox}>
+              <Text style={styles.couponText}>100% Extra on recharge of ₹50</Text>
+              <Text style={styles.couponSubtext}>
+                ✅ Rs. 50 cashback in wallet with this recharge
+              </Text>
+              <View style={styles.inputRow}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter Coupon code"
+                  placeholderTextColor="#aaa"
+                />
+                <TouchableOpacity style={styles.applyButton}>
+                  <Text style={styles.applyButtonText}>APPLY</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        )}
+      </ScrollView>
 
       {/* Pay Section */}
       <View style={styles.paySection}>
@@ -92,7 +96,7 @@ const PaymentInformation = ({ route, navigation }) => {
           <Text style={styles.payButtonText}>Pay ₹{payableAmount}</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -100,6 +104,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  scrollContainer: {
+    paddingBottom: hp('10%'), // Add padding bottom for better scrollability
   },
   paymentInfo: {
     flexDirection: "row",
@@ -111,11 +118,6 @@ const styles = StyleSheet.create({
   },
   paymentTitle: {
     fontSize: hp("2.2%"),
-    fontWeight: "600",
-    color: "#000",
-  },
-  backText: {
-    fontSize: hp("2%"),
     fontWeight: "600",
     color: "#000",
   },
@@ -192,6 +194,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9f9f9",
     borderTopWidth: 1,
     borderColor: "#ccc",
+    position: 'absolute', // Fixed position at the bottom
+    bottom: 0,
+    width: '100%',
   },
   payUsing: {
     fontSize: hp('2%'),

@@ -13,7 +13,10 @@ import Purches from '../../Screen/DrawerScreen/Purches';
 import Refertofriend from '../../Screen/DrawerScreen/Refertofriend';
 import PymentMethod from '../../Screen/DrawerScreen/PymentMethod';
 import SupportScreen from '../../Screen/DrawerScreen/SupportScreen';
-import {FollowingIcon, HoroscopeIcon, PaymentMethodIcon, PurchasesIcon, ReferofriendIcon, SettingsIcon, SupportIcon } from '../../Component/Horoscopeicon';
+import { FollowingIcon, HoroscopeIcon, Poojas, PurchasesIcon, ReferofriendIcon, SettingsIcon, SupportIcon } from '../../Component/Horoscopeicon';
+import PoojasScreen from '../../Screen/DrawerScreen/PoojasScreen';
+// import {FollowingIcon, HoroscopeIcon, PaymentMethodIcon, PurchasesIcon, ReferofriendIcon, SettingsIcon,SupportIcon } from '../../Component/Horoscopeicon';
+
 
 
 const Drawer = createDrawerNavigator();
@@ -80,14 +83,14 @@ const App_Drawer_Navigation = () => {
           ),
         }}
       />
-      <Drawer.Screen
-        name="Payment Method"
-        component={PymentMethod}
+       <Drawer.Screen
+        name="Poojas"
+        component={PoojasScreen}
         options={{
           headerShown: false,
-          title: 'Payment Method',
+          title: 'Poojas',
           drawerIcon: ({ focused, size }) => (
-            <PaymentMethodIcon size={size} color={focused ? '#000' : '#535763'}/>
+            <Poojas size={size} color={focused ? '#000' : '#535763'}/>
           ),
         }}
       />
