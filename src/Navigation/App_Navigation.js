@@ -43,6 +43,8 @@ import RecentChat from '../ChatSection/RecentChat';
 import OnlineOfflineBookPooja from '../Screen/Pujari/OnlineOfflineBookPooja';
 import PujariProfile from '../Screen/Pujari/PujariProfile';
 import BookPoojaform from '../Screen/Pujari/BookPoojaform';
+import Productdetails from '../Screen/Shop/Productdetails';
+import Productpayment from '../Screen/Shop/Productpayment';
 
 
 
@@ -278,6 +280,17 @@ const App_Navigation = () => {
             component={BookPoojaform}
             options={{ headerShown: false }}
             
+            />
+             {/*Shop */}
+             <Stack.Screen
+            name='Productdetail'
+            component={Productdetails}
+            options={{ headerShown: false }}
+            />
+              <Stack.Screen
+            name='ProductPayment'
+            component={Productpayment}
+            options={{ headerShown: false }}
             />
 
         </Stack.Navigator>

@@ -138,7 +138,7 @@ const HomeScreen = ({ navigation }) => {
 
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <Image style={styles.profilePic} source={require('../../assets/image/j.jpeg')} />
@@ -149,316 +149,316 @@ const HomeScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.settings}>
           <Fontisto name="language" size={20} />
         </TouchableOpacity>
-
         <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
-          <AntDesign name="customerservice" size={22} color='#000' />
+          <AntDesign name="customerservice" size={22} color="#000" />
         </TouchableOpacity>
-
       </View>
 
       {/* Search Bar */}
-      <View style={styles.searchBar}>
-        <Fontisto name="search" style={styles.searchIcon} size={20} color="#000" />
-        <TextInput
-          ref={inputRef}
-          placeholder="Search astrologer, pujari, products"
-          placeholderTextColor='#aaa'
-          style={styles.input}
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-        <TouchableOpacity onPress={isListening ? stopListening : startListening} style={styles.micIcon}>
-          <Fontisto name={isListening ? 'stop' : 'mic'} size={20} color="#fff" />
-        </TouchableOpacity>
-      </View>
-
-      {/* Services Section with Linear Gradient */}
-      <Text style={{ color: '#000', marginLeft: hp('3%'), fontSize: hp('2%'), fontWeight: 'bold' }}>Services</Text>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.services}>
-        {['Birth Kundali', 'Love', 'KP', 'Pooja', 'Panchang'].map((service, index) => (
-          <View
-          key={index}
-          style={[styles.serviceCard, { backgroundColor: '#F2F2F7' }]} // Simple gray background color
-        >
-            <View style={styles.iconTextContainer}>
-              {/* Adding icons based on the service */}
-              {service === 'Birth Kundali' && (
-                <Icon name="birthday-cake" size={16} color="#FF6347" style={styles.icon} />
-              )}
-              <TouchableOpacity onPress={() => navigation.navigate('LoveCalculator')}>
-                {service === 'Love' && (
-                  <Icon name="heart" size={16} color="#FF6347" style={styles.icon} />
-                )}
-              </TouchableOpacity>
-              {service === 'KP' && (
-                <Icon name="search" size={16} color="#FF6347" style={styles.icon} />
-              )}
-              {service === 'Pooja' && (
-                <Icon name="hand-paper-o" size={16} color="#FF6347" style={styles.icon} />
-              )}
-              <TouchableOpacity onPress={() => navigation.navigate('Panchang')}>
-                {service === 'Panchang' && (
-                  <Icon name="sun-o" size={16} color="#FF6347" style={styles.icon} />
-                )}
-              </TouchableOpacity>
-
-              <Text style={[styles.serviceText, { fontSize: 12 }]}>{service}</Text>
-            </View>
-            </View>
-        
-        ))}
-      </ScrollView>
-
-      {/* Astrologers Section */}
-      <View style={styles.container}>
-        <View style={styles.row}>
-          {/* First Card */}
-          <TouchableOpacity style={styles.card}>
-            <LinearGradient
-              colors={['#F1F1F1', '#FFEAB1']} // Gradient colors for the card
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.cardGradient}>
-              <TouchableOpacity onPress={() => navigation.navigate('Horoscope')}>
-                <Image style={styles.cardImage} source={require('../../assets/image/Horoscope.png')} />
-              </TouchableOpacity>
-              <Text style={styles.cardText}>Horoscope</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-
-          {/* Second Card */}
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('KundaliMatching')}>
-            <LinearGradient
-              colors={['#F1F1F1', '#FFEAB1']} // Gradient colors for the card
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.cardGradient}>
-              <Image style={styles.cardImage} source={require('../../assets/image/kundalimatching.png')} />
-              <Text style={styles.cardText}>Kundli Matching</Text>
-            </LinearGradient>
+      <ScrollView style={styles.container}>
+        <View style={styles.searchBar}>
+          <Fontisto name="search" style={styles.searchIcon} size={20} color="#000" />
+          <TextInput
+            ref={inputRef}
+            placeholder="Search astrologer, pujari, products"
+            placeholderTextColor='#aaa'
+            style={styles.input}
+            value={searchText}
+            onChangeText={setSearchText}
+          />
+          <TouchableOpacity onPress={isListening ? stopListening : startListening} style={styles.micIcon}>
+            <Fontisto name={isListening ? 'stop' : 'mic'} size={20} color="#fff" />
           </TouchableOpacity>
         </View>
 
-        <View style={styles.row}>
-          {/* Third Card */}
-          <TouchableOpacity style={styles.card}>
-            <LinearGradient
-              colors={['#F1F1F1', '#FFEAB1']} // Gradient colors for the card
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.cardGradient}>
-              <Image style={styles.cardImage} source={require('../../assets/image/bookpooja.png')} />
-              <Text style={styles.cardText}>Book Pooja</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-
-          {/* Fourth Card */}
-          <TouchableOpacity style={styles.card}>
-            <LinearGradient
-              colors={['#F1F1F1', '#FFEAB1']} // Gradient colors for the card
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.cardGradient}>
-              <Image style={styles.cardImage} source={require('../../assets/image/shop.png')} />
-              <Text style={styles.cardText}>Shop</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <View>
-        <Image style={styles.AstroImage} source={require('../../assets/image/Astro.png')} />
-      </View>
-
-
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-        <Text style={styles.Astrotext}>Astrology</Text>
-        <TouchableOpacity>
-          <Text style={styles.Viewtext}>View All</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.profileContainer}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {pujariData.map((pujari) => (
-            <View key={pujari.id} style={styles.profileCard}>
-
-              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                <Image source={pujari.image} style={styles.profileImage} />
-              </TouchableOpacity>
-
-              <Text style={styles.profileName}>{pujari.name}</Text>
-              <Text style={styles.profileRate}>{pujari.rate}</Text>
-              <View style={styles.profileActions}>
-                {/* Chat Button */}
-                <TouchableOpacity
-                  style={[
-                    styles.chatStyle,
-                    activeButton === pujari.id && styles.chatActive,
-                  ]}
-                  // onPress={() => handleChatPress(pujari.id)}
-                  onPress={() => navigation.navigate('LiveChat')}
-                >
-                  <Text
-                    style={[
-                      styles.chatText,
-                      activeButton === pujari.id && styles.chatActiveText,
-                    ]}
-                  >
-                    Chat
-                  </Text>
+        {/* Services Section with Linear Gradient */}
+        <Text style={{ color: '#000', marginLeft: hp('3%'), fontSize: hp('2%'), fontWeight: 'bold' }}>Services</Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.services}>
+          {['Birth Kundali', 'Love', 'KP', 'Pooja', 'Panchang'].map((service, index) => (
+            <View
+              key={index}
+              style={[styles.serviceCard, { backgroundColor: '#F2F2F7' }]} // Simple gray background color
+            >
+              <View style={styles.iconTextContainer}>
+                {/* Adding icons based on the service */}
+                {service === 'Birth Kundali' && (
+                  <Icon name="birthday-cake" size={16} color="#FF6347" style={styles.icon} />
+                )}
+                <TouchableOpacity onPress={() => navigation.navigate('LoveCalculator')}>
+                  {service === 'Love' && (
+                    <Icon name="heart" size={16} color="#FF6347" style={styles.icon} />
+                  )}
+                </TouchableOpacity>
+                {service === 'KP' && (
+                  <Icon name="search" size={16} color="#FF6347" style={styles.icon} />
+                )}
+                {service === 'Pooja' && (
+                  <Icon name="hand-paper-o" size={16} color="#FF6347" style={styles.icon} />
+                )}
+                <TouchableOpacity onPress={() => navigation.navigate('Panchang')}>
+                  {service === 'Panchang' && (
+                    <Icon name="sun-o" size={16} color="#FF6347" style={styles.icon} />
+                  )}
                 </TouchableOpacity>
 
-                {/* Call Button */}
-                <TouchableOpacity
-                  style={[
-                    styles.callStyle,
-                    activeButton === pujari.id && styles.callActive,
-                  ]}
-                  onPress={() => handleCallPress(pujari.id)}
-                >
-                  <Text
-                    style={[
-                      styles.callText,
-                      activeButton === pujari.id && styles.callActiveText,
-                    ]}
-                  >
-                    Call
-                  </Text>
-                </TouchableOpacity>
+                <Text style={[styles.serviceText, { fontSize: 12 }]}>{service}</Text>
               </View>
             </View>
+
           ))}
         </ScrollView>
-      </View>
 
-
-      {/* Shopping */}
-
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: hp('2%') }}>
-        <Text style={styles.Astrotext}>Top Shop </Text>
-        <TouchableOpacity>
-          <Text style={styles.Viewtext}>View All</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.profileContainer}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {profiles.map((profile) => (
-            <View key={profile.id} style={styles.profileCard}>
-              <Image source={profile.image} style={styles.poojaimg} />
-              <Text style={styles.profileName}>{profile.name}</Text>
-              <Text style={styles.profileRate}>{profile.rate}</Text>
-              <View style={styles.profileActions}>
-                {/* Chat Button */}
-                <TouchableOpacity
-                  style={[
-                    styles.viewStyle,
-                    activeButton === 'View' && styles.chatActive,
-                  ]}
-                  onPress={handleChatPress}>
-                  <Text
-                    style={[
-                      styles.chatText,
-                      activeButton === 'View' && styles.chatActiveText,
-                    ]}>
-                    View
-                  </Text>
+        {/* Astrologers Section */}
+        <View style={styles.container}>
+          <View style={styles.row}>
+            {/* First Card */}
+            <TouchableOpacity style={styles.card}>
+              <LinearGradient
+                colors={['#F1F1F1', '#FFEAB1']} // Gradient colors for the card
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.cardGradient}>
+                <TouchableOpacity onPress={() => navigation.navigate('Horoscope')}>
+                  <Image style={styles.cardImage} source={require('../../assets/image/Horoscope.png')} />
                 </TouchableOpacity>
-              </View>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
+                <Text style={styles.cardText}>Horoscope</Text>
+              </LinearGradient>
+            </TouchableOpacity>
 
-
-      {/* pujari */}
-
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-        <Text style={styles.Astrotext}>Pujaris</Text>
-        <TouchableOpacity>
-          <Text style={styles.Viewtext}>View All</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.profileContainer}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {pujariData.map((pujari) => (
-            <View key={pujari.id} style={styles.profileCard}>
-              <Image source={pujari.image} style={styles.profileImage} />
-              <Text style={styles.profileName}>{pujari.name}</Text>
-              <Text style={styles.profileRate}>{pujari.rate}</Text>
-              <View style={styles.profileActions}>
-                {/* Chat Button */}
-                <TouchableOpacity
-                  style={[
-                    styles.chatStyle,
-                    activeButton === pujari.id && styles.chatActive,
-                  ]}
-                  onPress={() => handleChatPress(pujari.id)}
-                >
-                  <Text
-                    style={[
-                      styles.chatText,
-                      activeButton === pujari.id && styles.chatActiveText,
-                    ]}
-                  >
-                    Chat
-                  </Text>
-                </TouchableOpacity>
-
-                {/* Call Button */}
-                <TouchableOpacity
-                  style={[
-                    styles.callStyle,
-                    activeButton === pujari.id && styles.callActive,
-                  ]}
-                  onPress={() => handleCallPress(pujari.id)}
-                >
-                  <Text
-                    style={[
-                      styles.callText,
-                      activeButton === pujari.id && styles.callActiveText,
-                    ]}
-                  >
-                    Call
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-
-
-
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={hp('10%')} // Adjust based on your header height
-      >
-        <ScrollView style={styles.container}>
-          {/* Other content remains the same */}
-
-          {/* Feedback Section */}
-          <View style={styles.feedback}>
-            <Text style={styles.Viewtext}>We value your genuine feedback</Text>
-            <TextInput
-              placeholder="Write your genuine feedback here..."
-              placeholderTextColor="#aaa"
-              style={styles.feedbackInput}
-              multiline={true}
-              numberOfLines={4}
-            />
-            <TouchableOpacity style={styles.feedbackButton}>
-              <Text style={styles.feedbackButtonText}>Send</Text>
+            {/* Second Card */}
+            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('KundaliMatching')}>
+              <LinearGradient
+                colors={['#F1F1F1', '#FFEAB1']} // Gradient colors for the card
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.cardGradient}>
+                <Image style={styles.cardImage} source={require('../../assets/image/kundalimatching.png')} />
+                <Text style={styles.cardText}>Kundli Matching</Text>
+              </LinearGradient>
             </TouchableOpacity>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </ScrollView>
+
+          <View style={styles.row}>
+            {/* Third Card */}
+            <TouchableOpacity style={styles.card}>
+              <LinearGradient
+                colors={['#F1F1F1', '#FFEAB1']} // Gradient colors for the card
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.cardGradient}>
+                <Image style={styles.cardImage} source={require('../../assets/image/bookpooja.png')} />
+                <Text style={styles.cardText}>Book Pooja</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            {/* Fourth Card */}
+            <TouchableOpacity style={styles.card}>
+              <LinearGradient
+                colors={['#F1F1F1', '#FFEAB1']} // Gradient colors for the card
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.cardGradient}>
+                <Image style={styles.cardImage} source={require('../../assets/image/shop.png')} />
+                <Text style={styles.cardText}>Shop</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View>
+          <Image style={styles.AstroImage} source={require('../../assets/image/Astro.png')} />
+        </View>
+
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
+          <Text style={styles.Astrotext}>Astrology</Text>
+          <TouchableOpacity>
+            <Text style={styles.Viewtext}>View All</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.profileContainer}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {pujariData.map((pujari) => (
+              <View key={pujari.id} style={styles.profileCard}>
+
+                <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                  <Image source={pujari.image} style={styles.profileImage} />
+                </TouchableOpacity>
+
+                <Text style={styles.profileName}>{pujari.name}</Text>
+                <Text style={styles.profileRate}>{pujari.rate}</Text>
+                <View style={styles.profileActions}>
+                  {/* Chat Button */}
+                  <TouchableOpacity
+                    style={[
+                      styles.chatStyle,
+                      activeButton === pujari.id && styles.chatActive,
+                    ]}
+                    // onPress={() => handleChatPress(pujari.id)}
+                    onPress={() => navigation.navigate('LiveChat')}
+                  >
+                    <Text
+                      style={[
+                        styles.chatText,
+                        activeButton === pujari.id && styles.chatActiveText,
+                      ]}
+                    >
+                      Chat
+                    </Text>
+                  </TouchableOpacity>
+
+                  {/* Call Button */}
+                  <TouchableOpacity
+                    style={[
+                      styles.callStyle,
+                      activeButton === pujari.id && styles.callActive,
+                    ]}
+                    onPress={() => handleCallPress(pujari.id)}
+                  >
+                    <Text
+                      style={[
+                        styles.callText,
+                        activeButton === pujari.id && styles.callActiveText,
+                      ]}
+                    >
+                      Call
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+
+        {/* Shopping */}
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: hp('2%') }}>
+          <Text style={styles.Astrotext}>Top Shop </Text>
+          <TouchableOpacity>
+            <Text style={styles.Viewtext}>View All</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.profileContainer}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {profiles.map((profile) => (
+              <View key={profile.id} style={styles.profileCard}>
+                <Image source={profile.image} style={styles.poojaimg} />
+                <Text style={styles.profileName}>{profile.name}</Text>
+                <Text style={styles.profileRate}>{profile.rate}</Text>
+                <View style={styles.profileActions}>
+                  {/* Chat Button */}
+                  <TouchableOpacity
+                    style={[
+                      styles.viewStyle,
+                      activeButton === 'View' && styles.chatActive,
+                    ]}
+                    onPress={handleChatPress}>
+                    <Text
+                      style={[
+                        styles.chatText,
+                        activeButton === 'View' && styles.chatActiveText,
+                      ]}>
+                      View
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+
+        {/* pujari */}
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
+          <Text style={styles.Astrotext}>Pujaris</Text>
+          <TouchableOpacity>
+            <Text style={styles.Viewtext}>View All</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.profileContainer}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {pujariData.map((pujari) => (
+              <View key={pujari.id} style={styles.profileCard}>
+                <Image source={pujari.image} style={styles.profileImage} />
+                <Text style={styles.profileName}>{pujari.name}</Text>
+                <Text style={styles.profileRate}>{pujari.rate}</Text>
+                <View style={styles.profileActions}>
+                  {/* Chat Button */}
+                  <TouchableOpacity
+                    style={[
+                      styles.chatStyle,
+                      activeButton === pujari.id && styles.chatActive,
+                    ]}
+                    onPress={() => handleChatPress(pujari.id)}
+                  >
+                    <Text
+                      style={[
+                        styles.chatText,
+                        activeButton === pujari.id && styles.chatActiveText,
+                      ]}
+                    >
+                      Chat
+                    </Text>
+                  </TouchableOpacity>
+
+                  {/* Call Button */}
+                  <TouchableOpacity
+                    style={[
+                      styles.callStyle,
+                      activeButton === pujari.id && styles.callActive,
+                    ]}
+                    onPress={() => handleCallPress(pujari.id)}
+                  >
+                    <Text
+                      style={[
+                        styles.callText,
+                        activeButton === pujari.id && styles.callActiveText,
+                      ]}
+                    >
+                      Call
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+
+
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={hp('10%')} // Adjust based on your header height
+        >
+          <ScrollView style={styles.container}>
+            {/* Other content remains the same */}
+
+            {/* Feedback Section */}
+            <View style={styles.feedback}>
+              <Text style={styles.Viewtext}>We value your genuine feedback</Text>
+              <TextInput
+                placeholder="Write your genuine feedback here..."
+                placeholderTextColor="#aaa"
+                style={styles.feedbackInput}
+                multiline={true}
+                numberOfLines={4}
+              />
+              <TouchableOpacity style={styles.feedbackButton}>
+                <Text style={styles.feedbackButtonText}>Send</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -472,14 +472,19 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: hp('1.2%'),
-
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#f8f9fa',
+    elevation: 5, // Adds shadow for Android
+    shadowColor: '#000', // Adds shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
   },
   profilePic: {
     width: wp('10%'),
-    height: hp('8%'),
+    height: hp('5%'),
     borderRadius: wp(5),
   },
   balance: {
@@ -708,3 +713,4 @@ const styles = StyleSheet.create({
     borderRadius: 10
   }
 });
+

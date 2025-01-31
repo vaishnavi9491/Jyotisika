@@ -14,8 +14,8 @@ import {
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 
-const PaymentInformation = ({ route, navigation }) => {
-  const { amount, extra, showCoupons } = route.params;  // Destructure showCoupons
+const PaymentInformation = ({ route, navigation, }) => {
+  const { amount, extra, showCoupons, image, fromProductScreen } = route.params;  // Destructure showCoupons
 
   const gst = (amount * 0.18).toFixed(2); // GST calculation (18%)
   const payableAmount = (amount + parseFloat(gst)).toFixed(2);
@@ -42,6 +42,12 @@ const PaymentInformation = ({ route, navigation }) => {
           <Text style={styles.paymentTitle}>Payment Information</Text>
         </View>
 
+        {fromProductScreen && image && (
+          <View style={styles.imageContainer}>
+            <Image source={image} style={styles.productImage} />
+          </View>
+        )}
+        <Text style={styles.price}>Price: ₹{amount}</Text>
         {/* Payment Details */}
         <View style={styles.detailsContainer}>
           <View style={styles.row}>
@@ -228,6 +234,17 @@ const styles = StyleSheet.create({
     fontSize: hp('2.4%'),
     fontWeight: "bold",
   },
+  productImage: {
+    width: wp("80%"),
+    height: hp("30%"),
+    resizeMode: "contain",
+    alignSelf: "center",
+    marginVertical: hp("2%"),
+  },
+  price: {
+    color: '#000',
+    textAlign: 'center'
+  }
 });
 
 export default PaymentInformation;
