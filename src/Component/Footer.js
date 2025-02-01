@@ -13,10 +13,14 @@ const Footer = () => {
           <Text style={styles.statNumber}>100%</Text>
           <Text style={styles.statLabel}>Privacy</Text>
         </View>
+        <View style={styles.verticleLine}></View>
+
         <View style={styles.statBox}>
           <Text style={styles.statNumber}>300+</Text>
           <Text style={styles.statLabel}>Astrologers</Text>
         </View>
+        <View style={styles.verticleLine}></View>
+        
         <View style={styles.statBox}>
           <Text style={styles.statNumber}>500+</Text>
           <Text style={styles.statLabel}>Pujari</Text>
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: hp('2%'),
     fontWeight: 'bold',
-    marginBottom: '10%',
+    marginBottom: hp('3%'),
     color: '#000'
   },
 
@@ -58,6 +62,12 @@ const styles = StyleSheet.create({
     fontSize: hp('2%'),
     color: '#000'
   },
+  verticleLine: {
+    height: '100%',
+    width: 1,
+    backgroundColor: '#404040',
+  }
+  
 });
 
 export default Footer;

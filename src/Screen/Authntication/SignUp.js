@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import ConfettiCannon from 'react-native-confetti-cannon';
 
-const RegistrationSuccess = ({ navigation }) => {
+const RegistrationSuccess = ({ navigation,route }) => {
+
+  useEffect(() => {
+    if (route.params) {
+      
+      console.log('Route params:', route.params);
+    }
+})
   return (
     <View style={styles.container}>
 

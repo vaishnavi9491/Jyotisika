@@ -18,6 +18,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const Name = ({ navigation }) => {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');
+    const [role, setRole] = useState('');
     const [dateOfBirth, setDateOfBirth] = useState(new Date());
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
@@ -30,14 +31,22 @@ const Name = ({ navigation }) => {
         { label: 'Other', value: 'Other' },
     ];
 
+    const roleOptions = [
+        { label: 'Astrologer', value: 'Astrologer' },
+        { label: 'Pujari', value: 'Pujari' },
+        { label: 'User', value: 'User' },
+    ];
+
+
     const validateInputs = () => {
         const newErrors = {};
         if (!name.trim()) newErrors.name = 'Name is required';
         if (!gender) newErrors.gender = 'Gender is required';
+        if (!role) newErrors.role = 'Role is required';
         if (!dateOfBirth) newErrors.dateOfBirth = 'Date of Birth is required';
 
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0; 
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleContinue = () => {
@@ -45,6 +54,7 @@ const Name = ({ navigation }) => {
             navigation.navigate('SignUp', {
                 name,
                 gender,
+                role,
                 dateOfBirth: dateOfBirth.toISOString(), // Convert to a serializable string
             });
         }
@@ -87,8 +97,35 @@ const Name = ({ navigation }) => {
                                 itemTextStyle={styles.itemTextStyle}
                                 value={gender}
                                 onChange={(item) => setGender(item.value)}
+                                renderItem={(item) => (
+                                    <Text style={styles.dropdownItemText}>
+                                        {item.label}
+                                    </Text>
+                                )}
                             />
                             {errors.gender && <Text style={styles.errorText}>{errors.gender}</Text>}
+                        </View>
+
+                        <View style={styles.textinput}>
+                            <Text style={styles.titleText}>Select Your Role</Text>
+                            <Dropdown
+                                style={styles.dropdown}
+                                data={roleOptions}
+                                labelField="label"
+                                valueField="value"
+                                placeholder="Select Role"
+                                placeholderStyle={styles.placeholderStyle}
+                                selectedTextStyle={styles.selectedTextStyle}
+                                itemTextStyle={styles.itemTextStyle}
+                                value={role}
+                                onChange={(item) => setRole(item.value)}
+                                renderItem={(item) => (
+                                    <Text style={styles.dropdownItemText}>
+                                        {item.label}
+                                    </Text>
+                                )}
+                            />
+                            {errors.role && <Text style={styles.errorText}>{errors.role}</Text>}
                         </View>
                         <View style={styles.textinput}>
                             <Text style={styles.titleText}>Select Date of Birth</Text>
@@ -120,7 +157,7 @@ const Name = ({ navigation }) => {
                                 onCancel={() => setIsDatePickerOpen(false)}
                             />
                             {errors.dateOfBirth && <Text style={styles.errorText}>{errors.dateOfBirth}</Text>}
-                            
+
                             <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
                                 <Text style={styles.continueText}>Save</Text>
                             </TouchableOpacity>
@@ -144,11 +181,9 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
-
     },
     logoContainer: {
         alignItems: 'center',
-
     },
     logo: {
         height: hp('15%'),
@@ -157,7 +192,6 @@ const styles = StyleSheet.create({
     content: {
         width: '100%',
         alignItems: 'center',
-
     },
     card: {
         width: wp('90%'),
@@ -166,7 +200,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         elevation: 3,
         borderColor: '#ccc',
-
     },
     titleText: {
         color: '#000',
@@ -184,8 +217,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         color: '#000',
         fontSize: hp('2%'),
-
-
     },
     textinput: {
         marginTop: hp('2%')
@@ -203,7 +234,6 @@ const styles = StyleSheet.create({
     placeholderStyle: {
         color: '#aaa',
         fontSize: hp('2%'),
-
     },
     selectedTextStyle: {
         color: '#000',
@@ -212,6 +242,12 @@ const styles = StyleSheet.create({
     itemTextStyle: {
         fontSize: hp('2%'),
         color: '#000'
+    },
+    dropdownItemText: {
+        fontSize: hp('1.8%'),
+        color: '#000',
+        paddingVertical: hp('1.3%'),
+        paddingHorizontal: hp('1.3%'),
     },
     dateInputContainer: {
         flexDirection: 'row',
@@ -224,7 +260,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp('3%'),
         backgroundColor: '#fff',
         marginBottom: hp('2%'),
-
     },
     dateInput: {
         flex: 1,
@@ -234,7 +269,6 @@ const styles = StyleSheet.create({
     dateText: {
         color: '#000',
         fontSize: hp('2%'),
-
     },
     iconContainer: {
         paddingHorizontal: wp('2%'),
@@ -261,7 +295,7 @@ const styles = StyleSheet.create({
     },
     footer: {
         width: '100%',
-        marginTop: hp('5%'),
+       // marginTop: hp('5%'),
     },
 });
 
