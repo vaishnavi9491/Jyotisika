@@ -23,7 +23,7 @@ const Purches = ({ navigation }) => {
           <Text style={styles.price}>₹ {item.price}</Text>
           <Text style={styles.originalPrice}> {item.originalPrice}</Text>
         </View>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Purchaseview')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Purchaseview')}>
           <Text style={styles.buttonText}>View</Text>
         </TouchableOpacity>
       </View>
@@ -33,7 +33,7 @@ const Purches = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate("App_Drawer_Navigation")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
           <AntDesign name="arrowleft" size={20} color="#000" />
         </TouchableOpacity>
         <Text style={styles.Jtext}>Purches</Text>

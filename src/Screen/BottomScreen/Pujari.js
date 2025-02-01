@@ -111,21 +111,22 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.header}>
-          <Image style={styles.profilePic} source={require('../../assets/image/jane.png')} />
-          <Text style={styles.Jtext}>Jyotisika</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-            <Text style={styles.balance}>₹ 50</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.settings}>
-            <Fontisto name="language" size={20} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
-            <AntDesign name="customerservice" size={22} color="#000" />
-          </TouchableOpacity>
-        </View>
 
+      <View style={styles.header}>
+        <Image style={styles.profilePic} source={require('../../assets/image/jane.png')} />
+        <Text style={styles.Jtext}>Jyotisika</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
+          <Text style={styles.balance}>₹ 50</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.settings}>
+          <Fontisto name="language" size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
+          <AntDesign name="customerservice" size={22} color="#000" />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.searchBar}>
           <Fontisto name="search" style={styles.searchIcon} size={20} color="#000" />
           <TextInput
@@ -244,47 +245,46 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container:
-  {
+  container: {
     flex: 1,
     backgroundColor: '#fff'
   },
-  scrollView:
-  {
+  scrollView: {
     paddingBottom: hp('5%')
   },
-  header:
-  {
+  header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: hp('1.2%')
+    justifyContent: 'space-between',
+    padding: hp('1%'),
+    backgroundColor: '#f8f9fa',
+    elevation: 5, // Adds shadow for Android
+    shadowColor: '#000', // Adds shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
   },
   Jtext: {
     marginRight: hp('20%'),
     color: '#000',
     fontWeight: 'bold',
   },
-  profilePic:
-  {
+  profilePic: {
     width: wp('10%'),
-    height: hp('8%'),
-    borderRadius: wp(5)
+    height: hp('5%'),
+    borderRadius: wp(5),
   },
-  balance:
-  {
+  balance: {
     fontSize: hp('2%'),
     fontWeight: 'bold',
     color: '#000'
   },
-  settings:
-  {
+  settings: {
     backgroundColor: '#FFD700',
     padding: wp('2%'),
     borderRadius: wp(2)
   },
-  searchBar:
-  {
+  searchBar: {
     marginVertical: hp('2%'),
     marginHorizontal: wp('4%')
   },
@@ -298,8 +298,7 @@ const styles = StyleSheet.create({
     fontSize: hp('2%'),
     color: '#000',
   },
-  searchIcon:
-  {
+  searchIcon: {
     position: 'absolute',
     left: wp('3%'),
     top: '50%',
@@ -327,19 +326,16 @@ const styles = StyleSheet.create({
     margin: hp('1%'),
     width: wp('35%'),
   },
-  iconTextContainer:
-  {
+  iconTextContainer: {
     flexDirection: 'row',
     alignItems: 'center'
   },
-  serviceText:
-  {
+  serviceText: {
     fontSize: hp('2%'),
     fontWeight: 'bold',
     color: '#000'
   },
-  sectionTitle:
-  {
+  sectionTitle: {
     color: '#000',
     marginLeft: hp('3%'),
     fontSize: hp('2%'),
@@ -353,11 +349,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: hp('2%'),
   },
-  // backgroundImage:{
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   padding: hp('2%')
-  // },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
@@ -371,6 +362,8 @@ const styles = StyleSheet.create({
   },
   imageContainer:
   {
+    marginLeft: hp('1%'),
+    marginTop: hp('1%'),
     width: wp('30%'),
     height: hp('10%'),
     borderRadius: 10
@@ -393,7 +386,7 @@ const styles = StyleSheet.create({
   {
     flexDirection: 'row',
     backgroundColor: '#000',
-    paddingVertical: 10,
+    paddingVertical: hp('1%'),
     alignItems: 'center',
   },
   blackBackground: {
@@ -403,7 +396,7 @@ const styles = StyleSheet.create({
   serviceTypeButton:
   {
     padding: hp('1%'),
-    marginHorizontal: hp('4%'),
+    marginHorizontal: hp('3%'),
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 5,

@@ -13,6 +13,8 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Astrology = ({navigation}) => {
   const [searchText, setSearchText] = useState("");
@@ -39,35 +41,35 @@ const Astrology = ({navigation}) => {
 
 
   return (
-    <ScrollView style={styles.container}>
-   <View style={styles.header}>
-        <Image style={styles.profilePic} source={require('../../assets/image/j.jpeg')} />
-        <Text style={styles.Jtext}>Jyotisika</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-          <Text style={styles.balance}>₹ 50</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.settings}>
-          <Fontisto name="language" size={20} />
-        </TouchableOpacity>
+    <View style={styles.container}>
+    <View style={styles.header}>
+           <Image style={styles.profilePic} source={require('../../assets/image/j.jpeg')} />
+           <Text style={styles.Jtext}>Jyotisika</Text>
+           <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
+             <Text style={styles.balance}>₹ 50</Text>
+           </TouchableOpacity>
+           <TouchableOpacity style={styles.settings}>
+             <Fontisto name="language" size={20} />
+           </TouchableOpacity>
+           <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
+             <AntDesign name="customerservice" size={22} color="#000" />
+           </TouchableOpacity>
+         </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
-          <AntDesign name="customerservice" size={22} color='#000' />
-        </TouchableOpacity>
+            <ScrollView style={styles.container}>
+               <View style={styles.searchBar}>
+          <Fontisto name="search" style={styles.searchIcon} size={20} color="#000" />
+          <TextInput
+      
+            placeholder="Search astrologer,service"
+            placeholderTextColor='#ccc'
+            style={styles.input}
+            value={searchText}
+            onChangeText={setSearchText}
+          />
+        </View>
 
-      </View>
-      <View style={styles.searchContainer}>
-        <Feather name="search" size={20} color="#000" style={styles.searchIcon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="search astrologer, service"
-          placeholderTextColor='#aaa'
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-      </View>
-
-
-      <View style={styles.tabsContainer}>
+      {/* <View style={styles.tabsContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <TouchableOpacity
             style={[styles.tab, activeTab === "All" && styles.activeTab]}
@@ -101,7 +103,45 @@ const Astrology = ({navigation}) => {
             <Text style={[styles.tabText, activeTab === "Career" && styles.activeTabText]}>Career</Text>
           </TouchableOpacity>
         </ScrollView>
-      </View>
+      </View> */}
+       <Text style={{ color: '#000', marginLeft: hp('3%'), fontSize: hp('2%'), fontWeight: 'bold' }}>Services</Text>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.services}>
+                {['All', 'Love', 'Eductional', 'Career', 'Marriage'].map((service, index) => (
+                  <View
+                    key={index}
+                    style={[styles.serviceCard, { backgroundColor: '#F2F2F7' }]} // Simple gray background color
+                  >
+                    <View style={styles.iconTextContainer}>
+                      {/* Adding icons based on the service */}
+                      {service === 'All' && (
+                        <Ionicons name="grid" size={16} color="#888" style={styles.icon} />
+                      )}
+                      <TouchableOpacity >
+                        {service === 'Love' && (
+                          <Ionicons name="heart" size={16} color="#888" style={styles.icon} />
+                        )}
+                      </TouchableOpacity>
+                      {service === 'Eductional' && (
+                        <Ionicons name="book" size={16} color="#888" style={styles.icon} />
+                      )}
+                      {service === 'Career' && (
+                        <Ionicons name="briefcase" size={16} color="#888" style={styles.icon} />
+                      )}
+                      <TouchableOpacity>
+                        {service === 'Marriage' && (
+                          <MaterialCommunityIcons name="ring" size={16} color="#888" style={styles.icon} />
+                        )}
+                      </TouchableOpacity>
+      
+                      <Text style={[styles.serviceText, { fontSize: 12 }]}>{service}</Text>
+                    </View>
+                  </View>
+      
+                ))}
+              </ScrollView>
       <View>
         <TouchableOpacity style={styles.RecentChatButton}onPress={()=>navigation.navigate('RecentChat')} >
           <Text style={styles.RecentChat}>Recent Chat</Text>
@@ -270,8 +310,8 @@ const Astrology = ({navigation}) => {
           <Text style={styles.Viewtext}>View All</Text>
         </TouchableOpacity>
       </View>
-      
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -281,18 +321,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    marginBottom: hp('3.5%')
+   
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: hp('1.2%'),
-
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#f8f9fa',
+    elevation: 5, // Adds shadow for Android
+    shadowColor: '#000', // Adds shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
   },
   profilePic: {
     width: wp('10%'),
-    height: hp('8%'),
+    height: hp('5%'),
     borderRadius: wp(5),
   },
   balance: {
@@ -306,6 +351,12 @@ const styles = StyleSheet.create({
     borderRadius: wp(2),
 
   },
+  Jtext: {
+    marginRight: hp('20%'),
+    color: '#000',
+    fontWeight: 'bold',
+  },
+  
   profileContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -335,59 +386,63 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFD700",
     borderRadius: wp(2),
   },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: wp("2%"),
-    marginTop: hp("1%"),
+  searchBar: {
+    position: 'relative',
+    marginVertical: hp('2%'),
+    marginHorizontal: wp('4%'),
+
+
+  },
+  input: {
     borderWidth: 1,
-    borderColor: "#000",
-    borderRadius: wp(3),
-    marginHorizontal: wp("3%"),
-    height: hp('7%')
+    borderColor: '#ccc',
+    borderRadius: wp(2),
+    paddingLeft: hp('5%'),
+    paddingRight: wp('10%'),
+    height: hp('6%'),
+    fontSize: hp('2%'),
+    color: '#000'
   },
   searchIcon: {
-    marginRight: wp("2%"),
+    position: 'absolute',
+    left: wp('3%'),
+    top: '50%',
+    transform: [{ translateY: -10 }],
   },
-  searchInput: {
-    flex: 1,
-    fontSize: wp("4%"),
-    color: "#000",
+  services: {
+    flexDirection: 'row',
+    paddingVertical: hp('1%'),
+  
   },
-  tabsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: wp("3%"),
-    marginTop: hp("2%"),
+  serviceText: {
+    fontSize: hp('2%'),
+    fontWeight: '600',
+    color: '#000',
   },
-  tab: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: hp("1.5%"),
-    paddingHorizontal: wp("4%"),
-    borderRadius: wp(3),
-    backgroundColor: "#f2f2f2",
+  serviceCard: {
+    marginRight: hp('1%'),
+    padding: hp('1%'),
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: hp('1%'),
+    width: wp('25%'),
   },
-  activeTab: {
-    backgroundColor: "#FFD700",
+  iconTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+
   },
-  tabText: {
-    fontSize: wp("4%"),
-    color: "#000",
-    marginLeft: wp("2%"),
+  icon: {
+    marginRight: hp('1%'),
   },
-  activeTabText: {
-    color: "#fff",
-  },
-  RecentChatButton: 
-  {
-        backgroundColor: '#CFF7D3',
-        margin: hp('1%'),
-        borderRadius: 10,
-        padding: hp('2%'),
-     
-      },
-      RecentChat: {
+  RecentChatButton:{
+   backgroundColor: '#CFF7D3',
+   margin: hp('1%'),
+   borderRadius: 10,
+   padding: hp('2%'),
+    },
+  RecentChat: {
         color: '#02542D',
         textAlign: 'center',
         fontSize: hp('2%'),
@@ -557,402 +612,11 @@ const styles = StyleSheet.create({
               callText: {
                 color: '#000',
               },
-            
               viewStyle: {
                 flex: 1,
                 padding: 8,
                 backgroundColor: '#FFCC00',
                 borderRadius: 5,
                 alignItems: 'center',
-            
               },
 });
-
-
-
-
-
-// import React, { useState } from "react";
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   Image,
-//   TouchableOpacity,
-//   ScrollView,
-//   TextInput,
-// } from "react-native";
-// import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
-// import Fontisto from "react-native-vector-icons/Fontisto";
-// import AntDesign from "react-native-vector-icons/AntDesign";
-// import Feather from "react-native-vector-icons/Feather";
-// import Ionicons from "react-native-vector-icons/Ionicons";
-
-// const Astrology = () => {
-//   const [searchText, setSearchText] = useState("");
-//   const [activeTab, setActiveTab] = useState("All");
-
-
-//   return (
-//     <ScrollView contentContainerStyle={styles.scrollViewContent}>
-//       <View style={styles.container}>
-
-//         <View style={styles.header}>
-//           <View style={styles.profileContainer}>
-//             <Image
-//               source={require('../../assets/image/jane.png')}
-//               style={styles.profileImage}
-//             />
-//             <Text style={styles.profileName}>John Doe</Text>
-//           </View>
-
-//           <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-//             <Text style={styles.balance}>₹ 50</Text>
-//           </TouchableOpacity>
-
-//           <View style={styles.iconContainer}>
-//             <TouchableOpacity style={styles.icon}>
-//               <Fontisto name="language" size={15} />
-//             </TouchableOpacity>
-//             <TouchableOpacity >
-//               <AntDesign name="customerservice" size={22} color='#000' />
-//             </TouchableOpacity>
-//           </View>
-//         </View>
-
-//         <View style={styles.searchContainer}>
-//           <Feather name="search" size={20} color="#000" style={styles.searchIcon} />
-//           <TextInput
-//             style={styles.searchInput}
-//             placeholder="search astrologer, service"
-//             placeholderTextColor='#aaa'
-//             value={searchText}
-//             onChangeText={setSearchText}
-//           />
-//         </View>
-
-
-//         <View style={styles.tabsContainer}>
-//           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-//             <TouchableOpacity
-//               style={[styles.tab, activeTab === "All" && styles.activeTab]}
-//               onPress={() => setActiveTab("All")}
-//             >
-//               <Ionicons name="grid" size={20} color={activeTab === "All" ? "#FFF" : "#000"} />
-//               <Text style={[styles.tabText, activeTab === "All" && styles.activeTabText]}>All</Text>
-//             </TouchableOpacity>
-
-//             <TouchableOpacity
-//               style={[styles.tab, activeTab === "Love" && styles.activeTab]}
-//               onPress={() => setActiveTab("Love")}
-//             >
-//               <Ionicons name="heart" size={20} color={activeTab === "Love" ? "red" : "#000"} />
-//               <Text style={[styles.tabText, activeTab === "Love" && styles.activeTabText]}>Love</Text>
-//             </TouchableOpacity>
-
-//             <TouchableOpacity
-//               style={[styles.tab, activeTab === "Education" && styles.activeTab]}
-//               onPress={() => setActiveTab("Education")}
-//             >
-//               <Ionicons name="book" size={20} color={activeTab === "Education" ? "#21005D" : "#000"} />
-//               <Text style={[styles.tabText, activeTab === "Education" && styles.activeTabText]}>Education</Text>
-//             </TouchableOpacity>
-
-//             <TouchableOpacity
-//               style={[styles.tab, activeTab === "Career" && styles.activeTab]}
-//               onPress={() => setActiveTab("Career")}
-//             >
-//               <Ionicons name="briefcase" size={20} color={activeTab === "Career" ? "#89475E" : "#000"} />
-//               <Text style={[styles.tabText, activeTab === "Career" && styles.activeTabText]}>Career</Text>
-//             </TouchableOpacity>
-//           </ScrollView>
-//         </View>
-//         <View>
-//           <TouchableOpacity style={styles.RecentChatButton} >
-//             <Text style={styles.RecentChat}>Recent Chat</Text>
-//           </TouchableOpacity>
-//         </View>
-
-
-//         <View style={styles.Box}>
-//           <View style={styles.profileInfo}>
-//             <Image
-//               source={require('../../assets/image/jane.png')}
-//               style={styles.profile}
-//             />
-//             <View style={styles.details}>
-//               <Text style={styles.name}>John Doe</Text>
-//               <Text style={styles.rating}>⭐ 4.5</Text>
-//               <Text style={styles.expertise}>Vedic, Numerology, Tarot</Text>
-//               <Text style={styles.languages}>English, Hindi, Marathi</Text>
-//               <Text style={styles.experience}>Exp: 23 years</Text>
-//             </View>
-//           </View>
-
-//           <View style={styles.stats}>
-//             <Text style={styles.orders}>15003 orders</Text>
-//             <Text style={styles.wait}>⏳ wait: 5 min</Text>
-//           </View>
-
-//           <View style={styles.buttons}>
-//             <TouchableOpacity style={styles.chatButton}>
-//               <Text style={styles.chatText}>Chat now</Text>
-//             </TouchableOpacity>
-//             <TouchableOpacity style={styles.callButton}>
-//               <Text style={styles.callText}>Call now</Text>
-//             </TouchableOpacity>
-//           </View>
-
-//           <View style={styles.priceContainer}>
-//             <Text style={styles.price}>₹ 50/min</Text>
-//             <Text style={styles.oldPrice}>₹ 71/min</Text>
-//           </View>
-//         </View>
-
-
-
-//         <View style={styles.Box}>
-//           <View style={styles.profileInfo}>
-//             <Image
-//               source={require('../../assets/image/jane.png')}
-//               style={styles.profile}
-//             />
-//             <View style={styles.details}>
-//               <Text style={styles.name}>John Doe</Text>
-//               <Text style={styles.rating}>⭐ 4.5</Text>
-//               <Text style={styles.expertise}>Vedic, Numerology, Tarot</Text>
-//               <Text style={styles.languages}>English, Hindi, Marathi</Text>
-//               <Text style={styles.experience}>Exp: 23 years</Text>
-//             </View>
-//           </View>
-
-//           <View style={styles.stats}>
-//             <Text style={styles.orders}>15003 orders</Text>
-//             <Text style={styles.wait}>⏳ wait: 5 min</Text>
-//           </View>
-
-//           <View style={styles.buttons}>
-//             <TouchableOpacity style={styles.chatButton}>
-//               <Text style={styles.chatText}>Chat now</Text>
-//             </TouchableOpacity>
-//             <TouchableOpacity style={styles.callButton}>
-//               <Text style={styles.callText}>Call now</Text>
-//             </TouchableOpacity>
-//           </View>
-//           <View style={styles.priceContainer}>
-//             <Text style={styles.price}>₹ 50/min</Text>
-//             <Text style={styles.oldPrice}>₹ 71/min</Text>
-//           </View>
-//         </View>
-
-
-//       </View>
-
-//     </ScrollView>
-//   );
-// };
-
-// export default Astrology;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   scrollViewContent: {
-//     flexGrow: 1,
-//   },
-//   header: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     padding: hp("2%"),
-//   },
-//   balance: {
-//     fontSize: hp("2%"),
-//     fontWeight: "bold",
-//     color: "#000",
-//   },
-//   profileContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     marginLeft: wp('3%'),
-//     flex: 1,
-//   },
-//   profileImage: {
-//     width: wp('12%'),
-//     height: wp('12%'),
-//     borderRadius: wp('6%'),
-//   },
-//   profileName: {
-//     fontSize: wp('4.5%'),
-//     marginLeft: wp('2%'),
-//     color: '#000',
-//     fontWeight: 'bold',
-//   },
-//   iconContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     width: wp('20%'), // Adjust the width to create space for the icons
-//   },
-//   icon: {
-//     marginLeft: wp('2%'), // Add space between the icons
-//     padding: wp('2%'),
-//     backgroundColor: "#FFD700",
-//     borderRadius: wp(2),
-//   },
-//   searchContainer: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//     padding: wp("2%"),
-//     marginTop: hp("1%"),
-//     borderWidth: 1,
-//     borderColor: "#000",
-//     borderRadius: wp(3),
-//     marginHorizontal: wp("3%"),
-//     height: hp('7%')
-//   },
-//   searchIcon: {
-//     marginRight: wp("2%"),
-//   },
-//   searchInput: {
-//     flex: 1,
-//     fontSize: wp("4%"),
-//     color: "#000",
-//   },
-//   tabsContainer: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     padding: wp("2%"),
-//     marginTop: hp("1%"),
-//   },
-//   tab: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//     paddingVertical: hp("1.5%"),
-//     paddingHorizontal: wp("4%"),
-//     borderRadius: wp(3),
-//     backgroundColor: "#f2f2f2",
-//   },
-//   activeTab: {
-//     backgroundColor: "#FFD700",
-//   },
-//   tabText: {
-//     fontSize: wp("4%"),
-//     color: "#000",
-//     marginLeft: wp("2%"),
-//   },
-//   activeTabText: {
-//     color: "#fff",
-//   },
-//   RecentChatButton: {
-//     backgroundColor: '#CFF7D3',
-//     margin: hp('1%'),
-//     borderRadius: 10,
-//     padding: hp('2%'),
- 
-//   },
-//   RecentChat: {
-//     color: '#02542D',
-//     textAlign: 'center',
-//     fontSize: hp('2%'),
-//     fontWeight: 'bold'
-//   },
-//   Box: {
-//     backgroundColor: '#fff',
-//     borderRadius: 10,
-//     padding: 16,
-//     margin: 10,
-//     shadowColor: '#000',
-//     shadowOpacity: 0.1,
-//     shadowRadius: 5,
-//     elevation: 3,
-//   },
-//   profileInfo: {
-//     flexDirection: 'row',
-//     marginBottom: 16,
-//   },
-//   profile: {
-//     width: 80,
-//     height: 80,
-//     borderRadius: 40,
-//     marginRight: 16,
-//   },
-//   details: {
-//     justifyContent: 'center',
-//   },
-//   name: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     color: '#000'
-//   },
-//   rating: {
-//     fontSize: 16,
-//     color: '#F39C12',
-//   },
-//   expertise: {
-//     fontSize: 14,
-//     color: '#7F8C8D',
-//   },
-//   languages: {
-//     fontSize: 14,
-//     color: '#7F8C8D',
-//   },
-//   experience: {
-//     fontSize: 14,
-//     color: '#7F8C8D',
-//   },
-//   stats: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     marginBottom: 16,
-//   },
-//   orders: {
-//     fontSize: 14,
-//     color: '#7F8C8D',
-//   },
-//   wait: {
-//     fontSize: 14,
-//     color: '#7F8C8D',
-//   },
-//   buttons: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     marginBottom: 16,
-//   },
-//   chatButton: {
-//     backgroundColor: '#3498DB',
-//     paddingVertical: 10,
-//     paddingHorizontal: 24,
-//     borderRadius: 5,
-//   },
-//   callButton: {
-//     backgroundColor: '#2ECC71',
-//     paddingVertical: 10,
-//     paddingHorizontal: 24,
-//     borderRadius: 5,
-//   },
-//   chatText: {
-//     color: '#fff',
-//     fontSize: 16,
-//   },
-//   callText: {
-//     color: '#fff',
-//     fontSize: 16,
-//   },
-//   priceContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//   },
-//   price: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     color: '#27AE60',
-//   },
-//   oldPrice: {
-//     fontSize: 14,
-//     color: '#BDC3C7',
-//     textDecorationLine: 'line-through',
-//   },
-// });
