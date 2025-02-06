@@ -6,8 +6,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 const RegistrationSuccess = ({ navigation,route }) => {
 
   useEffect(() => {
-    if (route.params) {
-      
+    if (route.params) {   
       console.log('Route params:', route.params);
     }
 })
