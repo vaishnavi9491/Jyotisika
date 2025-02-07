@@ -30,13 +30,11 @@ const LoveCalculatorScreen = () => {
             <View style={styles.container}>
                 {/* Header */}
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Horoscope")}>
+                    <TouchableOpacity onPress={() => navigation.navigate("App_Drawer_Navigation")}>
                         <AntDesign name="arrowleft" size={20} color="#000" />
                     </TouchableOpacity>
-                    <Text style={styles.Jtext}>BookPooja</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-                        <Text style={styles.balance}>₹ 50</Text>
-                    </TouchableOpacity>
+                    <Text style={styles.Jtext}>Love Calculator</Text>
+                   
                     <TouchableOpacity style={styles.settings}>
                         <Fontisto name="language" size={15} />
                     </TouchableOpacity>

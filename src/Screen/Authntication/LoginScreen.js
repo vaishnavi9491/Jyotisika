@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Footer from '../../Component/Footer';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const Login = ({ navigation, route }) => {
+const LoginScreen = ({ navigation, route }) => {
 
   const [mobileNumberError, setMobileNumberError] = useState('');
   const [mobileNumber, setMobileNumber] = useState(route?.params?.mobileNumber || '')
@@ -112,7 +112,7 @@ const Login = ({ navigation, route }) => {
   );
 };
 
-export default Login;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {

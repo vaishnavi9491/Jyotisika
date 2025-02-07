@@ -21,8 +21,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Voice from '@react-native-voice/voice';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../Component/i18n';
 
-const HomeScreen = ({ navigation }) => {
+const Pujari = ({ navigation }) => {
   LogBox.ignoreLogs([
     '`new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method.',
   ]);
@@ -30,6 +33,14 @@ const HomeScreen = ({ navigation }) => {
   if (!NativeEventEmitter.prototype.removeListeners) {
     NativeEventEmitter.prototype.removeListeners = () => { };
   }
+
+
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang); // Redux मधून घेतलेली भाषा i18n मध्ये बदला
+  }, [lang]);
 
   const [searchText, setSearchText] = useState('');
   const [isListening, setIsListening] = useState(false);
@@ -114,13 +125,13 @@ const HomeScreen = ({ navigation }) => {
 
       <View style={styles.header}>
         <Image style={styles.profilePic} source={require('../../assets/image/jane.png')} />
-        <Text style={styles.Jtext}>Jyotisika</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
+        <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
           <Text style={styles.balance}>₹ 50</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.settings}>
+        </TouchableOpacity> */}
+        {/* <TouchableOpacity style={styles.settings}>
           <Fontisto name="language" size={20} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
           <AntDesign name="customerservice" size={22} color="#000" />
         </TouchableOpacity>
@@ -131,7 +142,7 @@ const HomeScreen = ({ navigation }) => {
           <Fontisto name="search" style={styles.searchIcon} size={20} color="#000" />
           <TextInput
             ref={inputRef}
-            placeholder="Search astrologer, pujari, products"
+            placeholder={t("Search astrologer, pujari, products")}
             placeholderTextColor="#aaa"
             style={styles.input}
             value={searchText}
@@ -142,18 +153,18 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.sectionTitle}>Services</Text>
+        <Text style={styles.sectionTitle}>{t('Services')}</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.services}>
-          {['Birth Kundali', 'Love', 'KP', 'Pooja', 'Panchang'].map((service, index) => (
+          {['Birth kundali', 'Love', 'KP', 'pooja', 'Panchang'].map((service, index) => (
             <View
               key={index}
               style={[styles.serviceCard, { backgroundColor: '#F2F2F7' }]} // Simple gray background color
             >
               <View style={styles.iconTextContainer}>
-                {service === 'Birth Kundali' && (
+                {service === 'Birth kundali' && (
                   <Icon name="birthday-cake" size={16} color="#FF6347" style={styles.icon} />
                 )}
                 <TouchableOpacity onPress={() => navigation.navigate('LoveCalculator')}>
@@ -164,7 +175,7 @@ const HomeScreen = ({ navigation }) => {
                 {service === 'KP' && (
                   <Icon name="search" size={16} color="#FF6347" style={styles.icon} />
                 )}
-                {service === 'Pooja' && (
+                {service === 'pooja' && (
                   <Icon name="hand-paper-o" size={16} color="#FF6347" style={styles.icon} />
                 )}
                 <TouchableOpacity onPress={() => navigation.navigate('Panchang')}>
@@ -174,7 +185,7 @@ const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
 
                 {/* Reduced font size for the service text */}
-                <Text style={[styles.serviceText, { fontSize: 12 }]}>{service}</Text>
+                <Text style={[styles.serviceText, { fontSize: 12 }]}>{t(service)}</Text>
               </View>
             </View>
           ))}
@@ -213,7 +224,7 @@ const HomeScreen = ({ navigation }) => {
                       card.selectedServiceType === 'online' && styles.selectedText,
                     ]}
                   >
-                    Online Pooja
+                    {t('Online Pooja')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -232,7 +243,7 @@ const HomeScreen = ({ navigation }) => {
                       card.selectedServiceType === 'offline' && styles.selectedText,
                     ]}
                   >
-                    Offline Pooja
+                    {t('Offline Pooja')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -419,5 +430,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Pujari;
 

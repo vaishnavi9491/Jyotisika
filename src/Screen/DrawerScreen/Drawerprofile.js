@@ -21,7 +21,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const DrawerProfile = () => {
+const DrawerProfile = ({ navigation }) => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
@@ -164,7 +164,7 @@ const DrawerProfile = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("App_Drawer_Navigation")}>
           <AntDesign name="arrowleft" size={20} color="#000" />
         </TouchableOpacity>
         <Text style={styles.Jtext}>Pratik</Text>
@@ -255,11 +255,11 @@ const styles = StyleSheet.create({
     marginBottom: hp("2%"),
   },
   profilePic: {
-    width: wp("30%"),
+    width: wp("31%"),
     height: hp("15%"),
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: "#FFD700",
+
   },
   cameraIcon: {
     position: "absolute",
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     marginTop: hp("2%"),
   },
   label: {
-    fontSize: hp("2%"),
+    fontSize: hp("1.5%"),
     marginBottom: hp("1%"),
     color: "#000",
     fontWeight: "bold",

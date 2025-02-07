@@ -1,19 +1,28 @@
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import React from 'react';
+import React ,{useEffect}from 'react';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../Component/i18n';
 
 const Horoscope = ({ navigation }) => {
+
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang); // Redux मधून घेतलेली भाषा i18n मध्ये बदला
+  }, [lang]);
+
   return (
     <ScrollView>
       <View style={styles.Container}>
         <View style={styles.header}>
           <Image style={styles.profilePic} source={require('../../assets/image/jane.png')} />
-          <Text style={styles.Jtext}>Jyotisika</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-            <Text style={styles.balance}>₹ 50</Text>
-          </TouchableOpacity>
+          <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
+
           <TouchableOpacity style={styles.settings}>
             <Fontisto name="language" size={15} />
           </TouchableOpacity>

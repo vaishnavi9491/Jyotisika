@@ -156,8 +156,8 @@ const RecentChat = ({ navigation }) => {
     );
     const renderHeader = () => (
         <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <AntDesign name="arrowleft" size={20} color="#000" />
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                <AntDesign name="arrowleft" size={24} color="#000" />
             </TouchableOpacity>
             <Text style={styles.Jtext}>Chat Section</Text>
         </View>
@@ -182,6 +182,7 @@ const RecentChat = ({ navigation }) => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
+
                         <Text style={styles.modalTitle}>
                             Submit Review for {selectedChat?.name}
                         </Text>
@@ -243,8 +244,14 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
         alignItems: "center",
-        padding: hp("2%"),
-        backgroundColor: "#f4f4f4",
+        padding: hp('2%'),
+        backgroundColor: '#f8f9fa',
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        marginTop: '-4%'
     },
     Jtext: {
         marginLeft: hp("2%"),
@@ -335,6 +342,7 @@ const styles = StyleSheet.create({
         width: "100%",
         borderWidth: 2,
         borderColor: "#000",
+        color: '#000',
         borderRadius: 5,
         padding: hp('2%'),
         marginBottom: hp('2%'),

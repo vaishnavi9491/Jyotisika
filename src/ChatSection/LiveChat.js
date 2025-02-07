@@ -14,7 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const LiveChat = () => {
+const LiveChat = ({navigation}) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [timer, setTimer] = useState(0);
@@ -99,8 +99,8 @@ const LiveChat = () => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => console.log('Go Back')}>
-          <Icon name="arrow-back" size={wp('6%')} color="#fff" />
+        <TouchableOpacity onPress={() =>navigation.navigate('App_Drawer_Navigation')}>
+          <Icon name="arrow-back" size={wp('6%')} color="#000" />
         </TouchableOpacity>
 
         <View style={styles.profileContainer}>
@@ -161,7 +161,7 @@ const LiveChat = () => {
         />
 
         <TouchableOpacity style={styles.sendButton} onPress={sendMessage} disabled={!sessionActive}>
-          <Icon name="send" size={wp('6%')} color="#fff" />
+          <Icon name="send" size={wp('6%')} color="#000" />
         </TouchableOpacity>
       </View>
 
@@ -209,9 +209,14 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: wp('3%'),
-    paddingTop: hp('2%'),
-    paddingBottom: hp('1%'),
+    justifyContent: 'space-between',
+    padding: hp('1%'),
+    backgroundColor: '#f8f9fa',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
 
   },
   profileContainer: {
@@ -254,17 +259,19 @@ const styles = StyleSheet.create({
     padding: hp('1.5%'),
     borderRadius: wp('3%'),
     maxWidth: '70%',
+    color:'#000',
   },
   myMessage: {
-    backgroundColor: '#FFCC00',
+    backgroundColor: '#CFF7D3',
     alignSelf: 'flex-end',
   },
   userMessage: {
-    backgroundColor: '#FFCC00',
+    backgroundColor: '#CFF7D3',
     alignSelf: 'flex-start',
   },
   message: {
     fontSize: wp('4%'),
+    color:'#000'
   },
   inputContainer: {
     flexDirection: 'row',

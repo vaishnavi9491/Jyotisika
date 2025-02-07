@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     statNumber: {
-        fontSize: hp('2%'),
+        fontSize: hp('1.5%'),
         fontWeight: '500',
         color: '#000'
     },

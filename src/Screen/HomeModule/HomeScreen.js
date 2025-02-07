@@ -11,14 +11,22 @@ import {
   Platform,
   LogBox,
   NativeEventEmitter,
+  Linking
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Voice from '@react-native-voice/voice';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../Component/i18n';  // Make sure you have i18n setup
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setLanguage } from '../../Redux/Slice/languageSlice';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -36,7 +44,49 @@ const HomeScreen = ({ navigation }) => {
   const [isListening, setIsListening] = useState(false);
   const [activeButton, setActiveButton] = useState('');
   const inputRef = useRef(null);
+  // const [language, setLanguage] = useState('en');
+  const language = useSelector((state) => state.language.language);
+  const [open, setOpen] = useState(false);
 
+  const [items, setItems] = useState([
+    { label: 'English', value: 'en' },
+    { label: 'Hindi', value: 'hi' },
+    { label: 'Marathi', value: 'mr' },
+  ]);
+  const [selectLanguage, setSelectLanguage] = useState('English');
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    checkLng();
+  }, []);
+
+  const checkLng = async () => {
+    const x = await AsyncStorage.getItem('LANG');
+    if (x != null) {
+      i18n.changeLanguage(x);
+      dispatch(setLanguage(x));
+      let lng =
+        x === 'en'
+          ? 'English'
+          : x === 'hi'
+            ? 'हिंदी'
+            : x === 'mr'
+              ? 'मराठी'
+              : 'English';
+      setSelectLanguage(lng);
+    }
+  };
+
+
+  const handleLanguageChange = async (value) => {
+    dispatch(setLanguage(value)); // Update Redux store
+    i18n.changeLanguage(value); // Update the i18n language
+    await AsyncStorage.setItem('LANG', value); // Persist the selected language in AsyncStorage
+
+    // Update the selected language text for UI
+    const selectedLng = value === 'en' ? 'English' : value === 'hi' ? 'हिंदी' : 'मराठी';
+    setSelectLanguage(selectedLng);
+  };
 
   const profiles = [
     {
@@ -86,8 +136,9 @@ const HomeScreen = ({ navigation }) => {
     setActiveButton('chat');
   };
 
-  const handleCallPress = () => {
-    setActiveButton('call');
+  const handleCallPress = (phoneNumber) => {
+    const url = `tel:${phoneNumber}`;
+    Linking.openURL(url).catch((err) => console.error('Error:', err));
   };
 
   useEffect(() => {
@@ -136,23 +187,44 @@ const HomeScreen = ({ navigation }) => {
   };
 
 
-
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Image style={styles.profilePic} source={require('../../assets/image/j.jpeg')} />
-        <Text style={styles.Jtext}>Jyotisika</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-          <Text style={styles.balance}>₹ 50</Text>
+        <TouchableOpacity style={styles.settings} onPress={() => navigation.openDrawer()}>
+          <Entypo name="menu" size={20} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settings}>
-          <Fontisto name="language" size={20} />
-        </TouchableOpacity>
+
+        <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
           <AntDesign name="customerservice" size={22} color="#000" />
         </TouchableOpacity>
+        {/* Language Dropdown */}
+        <View style={styles.dropdownWrapper}>
+          <DropDownPicker
+            open={open}
+            value={language} // Redux madhun language ghete
+            items={items}
+            setOpen={setOpen}
+            setValue={(callback) => {
+              const selectedValue = callback(language); // Callback madhe current value ghetay
+              handleLanguageChange(selectedValue); // Function call karnay
+            }}
+            setItems={setItems}
+            onChangeValue={handleLanguageChange}
+            style={styles.dropdown}
+            containerStyle={styles.dropdownContainer}
+            dropDownDirection="BOTTOM"
+            placeholder="Choose Language"
+            placeholderStyle={styles.dropdownPlaceholder}
+          />
+        </View>
+
+        {/* Customer Service Icon */}
+
       </View>
+
+
 
       {/* Search Bar */}
       <ScrollView style={styles.container}>
@@ -160,8 +232,8 @@ const HomeScreen = ({ navigation }) => {
           <Fontisto name="search" style={styles.searchIcon} size={20} color="#000" />
           <TextInput
             ref={inputRef}
-            placeholder="Search astrologer, pujari, products"
-            placeholderTextColor='#aaa'
+            placeholder={t("Search astrologer, pujari, products")}
+            placeholderTextColor='#888'
             style={styles.input}
             value={searchText}
             onChangeText={setSearchText}
@@ -172,19 +244,19 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
         {/* Services Section with Linear Gradient */}
-        <Text style={{ color: '#000', marginLeft: hp('3%'), fontSize: hp('2%'), fontWeight: 'bold' }}>Services</Text>
+        <Text style={{ color: '#000', marginLeft: hp('3%'), fontSize: hp('2%'), fontWeight: 'bold' }}>{t('Services')}</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.services}>
-          {['Birth Kundali', 'Love', 'KP', 'Pooja', 'Panchang'].map((service, index) => (
+          {['Birth kundali', 'Love', 'KP', 'pooja', 'Panchang'].map((service, index) => (
             <View
               key={index}
               style={[styles.serviceCard, { backgroundColor: '#F2F2F7' }]} // Simple gray background color
             >
               <View style={styles.iconTextContainer}>
                 {/* Adding icons based on the service */}
-                {service === 'Birth Kundali' && (
+                {service === 'Birth kundali' && (
                   <Icon name="birthday-cake" size={16} color="#FF6347" style={styles.icon} />
                 )}
                 <TouchableOpacity onPress={() => navigation.navigate('LoveCalculator')}>
@@ -195,7 +267,7 @@ const HomeScreen = ({ navigation }) => {
                 {service === 'KP' && (
                   <Icon name="search" size={16} color="#FF6347" style={styles.icon} />
                 )}
-                {service === 'Pooja' && (
+                {service === 'pooja' && (
                   <Icon name="hand-paper-o" size={16} color="#FF6347" style={styles.icon} />
                 )}
                 <TouchableOpacity onPress={() => navigation.navigate('Panchang')}>
@@ -204,7 +276,7 @@ const HomeScreen = ({ navigation }) => {
                   )}
                 </TouchableOpacity>
 
-                <Text style={[styles.serviceText, { fontSize: 12 }]}>{service}</Text>
+                <Text style={[styles.serviceText, { fontSize: 12 }]}>{t(service)}</Text>
               </View>
             </View>
 
@@ -223,8 +295,9 @@ const HomeScreen = ({ navigation }) => {
                 style={styles.cardGradient}>
                 <TouchableOpacity onPress={() => navigation.navigate('Horoscope')}>
                   <Image style={styles.cardImage} source={require('../../assets/image/Horoscope.png')} />
+
+                  <Text style={styles.cardText}>{t('Horoscope')}</Text>
                 </TouchableOpacity>
-                <Text style={styles.cardText}>Horoscope</Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -236,7 +309,7 @@ const HomeScreen = ({ navigation }) => {
                 end={{ x: 1, y: 1 }}
                 style={styles.cardGradient}>
                 <Image style={styles.cardImage} source={require('../../assets/image/kundalimatching.png')} />
-                <Text style={styles.cardText}>Kundli Matching</Text>
+                <Text style={styles.cardText}>{t('Kundali Matching')}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -249,8 +322,10 @@ const HomeScreen = ({ navigation }) => {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={styles.cardGradient}>
-                <Image style={styles.cardImage} source={require('../../assets/image/bookpooja.png')} />
-                <Text style={styles.cardText}>Book Pooja</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('BookPooja')}>
+                  <Image style={styles.cardImage} source={require('../../assets/image/bookpooja.png')} />
+                  <Text style={styles.cardText}>{t('Book Pooja')}</Text>
+                </TouchableOpacity>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -261,8 +336,10 @@ const HomeScreen = ({ navigation }) => {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={styles.cardGradient}>
-                <Image style={styles.cardImage} source={require('../../assets/image/shop.png')} />
-                <Text style={styles.cardText}>Shop</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Shop')}>
+                  <Image style={styles.cardImage} source={require('../../assets/image/shop.png')} />
+                  <Text style={styles.cardText}>{t('Shop')}</Text>
+                </TouchableOpacity>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -274,9 +351,9 @@ const HomeScreen = ({ navigation }) => {
 
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-          <Text style={styles.Astrotext}>Astrology</Text>
+          <Text style={styles.Astrotext}>{t('Astrologer')}</Text>
           <TouchableOpacity>
-            <Text style={styles.Viewtext}>View All</Text>
+            <Text style={styles.Viewtext}>{t('View All')}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.profileContainer}>
@@ -306,7 +383,7 @@ const HomeScreen = ({ navigation }) => {
                         activeButton === pujari.id && styles.chatActiveText,
                       ]}
                     >
-                      Chat
+                      {t('Chat')}
                     </Text>
                   </TouchableOpacity>
 
@@ -316,7 +393,7 @@ const HomeScreen = ({ navigation }) => {
                       styles.callStyle,
                       activeButton === pujari.id && styles.callActive,
                     ]}
-                    onPress={() => handleCallPress(pujari.id)}
+                    onPress={() => handleCallPress(pujari.phoneNumber)} // Use the actual phone number here
                   >
                     <Text
                       style={[
@@ -324,7 +401,7 @@ const HomeScreen = ({ navigation }) => {
                         activeButton === pujari.id && styles.callActiveText,
                       ]}
                     >
-                      Call
+                      {t('Call')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -337,9 +414,9 @@ const HomeScreen = ({ navigation }) => {
         {/* Shopping */}
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: hp('2%') }}>
-          <Text style={styles.Astrotext}>Top Shop </Text>
+          <Text style={styles.Astrotext}>{t('Top Shop')}</Text>
           <TouchableOpacity>
-            <Text style={styles.Viewtext}>View All</Text>
+            <Text style={styles.Viewtext}>{t('View All')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -363,7 +440,7 @@ const HomeScreen = ({ navigation }) => {
                         styles.chatText,
                         activeButton === 'View' && styles.chatActiveText,
                       ]}>
-                      View
+                      {t('View')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -376,9 +453,9 @@ const HomeScreen = ({ navigation }) => {
         {/* pujari */}
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-          <Text style={styles.Astrotext}>Pujaris</Text>
+          <Text style={styles.Astrotext}>{t('Pujari')}</Text>
           <TouchableOpacity>
-            <Text style={styles.Viewtext}>View All</Text>
+            <Text style={styles.Viewtext}>{t('View All')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -404,7 +481,7 @@ const HomeScreen = ({ navigation }) => {
                         activeButton === pujari.id && styles.chatActiveText,
                       ]}
                     >
-                      Chat
+                      {t('Chat')}
                     </Text>
                   </TouchableOpacity>
 
@@ -422,7 +499,7 @@ const HomeScreen = ({ navigation }) => {
                         activeButton === pujari.id && styles.callActiveText,
                       ]}
                     >
-                      Call
+                      {t('Call')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -443,16 +520,16 @@ const HomeScreen = ({ navigation }) => {
 
             {/* Feedback Section */}
             <View style={styles.feedback}>
-              <Text style={styles.Viewtext}>We value your genuine feedback</Text>
+              <Text style={styles.Viewtext}>{t('We value your genuine feedback')}</Text>
               <TextInput
-                placeholder="Write your genuine feedback here..."
+                placeholder={t("Write your genuine feedback here...")}
                 placeholderTextColor="#aaa"
                 style={styles.feedbackInput}
                 multiline={true}
                 numberOfLines={4}
               />
               <TouchableOpacity style={styles.feedbackButton}>
-                <Text style={styles.feedbackButtonText}>Send</Text>
+                <Text style={styles.feedbackButtonText}>{t('send')}</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -474,13 +551,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
+    padding: hp('1%'),
     backgroundColor: '#f8f9fa',
-    elevation: 5, // Adds shadow for Android
-    shadowColor: '#000', // Adds shadow for iOS
+    elevation: 5,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+    zIndex: 1,
+    width: '100%', // Ensure header takes up the full width
   },
   profilePic: {
     width: wp('10%'),
@@ -496,8 +575,41 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFD700',
     padding: wp('2%'),
     borderRadius: wp(2),
-
   },
+  Jtext: {
+    fontSize: hp('2.5%'),
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  dropdownWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingRight: wp('2%'), // Space between dropdown and customer service icon
+    width: wp('50%'), // Adjust the width as per your preference
+  },
+  dropdownContainer: {
+    width: wp('30%'), // Set width for the dropdown container
+    zIndex: 10,
+    marginTop: hp('2%'), // Ensure dropdown opens below
+  },
+  dropdown: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 5,
+    minHeight: 40,
+  },
+  dropdownPlaceholder: {
+    fontSize: 12,
+    color: '#aaa',
+  },
+  customerService: {
+    paddingLeft: wp('2%'), // Adjust spacing from the dropdown
+  },
+
+
   searchBar: {
     position: 'relative',
     marginVertical: hp('2%'),
@@ -512,7 +624,7 @@ const styles = StyleSheet.create({
     paddingLeft: hp('5%'),
     paddingRight: wp('10%'),
     height: hp('6%'),
-    fontSize: hp('2%'),
+    fontSize: hp('1.5%'),
     color: '#000'
   },
   searchIcon: {
@@ -711,6 +823,7 @@ const styles = StyleSheet.create({
     width: wp('40%'),
     height: hp('15%'),
     borderRadius: 10
-  }
+  },
+
 });
 

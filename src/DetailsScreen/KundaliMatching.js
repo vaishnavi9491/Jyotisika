@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -18,9 +18,14 @@ import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../Component/i18n';
 
 const KundliMatchingScreen = ({ navigation }) => {
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+
   const [tab, setTab] = useState("Boy");
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState(new Date());
@@ -101,22 +106,16 @@ const KundliMatchingScreen = ({ navigation }) => {
       alert("Unable to open maps. Please check your device settings.")
     );
   };
-
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang]);
 
   return (
 
     <View style={styles.container}>
       <View style={styles.header}>
         <Image style={styles.profilePic} source={require('../assets/image/jane.png')} />
-        <Text style={styles.Jtext}>Jyotisika</Text>
-        
-        <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-          <Text style={styles.balance}>₹ 50</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.settings}>
-          <Fontisto name="language" size={20} />
-        </TouchableOpacity>
+        <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
 
         <TouchableOpacity>
           <AntDesign name="customerservice" size={22} color='#000' />
@@ -125,7 +124,7 @@ const KundliMatchingScreen = ({ navigation }) => {
       </View>
 
       <View>
-        <Text style={styles.headerKundli}>KundaliMatching</Text>
+        <Text style={styles.headerKundli}>{t('KundaliMatching')}</Text>
       </View>
 
 
@@ -134,21 +133,22 @@ const KundliMatchingScreen = ({ navigation }) => {
           style={[styles.tab, tab === "Boy" && styles.activeTab]}
           onPress={() => setTab("Boy")}
         >
-          <Text style={[styles.tabText, tab === "Boy" && styles.activeTabText]}>Boy</Text>
+          <Text style={[styles.tabText, tab === "Boy" && styles.activeTabText]}>{t('Boy')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tab, tab === "Girl" && styles.activeTab]}
           onPress={() => setTab("Girl")}
         >
-          <Text style={[styles.tabText, tab === "Girl" && styles.activeTabText]}>Girl</Text>
+          <Text style={[styles.tabText, tab === "Girl" && styles.activeTabText]}>{t('Girl')}</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.form}>
-        <Text style={styles.label}>Name</Text>
+        <Text style={styles.label}>{t('Name')}</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your name"
+          placeholderTextColor="#888"
           value={name}
           onChangeText={(text) => {
             setName(text);
@@ -156,7 +156,7 @@ const KundliMatchingScreen = ({ navigation }) => {
           }}
         />
         {errors.name ? <Text style={styles.errorText}>{errors.name}</Text> : null}
-        <Text style={styles.label}>Birth Date</Text>
+        <Text style={styles.label}>{t('Birth Date')}</Text>
         <TouchableOpacity style={styles.Birthdateinput} onPress={() => setShowDatePicker(true)}>
           <Text style={[styles.birthDateText, { color: "#000" }]}>
             {birthDate.toDateString()}
@@ -173,7 +173,7 @@ const KundliMatchingScreen = ({ navigation }) => {
           />
         )}
 
-        <Text style={styles.label}>Birth Time</Text>
+        <Text style={styles.label}>{t('Birth Time')}</Text>
         <View style={styles.timeContainer}>
           <TextInput
             style={styles.timeInput}
@@ -217,11 +217,12 @@ const KundliMatchingScreen = ({ navigation }) => {
         {errors.hour ? <Text style={styles.errorText}>{errors.hour}</Text> : null}
         {errors.minute ? <Text style={styles.errorText}>{errors.minute}</Text> : null}
 
-        <Text style={styles.label}>Birth Place</Text>
+        <Text style={styles.label}>{t('Birth Place')}</Text>
         <View style={styles.inputWithIcon}>
           <TextInput
             style={styles.textInput}
             placeholder="Enter birth place"
+            placeholderTextColor='#888'
             value={birthPlace}
             onChangeText={(text) => {
               setBirthPlace(text);
@@ -236,7 +237,7 @@ const KundliMatchingScreen = ({ navigation }) => {
 
 
         <TouchableOpacity style={styles.button} onPress={handleContinue}>
-          <Text style={styles.buttonText}>Continue</Text>
+          <Text style={styles.buttonText}>{t('Continue')}</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -13,8 +13,9 @@ import Purches from '../../Screen/DrawerScreen/Purches';
 import Refertofriend from '../../Screen/DrawerScreen/Refertofriend';
 import PymentMethod from '../../Screen/DrawerScreen/PymentMethod';
 import SupportScreen from '../../Screen/DrawerScreen/SupportScreen';
-import { FollowingIcon, HoroscopeIcon, Poojas, PurchasesIcon, ReferofriendIcon, SettingsIcon, SupportIcon } from '../../Component/Horoscopeicon';
+import { FollowingIcon, HoroscopeIcon, Poojas, PurchasesIcon, ReferofriendIcon, SettingsIcon, SupportIcon, Notification } from '../../Component/Horoscopeicon';
 import PoojasScreen from '../../Screen/DrawerScreen/PoojasScreen';
+import NotificationScreen from '../../Screen/DrawerScreen/NotificationScreen';
 // import {FollowingIcon, HoroscopeIcon, PaymentMethodIcon, PurchasesIcon, ReferofriendIcon, SettingsIcon,SupportIcon } from '../../Component/Horoscopeicon';
 
 
@@ -68,7 +69,7 @@ const App_Drawer_Navigation = () => {
           headerShown: false,
           title: 'Following',
           drawerIcon: ({ focused, size }) => (
-        <FollowingIcon size={size} color={focused ? '#000' : '#535763'}/>
+            <FollowingIcon size={size} color={focused ? '#000' : '#535763'} />
           ),
         }}
       />
@@ -79,21 +80,34 @@ const App_Drawer_Navigation = () => {
           headerShown: false,
           title: 'Purchases',
           drawerIcon: ({ focused, size }) => (
-            <PurchasesIcon size={size} color={focused ? '#000' : '#535763'}/>
+            <PurchasesIcon size={size} color={focused ? '#000' : '#535763'} />
           ),
         }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
         name="Poojas"
         component={PoojasScreen}
         options={{
           headerShown: false,
           title: 'Poojas',
           drawerIcon: ({ focused, size }) => (
-            <Poojas size={size} color={focused ? '#000' : '#535763'}/>
+            <Poojas size={size} color={focused ? '#000' : '#535763'} />
           ),
         }}
       />
+
+      <Drawer.Screen
+        name="Notification"
+        component={NotificationScreen}
+        options={{
+          headerShown: false,
+          title: 'Notification',
+          drawerIcon: ({ focused, size }) => (
+            <Notification size={size} color={focused ? '#000' : '#535763'} />
+          ),
+        }}
+      />
+
       <Drawer.Screen
         name="Refer to Friend"
         component={Refertofriend}
@@ -101,7 +115,7 @@ const App_Drawer_Navigation = () => {
           headerShown: false,
           title: 'Refer to Friend',
           drawerIcon: ({ focused, size }) => (
-            <ReferofriendIcon size={size} color={focused ? '#000' : '#535763'}/>
+            <ReferofriendIcon size={size} color={focused ? '#000' : '#535763'} />
           ),
         }}
       />
@@ -112,7 +126,7 @@ const App_Drawer_Navigation = () => {
           headerShown: false,
           title: 'Support',
           drawerIcon: ({ focused, size }) => (
-            <SupportIcon size={size} color={focused ? '#000' : '#535763'}/>
+            <SupportIcon size={size} color={focused ? '#000' : '#535763'} />
           ),
         }}
       />

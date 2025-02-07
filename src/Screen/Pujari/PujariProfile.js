@@ -48,7 +48,7 @@ const PujariProfile = ({ navigation }) => {
         <ScrollView>
             <SafeAreaView style={styles.container}>
                 <View style={styles.component}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('OnlineOfflineBookPooja')}>
                         <AntDesign name='arrowleft' size={20} color='#000' />
                     </TouchableOpacity>
                     <Text style={styles.Jtext}>Profile</Text>
@@ -216,7 +216,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: wp('4%'),
+        padding: hp('1%'),
+        backgroundColor: '#f8f9fa',
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
 
 
     },

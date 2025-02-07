@@ -82,10 +82,7 @@ const Gemini = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Horoscope")}>
           <AntDesign name="arrowleft" size={20} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.Jtext}>BookPooja</Text>
-        <TouchableOpacity onPress={()=>navigation.navigate('Wallet')}>
-        <Text style={styles.balance}>₹ 50</Text>
-        </TouchableOpacity>
+         <Text style={styles.Jtext}>Jyotisika</Text>
         <TouchableOpacity style={styles.settings}>
           <Fontisto name="language" size={15} />
         </TouchableOpacity>

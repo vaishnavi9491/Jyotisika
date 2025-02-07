@@ -1,12 +1,10 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { configureStore } from '@reduxjs/toolkit';
+import languageReducer from '../Redux/Slice/languageSlice';
 
-const store = () => {
-  return (
-    <View>
-      <Text>store</Text>
-    </View>
-  )
-}
+const store = configureStore({
+  reducer: {
+    language: languageReducer,
+  },
+});
 
-export default store
+export default store;

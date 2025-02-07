@@ -15,9 +15,9 @@ const Purchaseview = () => {
             <View style={styles.container}>
                 {/* Header Section */}
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.replace("Purches")}>
+                    {/* <TouchableOpacity onPress={() => navigation.replace("Purches")}>
                         <AntDesign name="arrowleft" size={24} color="#000" />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <Text style={styles.Jtext}>Purchase</Text>
                     <View style={styles.headerIcons}>
                         <TouchableOpacity style={styles.settings}>

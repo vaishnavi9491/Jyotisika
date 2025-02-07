@@ -4,7 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-nat
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Fontisto from "react-native-vector-icons/Fontisto";
 
-const Followings = ({navigation}) => {
+const Followings = ({ navigation }) => {
   const data = [
     {
       id: "1",
@@ -75,7 +75,7 @@ const Followings = ({navigation}) => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity  onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <FontAwesome name="arrow-left" size={20} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Followings</Text>
@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: wp(5),
     paddingVertical: hp(2),
-    
+
   },
   headerTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: hp('2%'),
+    fontWeight: "600",
     marginLeft: wp(4),
     color: "#000",
   },
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   name: {
-    fontSize: 16,
+    fontSize: hp('2%'),
     fontWeight: "bold",
     color: "#000",
   },
@@ -149,17 +149,17 @@ const styles = StyleSheet.create({
     marginLeft: wp(2),
   },
   specialties: {
-    fontSize: 14,
+    fontSize: hp('2%'),
     color: "#555",
     marginVertical: hp(0.5),
   },
   languages: {
-    fontSize: 14,
+    fontSize: hp('2%'),
     color: "#555",
     marginVertical: hp(0.5),
   },
   experience: {
-    fontSize: 14,
+    fontSize: hp('2%'),
     color: "#555",
     marginVertical: hp(0.5),
   },
@@ -169,13 +169,13 @@ const styles = StyleSheet.create({
     marginTop: hp(0.5),
   },
   rating: {
-    fontSize: 14,
+    fontSize: hp('2%'),
     fontWeight: "bold",
     color: "#000",
     marginRight: wp(2),
   },
   orders: {
-    fontSize: 14,
+    fontSize: hp('2%'),
     color: "#555",
   },
   unfollowButton: {

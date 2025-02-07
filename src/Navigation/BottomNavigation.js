@@ -1,6 +1,7 @@
 
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeIcon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -164,8 +165,8 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#fff',
-    fontSize: 10,
-    marginTop: '2%',
+    fontSize: hp('1%'),
+    marginTop:hp ('.3%'),
     fontWeight: 'bold'
   },
   labelFocused: {
