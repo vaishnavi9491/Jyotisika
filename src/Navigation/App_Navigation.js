@@ -48,6 +48,9 @@ import Productpayment from '../Screen/Shop/Productpayment';
 import GetOTPScreen from '../Screen/Authntication/GetOTPScreen';
 import LoginScreen from '../Screen/Authntication/LoginScreen';
 import Pujari from '../Screen/BottomScreen/Pujari';
+import AstrologerBottomTabNavigation from './AstrologerBottomTab/AstrologerBottomTabNavigation';
+import PujariBottomTab from './PujariBottomTabNavi/PujariBottomTab';
+import PujariProfileScreen from '../Screen/PujariBottomTabScreen/PujariModule/PujariProfileScreen';
 
 
 
@@ -127,6 +130,16 @@ const App_Navigation = () => {
             <Stack.Screen
                 name='BottomTabNavigation'
                 component={BottomTabNavigation}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='AstrologerBottomTabNavigation'
+                component={AstrologerBottomTabNavigation}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='PujariBottomTab'
+                component={PujariBottomTab}
                 options={{ headerShown: false }}
             />
 
@@ -286,21 +299,27 @@ const App_Navigation = () => {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-            name='BookPoojaform'
-            component={BookPoojaform}
-            options={{ headerShown: false }}
-            
+                name='BookPoojaform'
+                component={BookPoojaform}
+                options={{ headerShown: false }}
+
             />
-             {/*Shop */}
-             <Stack.Screen
-            name='Productdetail'
-            component={Productdetails}
-            options={{ headerShown: false }}
+            {/*Shop */}
+            <Stack.Screen
+                name='Productdetail'
+                component={Productdetails}
+                options={{ headerShown: false }}
             />
-              <Stack.Screen
-            name='ProductPayment'
-            component={Productpayment}
-            options={{ headerShown: false }}
+            <Stack.Screen
+                name='ProductPayment'
+                component={Productpayment}
+                options={{ headerShown: false }}
+            />
+            {/*Pujari Module */}
+            <Stack.Screen
+                name='PujariProfileScreen'
+                component={PujariProfileScreen}
+                options={{ headerShown: false }}
             />
 
         </Stack.Navigator>
