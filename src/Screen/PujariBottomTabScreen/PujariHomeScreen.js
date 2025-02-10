@@ -43,7 +43,7 @@ const PujariHomeScreen = ({navigation}) => {
                             },
                             {
                                 title: "Rate Charts",
-                                screen: "RateChartsScreen",
+                                screen: "RateChart",
                                 color: "#FFD8E4",
                                 icon: "rupee",
                                 iconLib: FontAwesome,
@@ -76,11 +76,11 @@ const PujariHomeScreen = ({navigation}) => {
                         ))}
                     </View>
                     {/* RecentRequest Component */}
-                    <RecentRequest />
+                    <RecentRequest navigation={navigation} limit={1} />
                     {/* PoojaReminders Component */}
-                    <PoojaReminders />
+                    <PoojaReminders navigation={navigation} limit={1} />
                     {/* MonthlyEarnings Component */}
-                    <MonthlyEarnings />
+                    <MonthlyEarnings  navigation={navigation} limit={1}/>
                     {/* Feedback Component */}
                     <Feedback />
                 </View>

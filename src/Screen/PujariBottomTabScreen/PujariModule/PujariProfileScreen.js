@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, StyleSheet,useColorScheme } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Dropdown } from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,7 +8,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import DatePicker from 'react-native-date-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { SelectList } from "react-native-dropdown-select-list"
 import TimeDropdown from '../../../Component/PujariHome/TimeDropdown';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
 
@@ -171,6 +170,7 @@ const ProfessionalScreen = () => {
 
 // **Advanced Tab**
 const AdvancedScreen = () => {
+    const theme = useColorScheme();
     // Pooja Dropdown
     const [selected, setSelectedPooja] = React.useState("");
 
@@ -210,7 +210,7 @@ const AdvancedScreen = () => {
         setShowEndPicker(false);
         if (selectedDate) setEndTime(selectedDate);
     };
-
+    const placeholderColor = theme === 'dark' ? '#888' : '#888'; 
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.inputText}>Add Pooja</Text>
@@ -224,7 +224,7 @@ const AdvancedScreen = () => {
                 search={true}
                 label="Pooja Selection"
                 multiple={true}
-                placeholderStyle={styles.placeholderStyle}
+                placeholderStyle={{ color: placeholderColor }}
                 dropdownTextStyles={styles.MultippledropdownItemText}
                 labelStyle={styles.labelStyle}  
             />

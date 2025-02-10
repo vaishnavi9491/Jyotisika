@@ -48,6 +48,10 @@ import Productpayment from '../Screen/Shop/Productpayment';
 import AstrologerBottomTabNavigation from './AstrologerBottomTab/AstrologerBottomTabNavigation';
 import PujariBottomTab from './PujariBottomTabNavi/PujariBottomTab';
 import PujariProfileScreen from '../Screen/PujariBottomTabScreen/PujariModule/PujariProfileScreen';
+import AllRescentRequest from '../Screen/PujariBottomTabScreen/PujariModule/AllRescentRequest';
+import RateChart from '../Screen/PujariBottomTabScreen/PujariModule/RateChart';
+import AllPoojaRemainder from '../Screen/PujariBottomTabScreen/PujariModule/AllPoojaRemainder';
+import AllMonthlyEarning from '../Screen/PujariBottomTabScreen/PujariModule/AllMonthlyEarning';
 
 
 
@@ -309,6 +313,26 @@ const App_Navigation = () => {
             <Stack.Screen
                 name='PujariProfileScreen'
                 component={PujariProfileScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='AllRescentRequest'
+                component={AllRescentRequest}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='AllPoojaRemainder'
+                component={AllPoojaRemainder}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='AllMonthlyEarning'
+                component={AllMonthlyEarning}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='RateChart'
+                component={RateChart}
                 options={{ headerShown: false }}
             />
 

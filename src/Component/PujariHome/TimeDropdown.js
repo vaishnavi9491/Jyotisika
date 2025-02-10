@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     inputText: {
         color: '#000',
         fontWeight: '500',
-        marginBottom: hp('1%'),
+        marginVertical: hp('1%'),
     },
     dropdown: {
         width: '100%',
