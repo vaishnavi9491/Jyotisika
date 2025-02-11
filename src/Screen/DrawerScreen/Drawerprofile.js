@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     marginBottom: hp("2%"),
   },
   profilePic: {
-    width: wp("31%"),
+    width: wp("30%"),
     height: hp("15%"),
     borderRadius: 50,
     borderWidth: 2,

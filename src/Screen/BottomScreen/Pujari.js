@@ -126,14 +126,8 @@ const Pujari = ({ navigation }) => {
       <View style={styles.header}>
         <Image style={styles.profilePic} source={require('../../assets/image/jane.png')} />
         <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
-        {/* <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-          <Text style={styles.balance}>₹ 50</Text>
-        </TouchableOpacity> */}
-        {/* <TouchableOpacity style={styles.settings}>
-          <Fontisto name="language" size={20} />
-        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
-          <AntDesign name="customerservice" size={22} color="#000" />
+          <AntDesign name="customerservice" size={22} color="#000" style={styles.customserviceicon} />
         </TouchableOpacity>
       </View>
 
@@ -276,7 +270,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   Jtext: {
-    marginRight: hp('20%'),
+    marginRight: hp('30%'),
     color: '#000',
     fontWeight: 'bold',
   },
@@ -428,6 +422,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold'
   },
+  
 });
 
 export default Pujari;

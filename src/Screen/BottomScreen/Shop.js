@@ -49,19 +49,19 @@ const Shop = ({ navigation }) => {
 
   const handleShowMoreToggle = () => {
     if (visibleProducts < filteredProducts.length) {
-      setVisibleProducts(filteredProducts.length); 
+      setVisibleProducts(filteredProducts.length);
     } else {
-      setVisibleProducts(4); 
+      setVisibleProducts(4);
     }
   };
   useEffect(() => {
-    i18n.changeLanguage(lang); 
+    i18n.changeLanguage(lang);
   }, [lang]);
 
   return (
 
     <FlatList
-      data={[]} 
+      data={[]}
       ListHeaderComponent={
         <View>
           <View style={styles.header}>
@@ -103,7 +103,7 @@ const Shop = ({ navigation }) => {
             )}
             keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
-            //contentContainerStyle={styles.categoryList}
+          //contentContainerStyle={styles.categoryList}
           />
 
           <Text style={styles.sectionTitle}>{t('Popular products')}</Text>
@@ -192,7 +192,8 @@ const styles = StyleSheet.create({
   profileName: {
     fontWeight: 'bold',
     fontSize: hp('2%'),
-    color: '#000'
+    color: '#000',
+    marginRight: hp('30%')
   },
   balance: {
     fontSize: hp('2%'),

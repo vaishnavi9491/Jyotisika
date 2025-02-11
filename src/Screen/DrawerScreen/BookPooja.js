@@ -1,11 +1,21 @@
 
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../Component/i18n';
 
 const BookedPoojaScreen = () => {
   const [selectedTab, setSelectedTab] = useState('Online'); // Default to 'Online'
+
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+
+  useEffect(() => {
+      i18n.changeLanguage(lang);
+  }, [lang]);
 
   const bookedPoojas = [
     {
@@ -100,7 +110,7 @@ const BookedPoojaScreen = () => {
         <TouchableOpacity onPress={() => console.log('Navigate to Home')}>
           <AntDesign name='arrowleft' size={20} color='#000' />
         </TouchableOpacity>
-        <Text style={styles.Jtext}>BookPooja</Text>
+        <Text style={styles.Jtext}>{t('BookPooja')}</Text>
 
       </View>
 
@@ -110,19 +120,19 @@ const BookedPoojaScreen = () => {
           style={[styles.tabButton, selectedTab === 'Offline' && styles.selectedTab]}
           onPress={() => setSelectedTab('Offline')}
         >
-          <Text style={styles.tabText}>Offline</Text>
+          <Text style={styles.tabText}>{t('Offline')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tabButton, selectedTab === 'Online' && styles.selectedTab]}
           onPress={() => setSelectedTab('Online')}
         >
-          <Text style={styles.tabText}>Online</Text>
+          <Text style={styles.tabText}>{t('Online')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tabButton, selectedTab === 'Mob' && styles.selectedTab]}
           onPress={() => setSelectedTab('Mob')}
         >
-          <Text style={styles.tabText}>Mob</Text>
+          <Text style={styles.tabText}>{t('Mob')}</Text>
         </TouchableOpacity>
       </View>
 
@@ -132,13 +142,13 @@ const BookedPoojaScreen = () => {
           style={[styles.tabButton, selectedTab === 'Ongoing' && styles.selectedTab]}
           onPress={() => setSelectedTab('Ongoing')}
         >
-          <Text style={styles.tabText}>Ongoing</Text>
+          <Text style={styles.tabText}>{t('Ongoing')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tabButton, selectedTab === 'Completed' && styles.selectedTab]}
           onPress={() => setSelectedTab('Completed')}
         >
-          <Text style={styles.tabText}>Completed</Text>
+          <Text style={styles.tabText}>{t('Completed')}</Text>
         </TouchableOpacity>
       </View>
 

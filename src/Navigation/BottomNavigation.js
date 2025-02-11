@@ -1,6 +1,6 @@
 
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React ,{useEffect}from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeIcon from 'react-native-vector-icons/Ionicons';
@@ -12,12 +12,23 @@ import Astrology from '../Screen/BottomScreen/Astrology';
 import Live from '../Screen/BottomScreen/Live';
 import Pujari from '../Screen/BottomScreen/Pujari';
 import Shop from '../Screen/BottomScreen/Shop';
-
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../Component/i18n';
 
 
 const Tab = createBottomTabNavigator();
 
 const AstrologerBottomTabNavigation = () => {
+
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang]);
+
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -39,7 +50,7 @@ const AstrologerBottomTabNavigation = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Home</Text>
+            <Text style={[styles.label, focused && styles.labelFocused]}>{t('Home')}</Text>
           ),
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconWrapper}>
@@ -61,7 +72,7 @@ const AstrologerBottomTabNavigation = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Astro</Text>
+            <Text style={[styles.label, focused && styles.labelFocused]}>{t('Astro')}</Text>
           ),
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconWrapper}>
@@ -83,7 +94,7 @@ const AstrologerBottomTabNavigation = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Live</Text>
+            <Text style={[styles.label, focused && styles.labelFocused]}>{t('Live')}</Text>
           ),
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconWrapper}>
@@ -105,7 +116,7 @@ const AstrologerBottomTabNavigation = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Pujari</Text>
+            <Text style={[styles.label, focused && styles.labelFocused]}>{t('Pujari')}</Text>
           ),
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconWrapper}>
@@ -127,7 +138,7 @@ const AstrologerBottomTabNavigation = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Shop</Text>
+            <Text style={[styles.label, focused && styles.labelFocused]}>{t('Shop')}</Text>
           ),
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconWrapper}>

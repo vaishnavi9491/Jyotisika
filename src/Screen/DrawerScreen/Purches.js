@@ -1,11 +1,21 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import AntDesign from "react-native-vector-icons/AntDesign";
-
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../Component/i18n';
 
 const Purches = ({ navigation }) => {
+
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+
+  useEffect(() => {
+      i18n.changeLanguage(lang);
+  }, [lang]);
+
   const data = [
     { id: '1', title: 'Pooja Deepak', price: 500, originalPrice: 710, image: require('../../assets/image/flower.png') },
     { id: '2', title: 'Pooja Deepak', price: 500, originalPrice: 710, image: require('../../assets/image/flower.png') },
@@ -24,7 +34,7 @@ const Purches = ({ navigation }) => {
           <Text style={styles.originalPrice}> {item.originalPrice}</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Purchaseview')}>
-          <Text style={styles.buttonText}>View</Text>
+          <Text style={styles.buttonText}>{t('View')}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -36,7 +46,7 @@ const Purches = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Home")}>
           <AntDesign name="arrowleft" size={20} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.Jtext}>Purches</Text>
+        <Text style={styles.Jtext}>{t('Purchases')}</Text>
 
         <TouchableOpacity style={styles.settings}>
           <Fontisto name="language" size={15} />

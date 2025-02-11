@@ -4,8 +4,18 @@ import React, { useEffect, useState } from 'react'
 import { DrawerItemList } from '@react-navigation/drawer';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../Component/i18n';
 
 const CustomDrawer = (props) => {
+    const { t } = useTranslation();
+    const lang = useSelector((state) => state.language.lang);
+
+    useEffect(() => {
+        i18n.changeLanguage(lang);
+    }, [lang]);
+
     const { navigation } = props;
     const [uname, setUsername] = useState();
 
@@ -38,20 +48,20 @@ const CustomDrawer = (props) => {
     return (
         <ScrollView>
             <View style={styles.container}>
-               
-                    <View style={{ backgroundColor: '#FFCC00', marginBottom: '5%', padding: '4%' }}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('Drawerprofile')}>
+
+                <View style={{ backgroundColor: '#FFCC00', marginBottom: '5%', padding: '4%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Drawerprofile')}>
                         <Image
                             source={require('../../assets/image/jane.png')}
                             style={styles.imgStyle}
                         />
-                        </TouchableOpacity>
-                        <View style={styles.userInfoContainer}>
-                            <Text style={styles.nameStyle}>Hello {uname}</Text>
-                            <Text style={styles.emailStyle}>abc@gmail.com</Text>
-                        </View>
+                    </TouchableOpacity>
+                    <View style={styles.userInfoContainer}>
+                        <Text style={styles.nameStyle}>Hello {uname}</Text>
+                        <Text style={styles.emailStyle}>abc@gmail.com</Text>
                     </View>
-                
+                </View>
+
 
 
                 <DrawerItemList {...props} />
@@ -65,7 +75,7 @@ const CustomDrawer = (props) => {
                                 color: '#FF5757',
                                 fontWeight: '600'
                             }}>
-                            Logout
+                            {t('Logout')}
                         </Text>
                     </View>
                 </TouchableOpacity>

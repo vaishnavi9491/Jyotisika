@@ -30,16 +30,6 @@ import { setLanguage } from '../../Redux/Slice/languageSlice';
 
 const HomeScreen = ({ navigation }) => {
 
-
-  LogBox.ignoreLogs([
-    '`new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method.',
-  ]);
-
-  // Patch `removeListeners` if it doesn't exist
-  if (!NativeEventEmitter.prototype.removeListeners) {
-    NativeEventEmitter.prototype.removeListeners = () => { };
-  }
-
   const [searchText, setSearchText] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [activeButton, setActiveButton] = useState('');
@@ -142,50 +132,12 @@ const HomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    // Add event listeners for speech recognition
-    Voice.onSpeechResults = onSpeechResults;
-    Voice.onSpeechError = onSpeechError;
 
     return () => {
       // Cleanup listeners when the component is unmounted
       Voice.destroy().then(Voice.removeAllListeners);
     };
   }, []);
-
-  const startListening = async () => {
-    try {
-      setIsListening(true);
-      if (inputRef.current) {
-        inputRef.current.focus(); // Focus the search bar when starting voice input
-      }
-      await Voice.start('en-US'); // Start listening for English language
-    } catch (error) {
-      console.error('Error starting voice recognition:', error);
-    }
-  };
-
-  const stopListening = async () => {
-    try {
-      setIsListening(false);
-      await Voice.stop(); // Stop listening
-    } catch (error) {
-      console.error('Error stopping voice recognition:', error);
-    }
-  };
-
-  const onSpeechResults = (event) => {
-    console.log('Speech Results:', event.value);
-    if (event.value && event.value.length > 0) {
-      setSearchText(event.value[0]); // Update the search text with the speech result
-    }
-    setIsListening(false); // Stop listening after results are received
-  };
-
-  const onSpeechError = (error) => {
-    console.error('Speech recognition error:', error);
-    setIsListening(false); // Stop listening if there is an error
-  };
-
 
   return (
     <View style={styles.container}>
@@ -194,7 +146,6 @@ const HomeScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.settings} onPress={() => navigation.openDrawer()}>
           <Entypo name="menu" size={20} />
         </TouchableOpacity>
-
         <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
           <AntDesign name="customerservice" size={22} color="#000" />
@@ -238,9 +189,9 @@ const HomeScreen = ({ navigation }) => {
             value={searchText}
             onChangeText={setSearchText}
           />
-          <TouchableOpacity onPress={isListening ? stopListening : startListening} style={styles.micIcon}>
+          {/* <TouchableOpacity onPress={isListening ? stopListening : startListening} style={styles.micIcon}>
             <Fontisto name={isListening ? 'stop' : 'mic'} size={20} color="#fff" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         {/* Services Section with Linear Gradient */}
@@ -577,7 +528,8 @@ const styles = StyleSheet.create({
     borderRadius: wp(2),
   },
   Jtext: {
-    fontSize: hp('2.5%'),
+   fontSize: hp('2.5%'),
+    marginLeft:hp('5%'),
     fontWeight: 'bold',
     color: '#000',
   },
@@ -599,10 +551,10 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 5,
-    minHeight: 40,
+    minHeight: 20,
   },
   dropdownPlaceholder: {
-    fontSize: 12,
+    fontSize: hp('1%'),
     color: '#aaa',
   },
   customerService: {

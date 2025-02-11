@@ -248,7 +248,7 @@ const Astrology = ({ navigation }) => {
                         activeButton === pujari.id && styles.chatActiveText,
                       ]}
                     >
-                      {t(' Chat')}
+                      {t('Chat')}
                     </Text>
                   </TouchableOpacity>
 
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
 
   },
   Jtext: {
-    marginRight: hp('20%'),
+    marginRight: hp('30%'),
     color: '#000',
     fontWeight: 'bold',
   },

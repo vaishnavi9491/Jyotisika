@@ -33,11 +33,8 @@
     "react-native-date-picker": "^5.0.8",
     "react-native-document-picker": "^9.3.1",
     "react-native-drawer": "^2.5.1",
-<<<<<<< HEAD
     "react-native-dropdown-picker": "^5.4.6",
-=======
     "react-native-dropdown-select-list": "^2.0.5",
->>>>>>> d535baba365c8c8fb6c7b86feb5d6cdc15fd7de0
     "react-native-element-dropdown": "^2.12.2",
     "react-native-emoji-selector": "^0.2.0",
     "react-native-gesture-handler": "^2.21.2",
