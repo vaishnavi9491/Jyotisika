@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, StyleSheet,useColorScheme } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, StyleSheet, useColorScheme, Modal, } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Dropdown } from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -183,6 +183,7 @@ const AdvancedScreen = () => {
     const [showEndPicker, setShowEndPicker] = useState(false);
     const [startTime, setStartTime] = useState(new Date());
     const [endTime, setEndTime] = useState(new Date());
+    const [modalVisible, setModalVisible] = useState(false);
 
     const poojaOptions = [
         { key: '1', value: 'Shanti Pooja' },
@@ -210,7 +211,7 @@ const AdvancedScreen = () => {
         setShowEndPicker(false);
         if (selectedDate) setEndTime(selectedDate);
     };
-    const placeholderColor = theme === 'dark' ? '#888' : '#888'; 
+    const placeholderColor = theme === 'dark' ? '#888' : '#888';
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.inputText}>Add Pooja</Text>
@@ -226,8 +227,15 @@ const AdvancedScreen = () => {
                 multiple={true}
                 placeholderStyle={{ color: placeholderColor }}
                 dropdownTextStyles={styles.MultippledropdownItemText}
-                labelStyle={styles.labelStyle}  
+                labelStyle={styles.labelStyle}
             />
+            <TouchableOpacity
+                style={styles.submitContainer}
+                onPress={() => setModalVisible(true)} // Open Modal
+            >
+                <Text style={styles.submitText}>Submit</Text>
+                <Ionicons name="arrow-forward" size={hp(3.3)} color="#007AFF" style={styles.backIcon} />
+            </TouchableOpacity>
 
             <Text style={styles.inputText}>Availability Days</Text>
             <View style={styles.dayContainer}>
@@ -303,6 +311,28 @@ const AdvancedScreen = () => {
             <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText}>Save Changes</Text>
             </TouchableOpacity>
+            
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.modalBackground}>
+                    <View style={styles.modalContainer}>
+                    <Image source={require('../../../assets/image/alertImg.png')} style={styles.alertImage} />
+                        <Text style={styles.modalText}>
+                            Note: These skills will be visible after a short interview!{'\n'}ALL THE BEST
+                        </Text>
+                        <TouchableOpacity
+                            style={styles.modalButton}
+                            onPress={() => setModalVisible(false)} // Close modal
+                        >
+                            <Text style={styles.modalButtonText}>OK</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </ScrollView>
     );
 };
@@ -313,7 +343,7 @@ const PujariProfileScreen = ({ navigation }) => {
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.heading}>
-                <TouchableOpacity onPress={() => navigation.navigate('PujariBottomTab')}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="arrow-back" size={hp(3.5)} color="#000" style={styles.backIcon} />
                 </TouchableOpacity>
                 <Text style={styles.headText}>Profile</Text>
@@ -476,9 +506,15 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: wp(36)
     },
-
-
-
+    submitContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        gap: 5
+    },
+    submitText: {
+        color: '#007AFF',
+        fontWeight: '500',
+    },
     dayContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -492,7 +528,7 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     timeContainer: {
-       // marginTop:hp('1%'),
+        // marginTop:hp('1%'),
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -513,19 +549,50 @@ const styles = StyleSheet.create({
         fontSize: hp('1.6%'),
         fontWeight: 'bold',
         color: '#000',
-        marginTop:hp('3%')
+        marginTop: hp('3%')
     },
     timeValue: {
         fontSize: hp('2.1%'),
         color: '#007BFF',
         fontWeight: '500',
     },
-
-
-
     labelStyle: {
         color: 'black',  // Set the label color to black
         fontSize: hp('2.2%'),
         fontWeight: 'bold',
-      },
+    },
+    modalBackground: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalContainer: {
+        width: '80%',
+        backgroundColor: '#fff',
+        padding: hp('1%'),
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    alertImage:{
+        height:hp('15%'),
+        width:hp('15%')
+    },
+    modalText: {
+        fontSize:  hp('2.1%'),
+        textAlign: 'center',
+        marginBottom: hp('2.5%'),
+        color:'#000'
+    },
+    modalButton: {
+        backgroundColor: '#4F378A',
+        paddingVertical: hp('1%'),
+        paddingHorizontal:  hp('5%'),
+        borderRadius: 5,
+    },
+    modalButtonText: {
+        color: '#fff',
+        fontSize: hp('2.1%'),
+        fontWeight: 'bold',
+    },
 });

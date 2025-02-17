@@ -1,19 +1,3 @@
-// import { StyleSheet, Text, View } from 'react-native'
-// import React from 'react'
-
-// const AllMonthlyEarning = () => {
-//   return (
-//     <View>
-//       <Text>AllMonthlyEarning</Text>
-//     </View>
-//   )
-// }
-
-// export default AllMonthlyEarning
-
-// const styles = StyleSheet.create({})
-
-
 
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -42,7 +26,7 @@ const AllMonthlyEarning = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.navigate('PujariBottomTab')}>
                     <Ionicons name="arrow-back" size={hp(3.5)} color="#000" style={styles.backIcon} />
                 </TouchableOpacity>
-                <Text style={styles.headText}>Pooja Remainder</Text>
+                <Text style={styles.headText}>Monthly Earning</Text>
             </View>
 
             {/* Tab Navigator */}

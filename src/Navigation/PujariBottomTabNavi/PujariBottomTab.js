@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,StatusBar } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeIcon from 'react-native-vector-icons/Ionicons';
@@ -19,6 +19,8 @@ const Tab = createBottomTabNavigator();
 
 const PujariBottomTab = () => {
     return (
+        <>
+        <StatusBar backgroundColor='#F08000' barStyle="light-content" />
         <Tab.Navigator
             screenOptions={{
                 tabBarShowLabel: true,
@@ -116,6 +118,7 @@ const PujariBottomTab = () => {
                 }}
             />
         </Tab.Navigator>
+        </>
     );
 };
 

@@ -41,8 +41,6 @@ const PoojaReminders = ({ navigation, limit, showButtons = true }) => {
     const PoojaRemainderCard = ({ pooja, date, time, attendee, startsIn }) => {
         return (
             <View>
-
-                <View>
                     <View style={styles.reminderCard}>
                         <View style={styles.rowContainer}>
                             <Image source={require('../../assets/image/john.png')} style={styles.userImage} />
@@ -56,7 +54,6 @@ const PoojaReminders = ({ navigation, limit, showButtons = true }) => {
                         </View>
                     </View>
                 </View>
-            </View>
         );
     };
 

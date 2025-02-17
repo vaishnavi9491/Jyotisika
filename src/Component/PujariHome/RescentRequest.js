@@ -116,8 +116,6 @@ const styles = StyleSheet.create({
         marginTop: hp('1%'),
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
-        borderBottomWidth: 2,
-        borderColor: '#888'
     },
     requestDetails: {
         marginHorizontal: hp('1.5%'),
@@ -160,7 +158,7 @@ const styles = StyleSheet.create({
         padding: hp('1.5%')
     },
     acceptButton: {
-        backgroundColor: '#28A745',
+        backgroundColor: '#34C759',
         flex: 1,
         paddingVertical: hp('1%'),
         alignItems: 'center',
