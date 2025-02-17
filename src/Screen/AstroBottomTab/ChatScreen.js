@@ -120,22 +120,29 @@
 
 // export default ChatScreen;
 
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const ChatScreen = ({ route }) => {
-  const { userName } = route.params; 
+  const { userName } = route.params;
   const [messages, setMessages] = useState([
-    { id: '1', text: 'Hello!', isSender: false },
-    { id: '2', text: 'Hi! How can I help you?', isSender: true },
+    { id: '1', text: 'Hello!', isSender: false, time: '10:00 AM' },
+    { id: '2', text: 'Hi! How can I help you?', isSender: true, time: '10:02 AM' },
   ]);
   const [input, setInput] = useState('');
 
+  const getCurrentTime = () => {
+    const now = new Date();
+    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
   const sendMessage = () => {
     if (input.trim()) {
-      setMessages([...messages, { id: Date.now().toString(), text: input, isSender: true }]);
+      setMessages([
+        ...messages,
+        { id: Date.now().toString(), text: input, isSender: true, time: getCurrentTime() },
+      ]);
       setInput('');
     }
   };
@@ -143,11 +150,12 @@ const ChatScreen = ({ route }) => {
   const renderMessage = ({ item }) => (
     <View
       style={[
-        styles.messageBubble,
+        styles.messageContainer,
         item.isSender ? styles.sentMessage : styles.receivedMessage,
       ]}
     >
       <Text style={styles.messageText}>{item.text}</Text>
+      <Text style={styles.timeText}>{item.time}</Text>
     </View>
   );
 
@@ -161,7 +169,6 @@ const ChatScreen = ({ route }) => {
         keyExtractor={(item) => item.id}
         renderItem={renderMessage}
         style={styles.messagesList}
-       // inverted // Show latest messages at the bottom
       />
       <View style={styles.inputContainer}>
         <TextInput
@@ -169,10 +176,10 @@ const ChatScreen = ({ route }) => {
           value={input}
           onChangeText={setInput}
           placeholder="Type a message..."
-          placeholderTextColor='#888'
+          placeholderTextColor="#888"
         />
         <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
-        <FontAwesome name="send" size={18} />
+          <FontAwesome name="send" size={18} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -192,13 +199,13 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     color: '#000',
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
   messagesList: {
     flex: 1,
     padding: 10,
   },
-  messageBubble: {
+  messageContainer: {
     padding: 10,
     borderRadius: 10,
     marginVertical: 5,
@@ -215,6 +222,12 @@ const styles = StyleSheet.create({
   messageText: {
     color: '#fff',
   },
+  timeText: {
+    fontSize: 10,
+    color: '#ddd',
+    marginTop: 5,
+    alignSelf: 'flex-end',
+  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -230,15 +243,12 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     borderRadius: 10,
     marginRight: 10,
-    color:'#000'
+    color: '#000',
   },
   sendButton: {
     backgroundColor: '#94CAF4',
     padding: 12,
     borderRadius: 10,
-  },
-  sendButtonText: {
-    color: '#fff',
   },
 });
 

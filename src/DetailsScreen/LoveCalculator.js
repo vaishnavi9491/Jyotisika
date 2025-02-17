@@ -30,19 +30,17 @@ const LoveCalculatorScreen = () => {
             <View style={styles.container}>
                 {/* Header */}
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Horoscope")}>
+                    <TouchableOpacity onPress={() => navigation.navigate("App_Drawer_Navigation")}>
                         <AntDesign name="arrowleft" size={20} color="#000" />
                     </TouchableOpacity>
-                    <Text style={styles.Jtext}>BookPooja</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-                        <Text style={styles.balance}>₹ 50</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.settings}>
+                    <Text style={styles.Jtext}>Love Calculator</Text>
+
+                    {/* <TouchableOpacity style={styles.settings}>
                         <Fontisto name="language" size={15} />
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <Feather name="phone-call" size={20} color="#000" />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
                 {/* Title */}
@@ -104,11 +102,18 @@ const styles = StyleSheet.create({
 
     },
     header: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: hp('2%'),
+        backgroundColor: '#f8f9fa',
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        zIndex: 1,
         width: '100%',
-        padding: hp("2%"),
     },
     balance: {
         fontSize: hp("2%"),
@@ -116,7 +121,7 @@ const styles = StyleSheet.create({
         color: "#000",
     },
     Jtext: {
-        marginRight: hp("20%"),
+        marginRight: hp("25%"),
         color: "#000",
         fontWeight: "bold",
     },

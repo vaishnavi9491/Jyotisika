@@ -87,9 +87,9 @@ const OnlineofflineBookPooja = ({ navigation }) => {
 
       <View style={styles.imageAndRating}>
         <TouchableOpacity>
-        <Image source={item.image} style={styles.profileImage} />
+          <Image source={item.image} style={styles.profileImage} />
         </TouchableOpacity>
-       
+
         <View style={styles.ratingRow}>
           <Text style={styles.rating}>⭐ {item.rating}</Text>
           <Text style={styles.completedPoojas}>{item.completedPoojas} Poojas</Text>
@@ -111,7 +111,7 @@ const OnlineofflineBookPooja = ({ navigation }) => {
           <Text style={styles.completedPoojas}>{item.completedPoojas} Poojas</Text>
         </View> */}
 
-        <TouchableOpacity style={styles.bookButton} onPress={()=>navigation.navigate('PujariProfile')}>
+        <TouchableOpacity style={styles.bookButton} onPress={() => navigation.navigate('PujariProfile')}>
           <Text style={styles.bookButtonText}>Book Pooja</Text>
         </TouchableOpacity>
       </View>
@@ -121,7 +121,7 @@ const OnlineofflineBookPooja = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate("App_Drawer_Navigation")}>
+        <TouchableOpacity onPress={() => navigation.navigate("BottomTabNavigation")}>
           <AntDesign name="arrowleft" size={20} color="#000" />
         </TouchableOpacity>
         <Text style={styles.Jtext}>Poojaris</Text>
@@ -145,6 +145,8 @@ const OnlineofflineBookPooja = ({ navigation }) => {
           onChange={(item) => setValue(item.value)}
           style={styles.dropdown}
           itemTextStyle={styles.itemTextStyle}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle} // Apply selected text style here
         />
       </View>
 
@@ -164,10 +166,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
   },
   header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: hp("2%"),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: hp('1%'),
+    backgroundColor: '#f8f9fa',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
   },
   balance: {
     fontSize: hp("2%"),
@@ -210,6 +218,9 @@ const styles = StyleSheet.create({
   selectedTextStyle: {
     fontSize: wp(4),
     color: '#000',
+  },
+  selectedItemTextStyle: {
+    color: '#000'
   },
   card: {
     flexDirection: 'row',
@@ -289,6 +300,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
   },
+
 });
 
 export default OnlineofflineBookPooja;

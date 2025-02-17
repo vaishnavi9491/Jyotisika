@@ -1,6 +1,9 @@
 
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import React ,{useEffect}from 'react'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeIcon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -11,12 +14,23 @@ import Astrology from '../Screen/BottomScreen/Astrology';
 import Live from '../Screen/BottomScreen/Live';
 import Pujari from '../Screen/BottomScreen/Pujari';
 import Shop from '../Screen/BottomScreen/Shop';
-
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../Component/i18n';
 
 
 const Tab = createBottomTabNavigator();
 
-const AstrologerBottomTabNavigation = () => {
+const UserBottomTabNavigation = () => {
+
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang]);
+
+
   return (
     <>
       <StatusBar backgroundColor='#FFCC00' barStyle="light-content" />
@@ -167,8 +181,8 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#fff',
-    fontSize: 10,
-    marginTop: '2%',
+    fontSize: hp('1%'),
+    marginTop:hp ('.3%'),
     fontWeight: 'bold'
   },
   labelFocused: {
@@ -178,4 +192,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AstrologerBottomTabNavigation;
+export default UserBottomTabNavigation;

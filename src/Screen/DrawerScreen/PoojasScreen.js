@@ -188,7 +188,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import {
   View,
   Text,
@@ -201,10 +201,20 @@ import { Dropdown } from 'react-native-element-dropdown';
 import Fontisto from "react-native-vector-icons/Fontisto";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../Component/i18n';
 
 
 const OnlineofflineBookPooja = ({ navigation }) => {
+
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+
+  useEffect(() => {
+      i18n.changeLanguage(lang);
+  }, [lang]);
+
   const [value, setValue] = useState(null);
 
   const items = [
@@ -282,7 +292,7 @@ const OnlineofflineBookPooja = ({ navigation }) => {
 
         <View style={styles.ratingRow}>
           <Text style={styles.rating}>⭐ {item.rating}</Text>
-          <Text style={styles.completedPoojas}>{item.completedPoojas} 15003 Pooja</Text>
+          <Text style={styles.completedPoojas}>{item.completedPoojas}{t(' 15003 Pooja')}</Text>
         </View>
       </View>
 
@@ -296,7 +306,7 @@ const OnlineofflineBookPooja = ({ navigation }) => {
         <Text style={styles.info}>{item.name}</Text>
 
         <Text style={styles.info}>{item.languages}</Text>
-        <Text style={styles.info}>Exp: {item.experience} years</Text>
+        <Text style={styles.info}>Exp: {item.experience} {t('years')}</Text>
         <Text style={styles.startTime}>{item.startTime}</Text>
         <Text style={styles.info}>{item.distance}</Text>
         {/* <View style={styles.ratingRow}>
@@ -305,7 +315,7 @@ const OnlineofflineBookPooja = ({ navigation }) => {
         </View> */}
 
         <TouchableOpacity style={styles.bookButton}>
-          <Text style={styles.bookButtonText}>Book Pooja</Text>
+          <Text style={styles.bookButtonText}>{t('Book Pooja')}</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -219,7 +219,7 @@
 // export default Capricorn;
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -236,6 +236,9 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import CalendarPicker from "react-native-calendar-picker";
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../Component/i18n';
 
 const { width, height } = Dimensions.get("window");
 
@@ -253,10 +256,12 @@ const horoscopes = [
     text: "Take time to relax and recharge. Leos may need a break to restore their energy.",
   },
 ];
-
-const options = ["Yesterday", "Today", "Tomorrow"];
-
 const Capricorn = ({ navigation }) => {
+  const options = ["Yesterday", "Today", "Tomorrow"];
+
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Daily");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -294,6 +299,9 @@ const Capricorn = ({ navigation }) => {
     setSelectedDate(formattedDate);
     setIsCalendarVisible(false);
   };
+  useEffect(() => {
+    i18n.changeLanguage(lang); // Redux मधून घेतलेली भाषा i18n मध्ये बदला
+  }, [lang]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -302,16 +310,10 @@ const Capricorn = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Horoscope")}>
           <AntDesign name="arrowleft" size={20} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.Jtext}>BookPooja</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-          <Text style={styles.balance}>₹ 50</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.settings}>
-          <Fontisto name="language" size={15} />
-        </TouchableOpacity>
+        <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
         <TouchableOpacity>
-            <AntDesign name="customerservice" size={22} color='#000' />
-          </TouchableOpacity>
+          <AntDesign name="customerservice" size={22} color='#000' />
+        </TouchableOpacity>
       </View>
 
       {/* Dropdown */}
@@ -393,7 +395,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: hp("2%"),
+    padding: hp("2%"), flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: hp('2%'),
+    backgroundColor: '#f8f9fa',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    zIndex: 1,
+    width: '100%',
   },
   balance: {
     fontSize: hp("2%"),
@@ -401,7 +414,7 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   Jtext: {
-    marginRight: hp("20%"),
+    marginRight: hp("30%"),
     color: "#000",
     fontWeight: "bold",
   },

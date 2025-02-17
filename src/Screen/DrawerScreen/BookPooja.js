@@ -1,141 +1,226 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  image
-} from 'react-native';
+
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../Component/i18n';
 
-// const data = [
-//   {
-//     id: '1',
-//     title: 'Ghar Shanti Pooja',
-//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-//     // image: require('../../assets/image/flower.png'),
-//     image: 'https://via.placeholder.com/150',
-//   },
-//   {
-//     id: '2',
-//     title: 'Navgrah Shanti Pooja',
-//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-//     image: 'https://via.placeholder.com/150',
-//   },
-//   {
-//     id: '3',
-//     title: 'Maa Saraswati Pooja',
-//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-//     image: 'https://via.placeholder.com/150',
-//   },
-// ];
+const BookedPoojaScreen = () => {
+  const [selectedTab, setSelectedTab] = useState('Online'); // Default to 'Online'
 
-const data = [
-  {
-    id: '1',
-    title: 'Ghar Shanti Pooja',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    image: require('../../assets/image/flower.png'), // Local image
-  },
-  {
-    id: '2',
-    title: 'Navgrah Shanti Pooja',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    image: require('../../assets/image/jwellary.png'),
-  },
-  {
-    id: '3',
-    title: 'Maa Saraswati Pooja',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    image: require('../../assets/image/jwellary.png'),
-  },
-];
+  const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
 
-const BookPooja = ({ navigation }) => {
-  const renderItem = ({ item }) => (
-    <View style={styles.card}>
-      <Image source={item.image} style={styles.cardImage} />
-      <View style={styles.cardContent}>
-        <Text style={styles.cardTitle}>{item.title}</Text>
-        <Text style={styles.cardDescription}>{item.description}</Text>
-        <TouchableOpacity style={styles.bookButton}>
-          <Text style={styles.bookButtonText}>Book Now</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang]);
+
+  const bookedPoojas = [
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Online',
+    },
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Online',
+    },
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Online',
+    },
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Offline',
+    },
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Ongoing',
+    },
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Ongoing',
+    },
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Completed',
+    },
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Completed',
+    },
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Completed',
+    },
+    {
+      title: 'Ghar Shanti Pooja',
+      address: 'XYZ, ABC, Nashik, MH',
+      panditName: 'John Doe',
+      date: '25/12/2024',
+      time: '10:00 AM',
+      status: 'Completed',
+    },
+  ];
+
+  // Filter poojas based on the selected tab
+  const filteredPoojas = bookedPoojas.filter(pooja => pooja.status === selectedTab);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() => console.log('Navigate to Home')}>
           <AntDesign name='arrowleft' size={20} color='#000' />
         </TouchableOpacity>
-        <Text style={styles.Jtext}>BookPooja</Text>
-        <Text style={styles.balance}>₹ 50</Text>
-        <TouchableOpacity style={styles.settings}>
-          <Fontisto name="language" size={15} />
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <AntDesign name="customerservice" size={22} color='#000' />
-        </TouchableOpacity>
+        <Text style={styles.Jtext}>{t('BookPooja')}</Text>
 
       </View>
 
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Icon name="search" size={25} color="#000" style={styles.searchicon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Pooja"
-          placeholderTextColor="#bab2b2"
-        />
+      {/* Tabs */}
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tabButton, selectedTab === 'Offline' && styles.selectedTab]}
+          onPress={() => setSelectedTab('Offline')}
+        >
+          <Text style={styles.tabText}>{t('Offline')}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, selectedTab === 'Online' && styles.selectedTab]}
+          onPress={() => setSelectedTab('Online')}
+        >
+          <Text style={styles.tabText}>{t('Online')}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, selectedTab === 'Mob' && styles.selectedTab]}
+          onPress={() => setSelectedTab('Mob')}
+        >
+          <Text style={styles.tabText}>{t('Mob')}</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* FlatList */}
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        contentContainerStyle={styles.listContent}
-      />
+      {/* More Tabs for Ongoing and Completed */}
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tabButton, selectedTab === 'Ongoing' && styles.selectedTab]}
+          onPress={() => setSelectedTab('Ongoing')}
+        >
+          <Text style={styles.tabText}>{t('Ongoing')}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, selectedTab === 'Completed' && styles.selectedTab]}
+          onPress={() => setSelectedTab('Completed')}
+        >
+          <Text style={styles.tabText}>{t('Completed')}</Text>
+        </TouchableOpacity>
+      </View>
 
-      {/* Bottom Navigation */}
+      {/* Booked Pooja List */}
+      <ScrollView style={styles.bookedList}>
+        {filteredPoojas.map((pooja, index) => {
+          // Dynamically set the image based on the pooja status
+          let imageSource;
+          if (pooja.status === 'Online') {
+            imageSource = require('../../assets/image/stone.png');
+          } else if (pooja.status === 'Offline') {
+            imageSource = require('../../assets/image/stone.png');
+          } else if (pooja.status === 'Ongoing') {
+            imageSource = require('../../assets/image/jwellary.png');
+          } else if (pooja.status === 'Completed') {
+            imageSource = require('../../assets/image/flower.png');
+          }
 
-    </SafeAreaView>
+          return (
+            <View key={index} style={styles.card}>
+              <Image
+                source={imageSource} // Dynamically selected image
+                style={styles.cardImage}
+              />
+              <View style={styles.cardDetails}>
+                <Text style={styles.cardTitle}>{pooja.title}</Text>
+                <Text style={styles.cardDescription}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </Text>
+                <Text style={styles.cardInfo}>Address        :  {pooja.address}</Text>
+                <Text style={styles.cardInfo}>Pandit name :  {pooja.panditName}</Text>
+                <Text style={styles.cardInfo}>Date               :  {pooja.date}</Text>
+                <Text style={styles.cardInfo}>Time               :  {pooja.time}</Text>
+              </View>
+            </View>
+          );
+        })}
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
 
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: hp("2%"), flexDirection: 'row',
     alignItems: 'center',
-
-
+    justifyContent: 'space-between',
+    padding: hp('2%'),
+    backgroundColor: '#f8f9fa',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    zIndex: 1,
+    width: '100%',
   },
   balance: {
     fontSize: hp('2%'),
     fontWeight: 'bold',
     color: '#000',
-
   },
   Jtext: {
-    marginRight: hp('20%'),
+    marginRight: hp('30%'),
     color: '#000',
     fontWeight: 'bold',
   },
@@ -143,96 +228,63 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFD700',
     padding: wp('2%'),
     borderRadius: wp(2),
-
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: wp('4%'),
-    //backgroundColor: '#FFD700',
-  },
-  headerTitle: {
-    fontSize: wp('5%'),
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f2f2f2',
-    margin: wp('4%'),
-    // padding: wp('3%'),
-    borderRadius: wp('2%'),
-  },
-  searchInput: {
-    marginLeft: wp('2%'),
-    fontSize: wp('4%'),
-    color: '#000',
-    flex: 1,
-  },
-  listContent: {
-    paddingBottom: hp('10%'),
-  },
-  card: {
-    //flexDirection: 'row',
-    backgroundColor: '#fff',
-    marginHorizontal: wp('4%'),
-    marginBottom: hp('2%'),
-    borderRadius: wp('2%'),
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  cardImage: {
-    width: wp('25%'),
-    height: wp('25%'),
-    borderRadius: wp('2%'),
-    margin: wp('2%'),
-  },
-  cardContent: {
-    flex: 1,
-    padding: wp('2%'),
-  },
-  cardTitle: {
-    fontSize: wp('4.5%'),
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  cardDescription: {
-    fontSize: wp('3.5%'),
-    color: '#666',
-    marginVertical: hp('1%'),
-  },
-  bookButton: {
-    backgroundColor: '#FFD700',
-    paddingVertical: hp('1%'),
-    paddingHorizontal: wp('5%'),
-    borderRadius: wp('2%'),
-    alignSelf: 'flex-start',
-  },
-  bookButtonText: {
-    fontSize: wp('4%'),
-    color: '#000',
-    fontWeight: 'bold',
-  },
-  bottomNav: {
+  tabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#FFD700',
-    height: hp('8%'),
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
+    marginTop: hp('2%'),
   },
-  searchicon: {
-    alignSelf: 'center',
-    marginLeft: hp('2%')
-  }
+  tabButton: {
+    paddingVertical: hp('1%'),
+    paddingHorizontal: hp('1%'),
+
+
+  },
+  selectedTab: {
+    borderColor: '#65558F',
+    borderBottomWidth: 2,
+  },
+  tabText: {
+    fontSize: hp('1.5%'),
+    color: '#6a1b9a',
+    fontWeight: 'bold'
+  },
+  bookedList: {
+    marginTop: hp('2%'),
+  },
+  card: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    marginBottom: hp('2%'),
+    borderRadius: 10,
+    padding: hp('2%'),
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  cardImage: {
+    width: hp('12%'),
+    height: hp('10%'),
+    borderRadius: 10,
+  },
+  cardDetails: {
+    flex: 1,
+    paddingLeft: hp('2%'),
+  },
+  cardTitle: {
+    fontSize: hp('2%'),
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  cardDescription: {
+    fontSize: hp('1.6%'),
+    color: '#777',
+
+  },
+  cardInfo: {
+    fontSize: hp('1.3%'),
+    color: '#000',
+    marginTop: hp('1%'),
+  },
 });
 
-export default BookPooja;
-
-
+export default BookedPoojaScreen;

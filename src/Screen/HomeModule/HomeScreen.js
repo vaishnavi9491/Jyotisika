@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
@@ -9,35 +10,70 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  LogBox,
-  NativeEventEmitter,
+  Linking,
+  Modal,
+  FlatList
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Voice from '@react-native-voice/voice';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { useTranslation } from 'react-i18next';
+import i18n from '../../Component/i18n';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLanguage } from '../../Redux/Slice/languageSlice';
 
 const HomeScreen = ({ navigation }) => {
 
-
-  LogBox.ignoreLogs([
-    '`new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method.',
-  ]);
-
-  // Patch `removeListeners` if it doesn't exist
-  if (!NativeEventEmitter.prototype.removeListeners) {
-    NativeEventEmitter.prototype.removeListeners = () => { };
-  }
-
   const [searchText, setSearchText] = useState('');
-  const [isListening, setIsListening] = useState(false);
   const [activeButton, setActiveButton] = useState('');
   const inputRef = useRef(null);
+  const language = useSelector((state) => state.language.language);
+  const [open, setOpen] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
+  const [selectedLanguage, setSelectedLanguage] = useState('English');
+
+  const languages = [
+    { id: 'en', name: 'English' },
+    { id: 'hi', name: 'हिंदी' },
+    { id: 'mr', name: 'मराठी' },
+
+  ];
 
 
+  useEffect(() => {
+    checkStoredLanguage();
+  }, []);
+
+  const checkStoredLanguage = async () => {
+    const storedLang = await AsyncStorage.getItem('LANG');
+    if (storedLang) {
+      i18n.changeLanguage(storedLang);
+      dispatch(setLanguage(storedLang));
+
+      // Map language codes to language names
+      const languageMap = {
+        en: 'English',
+        hi: 'हिंदी',
+        mr: 'मराठी',
+      };
+
+      setSelectedLanguage(languageMap[storedLang] || 'English');
+    }
+  };
+  const handleLanguageSelect = async (lang) => {
+    dispatch(setLanguage(lang.id));
+    i18n.changeLanguage(lang.id);
+    await AsyncStorage.setItem('LANG', lang.id);
+
+    setSelectedLanguage(lang.name);
+    setModalVisible(false);
+  };
   const profiles = [
     {
       id: 1,
@@ -86,53 +122,9 @@ const HomeScreen = ({ navigation }) => {
     setActiveButton('chat');
   };
 
-  const handleCallPress = () => {
-    setActiveButton('call');
-  };
-
-  useEffect(() => {
-    // Add event listeners for speech recognition
-    Voice.onSpeechResults = onSpeechResults;
-    Voice.onSpeechError = onSpeechError;
-
-    return () => {
-      // Cleanup listeners when the component is unmounted
-      Voice.destroy().then(Voice.removeAllListeners);
-    };
-  }, []);
-
-  const startListening = async () => {
-    try {
-      setIsListening(true);
-      if (inputRef.current) {
-        inputRef.current.focus(); // Focus the search bar when starting voice input
-      }
-      await Voice.start('en-US'); // Start listening for English language
-    } catch (error) {
-      console.error('Error starting voice recognition:', error);
-    }
-  };
-
-  const stopListening = async () => {
-    try {
-      setIsListening(false);
-      await Voice.stop(); // Stop listening
-    } catch (error) {
-      console.error('Error stopping voice recognition:', error);
-    }
-  };
-
-  const onSpeechResults = (event) => {
-    console.log('Speech Results:', event.value);
-    if (event.value && event.value.length > 0) {
-      setSearchText(event.value[0]); // Update the search text with the speech result
-    }
-    setIsListening(false); // Stop listening after results are received
-  };
-
-  const onSpeechError = (error) => {
-    console.error('Speech recognition error:', error);
-    setIsListening(false); // Stop listening if there is an error
+  const handleCallPress = (phoneNumber) => {
+    const url = `tel:${phoneNumber}`;
+    Linking.openURL(url).catch((err) => console.error('Error:', err));
   };
 
 
@@ -141,18 +133,55 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Image style={styles.profilePic} source={require('../../assets/image/j.jpeg')} />
-        <Text style={styles.Jtext}>Jyotisika</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-          <Text style={styles.balance}>₹ 50</Text>
+        <TouchableOpacity style={styles.settings} onPress={() => navigation.openDrawer()}>
+          <Entypo name="menu" size={20} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settings}>
-          <Fontisto name="language" size={20} />
+        <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
+
+        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.languageButton}>
+          <Fontisto name="language" size={24} color="#000" backgroundColor='#FFCC00' />
+          <Text style={styles.languageText}></Text>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
-          <AntDesign name="customerservice" size={22} color="#000" />
+          <AntDesign name="customerservice" size={20} color="#000" />
         </TouchableOpacity>
+
+        <Modal visible={modalVisible} animationType="fade" transparent={true}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalTitle}>Choose your language</Text>
+
+              {/* Search Bar */}
+
+              {/* Language List */}
+              <FlatList
+                data={languages.filter(lang => lang.name.toLowerCase().includes(searchText.toLowerCase()))}
+                numColumns={3}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={[
+                      styles.languageBox,
+                      selectedLanguage === item.name && styles.selectedLanguageBox,
+                    ]}
+                    onPress={() => handleLanguageSelect(item)}
+                  >
+                    <Text style={styles.languageText}>{item.name}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+
+              {/* Close Button */}
+              <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
+                <Text style={styles.closeButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
       </View>
+
 
       {/* Search Bar */}
       <ScrollView style={styles.container}>
@@ -160,31 +189,29 @@ const HomeScreen = ({ navigation }) => {
           <Fontisto name="search" style={styles.searchIcon} size={20} color="#000" />
           <TextInput
             ref={inputRef}
-            placeholder="Search astrologer, pujari, products"
-            placeholderTextColor='#aaa'
+            placeholder={t("Search astrologer, pujari, products")}
+            placeholderTextColor='#888'
             style={styles.input}
             value={searchText}
             onChangeText={setSearchText}
           />
-          <TouchableOpacity onPress={isListening ? stopListening : startListening} style={styles.micIcon}>
-            <Fontisto name={isListening ? 'stop' : 'mic'} size={20} color="#fff" />
-          </TouchableOpacity>
+
         </View>
 
         {/* Services Section with Linear Gradient */}
-        <Text style={{ color: '#000', marginLeft: hp('3%'), fontSize: hp('2%'), fontWeight: 'bold' }}>Services</Text>
+        <Text style={{ color: '#000', marginLeft: hp('3%'), fontSize: hp('2%'), fontWeight: 'bold' }}>{t('Services')}</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.services}>
-          {['Birth Kundali', 'Love', 'KP', 'Pooja', 'Panchang'].map((service, index) => (
+          {['Birth kundali', 'Love', 'KP', 'pooja', 'Panchang'].map((service, index) => (
             <View
               key={index}
               style={[styles.serviceCard, { backgroundColor: '#F2F2F7' }]} // Simple gray background color
             >
               <View style={styles.iconTextContainer}>
                 {/* Adding icons based on the service */}
-                {service === 'Birth Kundali' && (
+                {service === 'Birth kundali' && (
                   <Icon name="birthday-cake" size={16} color="#FF6347" style={styles.icon} />
                 )}
                 <TouchableOpacity onPress={() => navigation.navigate('LoveCalculator')}>
@@ -195,7 +222,7 @@ const HomeScreen = ({ navigation }) => {
                 {service === 'KP' && (
                   <Icon name="search" size={16} color="#FF6347" style={styles.icon} />
                 )}
-                {service === 'Pooja' && (
+                {service === 'pooja' && (
                   <Icon name="hand-paper-o" size={16} color="#FF6347" style={styles.icon} />
                 )}
                 <TouchableOpacity onPress={() => navigation.navigate('Panchang')}>
@@ -204,7 +231,7 @@ const HomeScreen = ({ navigation }) => {
                   )}
                 </TouchableOpacity>
 
-                <Text style={[styles.serviceText, { fontSize: 12 }]}>{service}</Text>
+                <Text style={[styles.serviceText, { fontSize: 12 }]}>{t(service)}</Text>
               </View>
             </View>
 
@@ -223,8 +250,9 @@ const HomeScreen = ({ navigation }) => {
                 style={styles.cardGradient}>
                 <TouchableOpacity onPress={() => navigation.navigate('Horoscope')}>
                   <Image style={styles.cardImage} source={require('../../assets/image/Horoscope.png')} />
+
+                  <Text style={styles.cardText}>{t('Horoscope')}</Text>
                 </TouchableOpacity>
-                <Text style={styles.cardText}>Horoscope</Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -236,7 +264,7 @@ const HomeScreen = ({ navigation }) => {
                 end={{ x: 1, y: 1 }}
                 style={styles.cardGradient}>
                 <Image style={styles.cardImage} source={require('../../assets/image/kundalimatching.png')} />
-                <Text style={styles.cardText}>Kundli Matching</Text>
+                <Text style={styles.cardText}>{t('Kundali Matching')}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -249,8 +277,10 @@ const HomeScreen = ({ navigation }) => {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={styles.cardGradient}>
-                <Image style={styles.cardImage} source={require('../../assets/image/bookpooja.png')} />
-                <Text style={styles.cardText}>Book Pooja</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('BookPooja')}>
+                  <Image style={styles.cardImage} source={require('../../assets/image/bookpooja.png')} />
+                  <Text style={styles.cardText}>{t('Book Pooja')}</Text>
+                </TouchableOpacity>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -261,8 +291,10 @@ const HomeScreen = ({ navigation }) => {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={styles.cardGradient}>
-                <Image style={styles.cardImage} source={require('../../assets/image/shop.png')} />
-                <Text style={styles.cardText}>Shop</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Shop')}>
+                  <Image style={styles.cardImage} source={require('../../assets/image/shop.png')} />
+                  <Text style={styles.cardText}>{t('Shop')}</Text>
+                </TouchableOpacity>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -274,9 +306,9 @@ const HomeScreen = ({ navigation }) => {
 
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-          <Text style={styles.Astrotext}>Astrology</Text>
+          <Text style={styles.Astrotext}>{t('Astrologer')}</Text>
           <TouchableOpacity>
-            <Text style={styles.Viewtext}>View All</Text>
+            <Text style={styles.Viewtext}>{t('View All')}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.profileContainer}>
@@ -306,7 +338,7 @@ const HomeScreen = ({ navigation }) => {
                         activeButton === pujari.id && styles.chatActiveText,
                       ]}
                     >
-                      Chat
+                      {t('Chat')}
                     </Text>
                   </TouchableOpacity>
 
@@ -316,7 +348,7 @@ const HomeScreen = ({ navigation }) => {
                       styles.callStyle,
                       activeButton === pujari.id && styles.callActive,
                     ]}
-                    onPress={() => handleCallPress(pujari.id)}
+                    onPress={() => handleCallPress(pujari.phoneNumber)} // Use the actual phone number here
                   >
                     <Text
                       style={[
@@ -324,7 +356,7 @@ const HomeScreen = ({ navigation }) => {
                         activeButton === pujari.id && styles.callActiveText,
                       ]}
                     >
-                      Call
+                      {t('Call')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -337,9 +369,9 @@ const HomeScreen = ({ navigation }) => {
         {/* Shopping */}
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: hp('2%') }}>
-          <Text style={styles.Astrotext}>Top Shop </Text>
+          <Text style={styles.Astrotext}>{t('Top Shop')}</Text>
           <TouchableOpacity>
-            <Text style={styles.Viewtext}>View All</Text>
+            <Text style={styles.Viewtext}>{t('View All')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -363,7 +395,7 @@ const HomeScreen = ({ navigation }) => {
                         styles.chatText,
                         activeButton === 'View' && styles.chatActiveText,
                       ]}>
-                      View
+                      {t('View')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -376,9 +408,9 @@ const HomeScreen = ({ navigation }) => {
         {/* pujari */}
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-          <Text style={styles.Astrotext}>Pujaris</Text>
+          <Text style={styles.Astrotext}>{t('Pujari')}</Text>
           <TouchableOpacity>
-            <Text style={styles.Viewtext}>View All</Text>
+            <Text style={styles.Viewtext}>{t('View All')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -404,7 +436,7 @@ const HomeScreen = ({ navigation }) => {
                         activeButton === pujari.id && styles.chatActiveText,
                       ]}
                     >
-                      Chat
+                      {t('Chat')}
                     </Text>
                   </TouchableOpacity>
 
@@ -422,7 +454,7 @@ const HomeScreen = ({ navigation }) => {
                         activeButton === pujari.id && styles.callActiveText,
                       ]}
                     >
-                      Call
+                      {t('Call')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -443,16 +475,16 @@ const HomeScreen = ({ navigation }) => {
 
             {/* Feedback Section */}
             <View style={styles.feedback}>
-              <Text style={styles.Viewtext}>We value your genuine feedback</Text>
+              <Text style={styles.Viewtext}>{t('We value your genuine feedback')}</Text>
               <TextInput
-                placeholder="Write your genuine feedback here..."
+                placeholder={t("Write your genuine feedback here...")}
                 placeholderTextColor="#aaa"
                 style={styles.feedbackInput}
                 multiline={true}
                 numberOfLines={4}
               />
               <TouchableOpacity style={styles.feedbackButton}>
-                <Text style={styles.feedbackButtonText}>Send</Text>
+                <Text style={styles.feedbackButtonText}>{t('send')}</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -474,36 +506,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
+    padding: hp('1%'),
     backgroundColor: '#f8f9fa',
-    elevation: 5, // Adds shadow for Android
-    shadowColor: '#000', // Adds shadow for iOS
+    elevation: 5,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+    zIndex: 1,
+    width: '100%',
   },
-  profilePic: {
-    width: wp('10%'),
-    height: hp('5%'),
-    borderRadius: wp(5),
-  },
-  balance: {
-    fontSize: hp('2%'),
-    fontWeight: 'bold',
-    color: '#000'
-  },
+
   settings: {
     backgroundColor: '#FFD700',
     padding: wp('2%'),
     borderRadius: wp(2),
-
   },
+  Jtext: {
+    fontSize: hp('2.5%'),
+    marginRight: hp('30%'),
+    fontWeight: 'bold',
+    color: '#000',
+  },
+
   searchBar: {
     position: 'relative',
     marginVertical: hp('2%'),
     marginHorizontal: wp('4%'),
-
-
   },
   input: {
     borderWidth: 1,
@@ -512,7 +541,7 @@ const styles = StyleSheet.create({
     paddingLeft: hp('5%'),
     paddingRight: wp('10%'),
     height: hp('6%'),
-    fontSize: hp('2%'),
+    fontSize: hp('1.5%'),
     color: '#000'
   },
   searchIcon: {
@@ -521,15 +550,7 @@ const styles = StyleSheet.create({
     top: '50%',
     transform: [{ translateY: -10 }],
   },
-  micIcon: {
-    position: 'absolute',
-    right: wp('3%'),
-    top: '40%',
-    transform: [{ translateY: -10 }],
-    backgroundColor: '#FFD700',
-    padding: wp('1.5%'),
-    borderRadius: hp('5%'),
-  },
+
   services: {
     flexDirection: 'row',
     paddingVertical: hp('1%'),
@@ -627,7 +648,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   Jtext: {
-    marginRight: hp('20%'),
+    marginRight: hp('25%'),
     color: '#000',
     fontWeight: 'bold',
   },
@@ -675,7 +696,7 @@ const styles = StyleSheet.create({
   profileActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: hp(2),
+    marginTop: hp('2%'),
   },
   chatStyle: {
     flex: 1,
@@ -711,6 +732,62 @@ const styles = StyleSheet.create({
     width: wp('40%'),
     height: hp('15%'),
     borderRadius: 10
-  }
+  },
+  languageButton:
+  {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 10
+  },
+  languageText:
+  {
+    fontSize: hp('2%'),
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  modalOverlay:
+  {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  modalContainer: {
+    backgroundColor: '#FFD66B',
+    padding: 20,
+    borderRadius: 10,
+    width: '85%',
+    alignItems: 'center'
+  },
+  modalTitle: {
+    fontSize: hp('2%'),
+    fontWeight: 'bold',
+    marginBottom: hp('2%')
+  },
+  languageBox: {
+    backgroundColor: '#fff',
+    margin: 4,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 80,
+    height: 40,
+  },
+  closeButton:
+  {
+    marginTop: 10,
+    padding: hp('2%'),
+    backgroundColor: '#fff',
+    borderRadius: 10
+  },
+  closeButtonText:
+  {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'red'
+  },
+
 });
+
 

@@ -2,9 +2,9 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Splash from '../Screen/Authntication/Splash';
-import Login from '../Screen/Authntication/Login';
+
 import SignUp from '../Screen/Authntication/SignUp';
-import GetOTP from '../Screen/Authntication/GetOTP';
+
 import Name from '../Screen/Authntication/Name';
 import HomeScreen from '../Screen/HomeModule/HomeScreen';
 import BottomTabNavigation from './BottomNavigation';
@@ -45,6 +45,9 @@ import PujariProfile from '../Screen/Pujari/PujariProfile';
 import BookPoojaform from '../Screen/Pujari/BookPoojaform';
 import Productdetails from '../Screen/Shop/Productdetails';
 import Productpayment from '../Screen/Shop/Productpayment';
+import GetOTPScreen from '../Screen/Authntication/GetOTPScreen';
+import LoginScreen from '../Screen/Authntication/LoginScreen';
+import Pujari from '../Screen/BottomScreen/Pujari';
 import AstrologerBottomTabNavigation from './AstrologerBottomTab/AstrologerBottomTabNavigation';
 import PujariBottomTab from './PujariBottomTabNavi/PujariBottomTab';
 import PujariProfileScreen from '../Screen/PujariBottomTabScreen/PujariModule/PujariProfileScreen';
@@ -57,6 +60,8 @@ import AllPujariFeedBack from '../Screen/PujariBottomTabScreen/PujariModule/AllP
 import CompletedPoojaScreen from '../Screen/PujariBottomTabScreen/PujariModule/CompletedPoojaScreen';
 import EarningBreakdown from '../Screen/PujariBottomTabScreen/PujariModule/EarningBreakdown';
 import PujariTodaysSchedule from '../Screen/PujariBottomTabScreen/PujariModule/PujariTodaysSchedule';
+import ChatScreen from '../Screen/AstroBottomTab/ChatScreen';
+
 
 
 
@@ -72,7 +77,7 @@ const App_Navigation = () => {
             />
             <Stack.Screen
                 name='Login'
-                component={Login}
+                component={LoginScreen}
                 options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -82,7 +87,7 @@ const App_Navigation = () => {
             />
             <Stack.Screen
                 name='GetOTP'
-                component={GetOTP}
+                component={GetOTPScreen}
                 options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -287,6 +292,13 @@ const App_Navigation = () => {
             />
             {/*Pujari */}
             <Stack.Screen
+                name='Pujari'
+                component={Pujari}
+                options={{ headerShown: false }}
+            />
+
+
+            <Stack.Screen
                 name='OnlineOfflineBookPooja'
                 component={OnlineOfflineBookPooja}
                 options={{ headerShown: false }}
@@ -364,6 +376,13 @@ const App_Navigation = () => {
                 component={EarningBreakdown}
                 options={{ headerShown: false }}
             />
+             <Stack.Screen
+                name='ChatScreen'
+                component={ChatScreen}
+                options={{ headerShown: false }}
+            />
+              {/*Astrology Module */}
+
 
         </Stack.Navigator>
 
