@@ -1,7 +1,5 @@
 
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
 import React ,{useEffect}from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
