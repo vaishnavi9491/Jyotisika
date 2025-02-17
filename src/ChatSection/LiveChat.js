@@ -15,8 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const LiveChat = ({ navigation, route }) => {
-  const { userName } = route.params;
-
+  const { userName, } = route.params;
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [timer, setTimer] = useState(0);
@@ -134,6 +133,7 @@ const LiveChat = ({ navigation, route }) => {
             style={styles.profileImage}
           />
           <Text style={styles.userName}>{userName}</Text>
+
         </View>
 
         <View style={styles.sessionInfo}>

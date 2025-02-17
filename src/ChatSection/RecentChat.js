@@ -12,10 +12,7 @@ import {
     Alert
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
 
 const RecentChat = ({ navigation }) => {
     const [isReviewModalVisible, setReviewModalVisible] = useState(false);
@@ -85,16 +82,11 @@ const RecentChat = ({ navigation }) => {
     };
 
 
-    // const handleChatPress = (item) => {
-    //     setSelectedChat(item);
-    //     setReviewModalVisible(true);
-    // };
+
 
     const handleChatPress = (user) => {
-        navigation.navigate("LiveChat", { userName: user.name }); // Pass chat data
+        navigation.navigate("LiveChat", { userName: user.name, });
     };
-
-
 
     const handleStarPress = (star) => {
         setRating(star);
