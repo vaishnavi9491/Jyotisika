@@ -1,5 +1,5 @@
 
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,7 +14,7 @@ const BookedPoojaScreen = () => {
   const lang = useSelector((state) => state.language.lang);
 
   useEffect(() => {
-      i18n.changeLanguage(lang);
+    i18n.changeLanguage(lang);
   }, [lang]);
 
   const bookedPoojas = [
@@ -198,16 +198,21 @@ const styles = StyleSheet.create({
 
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: hp("2%"), flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
+    padding: hp('2%'),
     backgroundColor: '#f8f9fa',
-    elevation: 5, // Adds shadow for Android
-    shadowColor: '#000', // Adds shadow for iOS
+    elevation: 5,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+    zIndex: 1,
+    width: '100%',
   },
   balance: {
     fontSize: hp('2%'),
@@ -215,7 +220,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   Jtext: {
-    marginRight: hp('20%'),
+    marginRight: hp('30%'),
     color: '#000',
     fontWeight: 'bold',
   },

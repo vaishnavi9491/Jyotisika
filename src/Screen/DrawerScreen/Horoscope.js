@@ -23,10 +23,6 @@ const Horoscope = ({ navigation }) => {
           <Image style={styles.profilePic} source={require('../../assets/image/jane.png')} />
           <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
 
-          <TouchableOpacity style={styles.settings}>
-            <Fontisto name="language" size={15} />
-          </TouchableOpacity>
-
           <TouchableOpacity>
             <AntDesign name="customerservice" size={22} color='#000' />
           </TouchableOpacity>
@@ -159,7 +155,7 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   Jtext: {
-    marginRight: hp('20%'),
+    marginRight: hp('25%'),
     color: '#000',
     fontWeight: 'bold',
   },

@@ -85,10 +85,16 @@ const RecentChat = ({ navigation }) => {
     };
 
 
-    const handleChatPress = (item) => {
-        setSelectedChat(item);
-        setReviewModalVisible(true);
+    // const handleChatPress = (item) => {
+    //     setSelectedChat(item);
+    //     setReviewModalVisible(true);
+    // };
+
+    const handleChatPress = (user) => {
+        navigation.navigate("LiveChat", { userName: user.name }); // Pass chat data
     };
+
+
 
     const handleStarPress = (star) => {
         setRating(star);
@@ -105,12 +111,12 @@ const RecentChat = ({ navigation }) => {
         setThankYouModalVisible(true);
     };
 
-    const closeThankYouModal = () => {
-        setThankYouModalVisible(false);
-        setReviewText("");
-        setRating(0);
-        setSelectedChat(null);
-    };
+    // const closeThankYouModal = () => {
+    //     setThankYouModalVisible(false);
+    //     setReviewText("");
+    //     setRating(0);
+    //     setSelectedChat(null);
+    // };
 
 
 
@@ -172,66 +178,6 @@ const RecentChat = ({ navigation }) => {
                 ListHeaderComponent={renderHeader}
                 contentContainerStyle={styles.list}
             />
-
-            {/* Review Modal */}
-            <Modal
-                visible={isReviewModalVisible}
-                transparent={true}
-                animationType="slide"
-                onRequestClose={() => setReviewModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-
-                        <Text style={styles.modalTitle}>
-                            Submit Review for {selectedChat?.name}
-                        </Text>
-                        <View style={styles.starContainer}>
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <TouchableOpacity
-                                    key={star}
-                                    onPress={() => handleStarPress(star)}
-                                >
-                                    <AntDesign
-                                        name={star <= rating ? "star" : "staro"}
-                                        size={30}
-                                        color="#FFD700"
-                                    />
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-                        <Text style={styles.reviewText}>Comment your review</Text>
-                        <TextInput
-                            style={styles.textInput}
-                            placeholder="Write your review here..."
-                            value={reviewText}
-                            onChangeText={setReviewText}
-                            multiline
-                        />
-                        <Button title="Submit" onPress={handleSubmitReview} />
-                    </View>
-                </View>
-            </Modal>
-
-            {/* Thank You Modal */}
-            <Modal
-                visible={isThankYouModalVisible}
-                transparent={true}
-                animationType="slide"
-                onRequestClose={closeThankYouModal}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Thank You!</Text>
-                        <Text style={styles.reviewText}>Your review has been submitted successfully.</Text>
-                        <Image
-                            source={require('../assets/image/Jyotisika.png')}
-                            style={{ height: hp('15%'), width: wp('30%') }}
-                        />
-                        <Button title="Close" onPress={closeThankYouModal} />
-                    </View>
-                </View>
-            </Modal>
         </View>
     );
 };

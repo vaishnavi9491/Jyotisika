@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
@@ -9,75 +10,70 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  LogBox,
-  NativeEventEmitter,
-  Linking
+  Linking,
+  Modal,
+  FlatList
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Voice from '@react-native-voice/voice';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { useTranslation } from 'react-i18next';
-import i18n from '../../Component/i18n';  // Make sure you have i18n setup
+import i18n from '../../Component/i18n';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage } from '../../Redux/Slice/languageSlice';
 
 const HomeScreen = ({ navigation }) => {
 
   const [searchText, setSearchText] = useState('');
-  const [isListening, setIsListening] = useState(false);
   const [activeButton, setActiveButton] = useState('');
   const inputRef = useRef(null);
-  // const [language, setLanguage] = useState('en');
   const language = useSelector((state) => state.language.language);
   const [open, setOpen] = useState(false);
-
-  const [items, setItems] = useState([
-    { label: 'English', value: 'en' },
-    { label: 'Hindi', value: 'hi' },
-    { label: 'Marathi', value: 'mr' },
-  ]);
-  const [selectLanguage, setSelectLanguage] = useState('English');
-  const { t } = useTranslation();
+  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
+  const [selectedLanguage, setSelectedLanguage] = useState('English');
+
+  const languages = [
+    { id: 'en', name: 'English' },
+    { id: 'hi', name: 'हिंदी' },
+    { id: 'mr', name: 'मराठी' },
+
+  ];
+
+
   useEffect(() => {
-    checkLng();
+    checkStoredLanguage();
   }, []);
 
-  const checkLng = async () => {
-    const x = await AsyncStorage.getItem('LANG');
-    if (x != null) {
-      i18n.changeLanguage(x);
-      dispatch(setLanguage(x));
-      let lng =
-        x === 'en'
-          ? 'English'
-          : x === 'hi'
-            ? 'हिंदी'
-            : x === 'mr'
-              ? 'मराठी'
-              : 'English';
-      setSelectLanguage(lng);
+  const checkStoredLanguage = async () => {
+    const storedLang = await AsyncStorage.getItem('LANG');
+    if (storedLang) {
+      i18n.changeLanguage(storedLang);
+      dispatch(setLanguage(storedLang));
+
+      // Map language codes to language names
+      const languageMap = {
+        en: 'English',
+        hi: 'हिंदी',
+        mr: 'मराठी',
+      };
+
+      setSelectedLanguage(languageMap[storedLang] || 'English');
     }
   };
+  const handleLanguageSelect = async (lang) => {
+    dispatch(setLanguage(lang.id));
+    i18n.changeLanguage(lang.id);
+    await AsyncStorage.setItem('LANG', lang.id);
 
-
-  const handleLanguageChange = async (value) => {
-    dispatch(setLanguage(value)); // Update Redux store
-    i18n.changeLanguage(value); // Update the i18n language
-    await AsyncStorage.setItem('LANG', value); // Persist the selected language in AsyncStorage
-
-    // Update the selected language text for UI
-    const selectedLng = value === 'en' ? 'English' : value === 'hi' ? 'हिंदी' : 'मराठी';
-    setSelectLanguage(selectedLng);
+    setSelectedLanguage(lang.name);
+    setModalVisible(false);
   };
-
   const profiles = [
     {
       id: 1,
@@ -131,13 +127,7 @@ const HomeScreen = ({ navigation }) => {
     Linking.openURL(url).catch((err) => console.error('Error:', err));
   };
 
-  useEffect(() => {
 
-    return () => {
-      // Cleanup listeners when the component is unmounted
-      Voice.destroy().then(Voice.removeAllListeners);
-    };
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -147,34 +137,50 @@ const HomeScreen = ({ navigation }) => {
           <Entypo name="menu" size={20} />
         </TouchableOpacity>
         <Text style={styles.Jtext}>{t('Jyotisika')}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
-          <AntDesign name="customerservice" size={22} color="#000" />
-        </TouchableOpacity>
-        {/* Language Dropdown */}
-        <View style={styles.dropdownWrapper}>
-          <DropDownPicker
-            open={open}
-            value={language} // Redux madhun language ghete
-            items={items}
-            setOpen={setOpen}
-            setValue={(callback) => {
-              const selectedValue = callback(language); // Callback madhe current value ghetay
-              handleLanguageChange(selectedValue); // Function call karnay
-            }}
-            setItems={setItems}
-            onChangeValue={handleLanguageChange}
-            style={styles.dropdown}
-            containerStyle={styles.dropdownContainer}
-            dropDownDirection="BOTTOM"
-            placeholder="Choose Language"
-            placeholderStyle={styles.dropdownPlaceholder}
-          />
-        </View>
 
-        {/* Customer Service Icon */}
+        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.languageButton}>
+          <Fontisto name="language" size={24} color="#000" backgroundColor='#FFCC00' />
+          <Text style={styles.languageText}></Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('QuestionCategory')}>
+          <AntDesign name="customerservice" size={20} color="#000" />
+        </TouchableOpacity>
+
+        <Modal visible={modalVisible} animationType="fade" transparent={true}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalTitle}>Choose your language</Text>
+
+              {/* Search Bar */}
+
+              {/* Language List */}
+              <FlatList
+                data={languages.filter(lang => lang.name.toLowerCase().includes(searchText.toLowerCase()))}
+                numColumns={3}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={[
+                      styles.languageBox,
+                      selectedLanguage === item.name && styles.selectedLanguageBox,
+                    ]}
+                    onPress={() => handleLanguageSelect(item)}
+                  >
+                    <Text style={styles.languageText}>{item.name}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+
+              {/* Close Button */}
+              <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
+                <Text style={styles.closeButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
 
       </View>
-
 
 
       {/* Search Bar */}
@@ -189,9 +195,7 @@ const HomeScreen = ({ navigation }) => {
             value={searchText}
             onChangeText={setSearchText}
           />
-          {/* <TouchableOpacity onPress={isListening ? stopListening : startListening} style={styles.micIcon}>
-            <Fontisto name={isListening ? 'stop' : 'mic'} size={20} color="#fff" />
-          </TouchableOpacity> */}
+
         </View>
 
         {/* Services Section with Linear Gradient */}
@@ -510,64 +514,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     zIndex: 1,
-    width: '100%', // Ensure header takes up the full width
+    width: '100%',
   },
-  profilePic: {
-    width: wp('10%'),
-    height: hp('5%'),
-    borderRadius: wp(5),
-  },
-  balance: {
-    fontSize: hp('2%'),
-    fontWeight: 'bold',
-    color: '#000'
-  },
+
   settings: {
     backgroundColor: '#FFD700',
     padding: wp('2%'),
     borderRadius: wp(2),
   },
   Jtext: {
-   fontSize: hp('2.5%'),
-    marginLeft:hp('5%'),
+    fontSize: hp('2.5%'),
+    marginRight: hp('30%'),
     fontWeight: 'bold',
     color: '#000',
   },
-  dropdownWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingRight: wp('2%'), // Space between dropdown and customer service icon
-    width: wp('50%'), // Adjust the width as per your preference
-  },
-  dropdownContainer: {
-    width: wp('30%'), // Set width for the dropdown container
-    zIndex: 10,
-    marginTop: hp('2%'), // Ensure dropdown opens below
-  },
-  dropdown: {
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 5,
-    minHeight: 20,
-  },
-  dropdownPlaceholder: {
-    fontSize: hp('1%'),
-    color: '#aaa',
-  },
-  customerService: {
-    paddingLeft: wp('2%'), // Adjust spacing from the dropdown
-  },
-
 
   searchBar: {
     position: 'relative',
     marginVertical: hp('2%'),
     marginHorizontal: wp('4%'),
-
-
   },
   input: {
     borderWidth: 1,
@@ -585,15 +550,7 @@ const styles = StyleSheet.create({
     top: '50%',
     transform: [{ translateY: -10 }],
   },
-  micIcon: {
-    position: 'absolute',
-    right: wp('3%'),
-    top: '40%',
-    transform: [{ translateY: -10 }],
-    backgroundColor: '#FFD700',
-    padding: wp('1.5%'),
-    borderRadius: hp('5%'),
-  },
+
   services: {
     flexDirection: 'row',
     paddingVertical: hp('1%'),
@@ -691,7 +648,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   Jtext: {
-    marginRight: hp('20%'),
+    marginRight: hp('25%'),
     color: '#000',
     fontWeight: 'bold',
   },
@@ -739,7 +696,7 @@ const styles = StyleSheet.create({
   profileActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: hp(2),
+    marginTop: hp('2%'),
   },
   chatStyle: {
     flex: 1,
@@ -776,6 +733,61 @@ const styles = StyleSheet.create({
     height: hp('15%'),
     borderRadius: 10
   },
+  languageButton:
+  {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 10
+  },
+  languageText:
+  {
+    fontSize: hp('2%'),
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  modalOverlay:
+  {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  modalContainer: {
+    backgroundColor: '#FFD66B',
+    padding: 20,
+    borderRadius: 10,
+    width: '85%',
+    alignItems: 'center'
+  },
+  modalTitle: {
+    fontSize: hp('2%'),
+    fontWeight: 'bold',
+    marginBottom: hp('2%')
+  },
+  languageBox: {
+    backgroundColor: '#fff',
+    margin: 4,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 80,
+    height: 40,
+  },
+  closeButton:
+  {
+    marginTop: 10,
+    padding: hp('2%'),
+    backgroundColor: '#fff',
+    borderRadius: 10
+  },
+  closeButtonText:
+  {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'red'
+  },
 
 });
+
 

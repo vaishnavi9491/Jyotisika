@@ -43,12 +43,12 @@ const Astrology = ({ navigation }) => {
 
   const handleCallPress = () => {
     setActiveButton('call');
-    const phoneNumber = '1234567890'; // Replace with the desired number
+    const phoneNumber = '1234567890'; 
     Linking.openURL(`tel:${phoneNumber}`);
   };
 
   useEffect(() => {
-    i18n.changeLanguage(lang); // Redux मधून घेतलेली भाषा i18n मध्ये बदला
+    i18n.changeLanguage(lang); 
   }, [lang]);
 
 

@@ -253,10 +253,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: hp("2%"), flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: hp('2%'),
+    backgroundColor: '#f8f9fa',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    zIndex: 1,
+    width: '100%',
 
   },
   profilePic: {
@@ -276,7 +287,7 @@ const styles = StyleSheet.create({
 
   },
   Jtext: {
-    marginRight: hp('20%'),
+    marginRight: hp('30%'),
     color: '#000',
     fontWeight: 'bold',
   },

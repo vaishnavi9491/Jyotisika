@@ -55,6 +55,7 @@ import AllRescentRequest from '../Screen/PujariBottomTabScreen/PujariModule/AllR
 import RateChart from '../Screen/PujariBottomTabScreen/PujariModule/RateChart';
 import AllPoojaRemainder from '../Screen/PujariBottomTabScreen/PujariModule/AllPoojaRemainder';
 import AllMonthlyEarning from '../Screen/PujariBottomTabScreen/PujariModule/AllMonthlyEarning';
+import ChatScreen from '../Screen/AstroBottomTab/ChatScreen';
 
 
 
@@ -341,10 +342,12 @@ const App_Navigation = () => {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name='RateChart'
-                component={RateChart}
+                name='ChatScreen'
+                component={ChatScreen}
                 options={{ headerShown: false }}
             />
+              {/*Astrology Module */}
+
 
         </Stack.Navigator>
 

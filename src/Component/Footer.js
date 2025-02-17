@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFCC00',
     paddingVertical: hp('4%'),
     alignItems: 'center',
-    marginTop: hp('13%'),
+    marginTop: hp('20%'),
   },
 
   footerText: {

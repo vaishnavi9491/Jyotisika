@@ -11,8 +11,6 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  LogBox,
-  NativeEventEmitter,
   ImageBackground,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -26,13 +24,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from '../../Component/i18n';
 
 const Pujari = ({ navigation }) => {
-  LogBox.ignoreLogs([
-    '`new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method.',
-  ]);
-
-  if (!NativeEventEmitter.prototype.removeListeners) {
-    NativeEventEmitter.prototype.removeListeners = () => { };
-  }
+  
 
 
   const { t } = useTranslation();
@@ -70,47 +62,10 @@ const Pujari = ({ navigation }) => {
 
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    Voice.onSpeechResults = onSpeechResults;
-    Voice.onSpeechError = onSpeechError;
 
-    return () => {
-      Voice.destroy().then(Voice.removeAllListeners);
-    };
-  }, []);
+  
 
-  const startListening = async () => {
-    try {
-      setIsListening(true);
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-      await Voice.start('en-US');
-    } catch (error) {
-      console.error('Error starting voice recognition:', error);
-    }
-  };
-
-  const stopListening = async () => {
-    try {
-      setIsListening(false);
-      await Voice.stop();
-    } catch (error) {
-      console.error('Error stopping voice recognition:', error);
-    }
-  };
-
-  const onSpeechResults = (event) => {
-    if (event.value && event.value.length > 0) {
-      setSearchText(event.value[0]);
-    }
-    setIsListening(false);
-  };
-
-  const onSpeechError = (error) => {
-    console.error('Speech recognition error:', error);
-    setIsListening(false);
-  };
+ 
 
   const handleServiceTypeSelection = (cardId, type) => {
     setCards((prevCards) =>
@@ -136,15 +91,13 @@ const Pujari = ({ navigation }) => {
           <Fontisto name="search" style={styles.searchIcon} size={20} color="#000" />
           <TextInput
             ref={inputRef}
-            placeholder={t("Search astrologer, pujari, products")}
-            placeholderTextColor="#aaa"
+            placeholder={t("Search pooja ")}
+            placeholderTextColor="#ccc"
             style={styles.input}
             value={searchText}
             onChangeText={setSearchText}
           />
-          <TouchableOpacity onPress={isListening ? stopListening : startListening} style={styles.micIcon}>
-            <Fontisto name={isListening ? 'stop' : 'mic'} size={20} color="#fff" />
-          </TouchableOpacity>
+          
         </View>
 
         <Text style={styles.sectionTitle}>{t('Services')}</Text>

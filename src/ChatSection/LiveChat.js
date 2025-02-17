@@ -14,14 +14,19 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const LiveChat = ({navigation}) => {
+const LiveChat = ({ navigation, route }) => {
+  const { userName } = route.params;
+
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [timer, setTimer] = useState(0);
   const [sessionActive, setSessionActive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isEndSessionModalVisible, setEndSessionModalVisible] = useState(false);
+  const [isReviewModalVisible, setReviewModalVisible] = useState(false);
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState(0);
 
   const categories = [
     'Love & Relationship',
@@ -33,6 +38,23 @@ const LiveChat = ({navigation}) => {
     'Education',
     'Business',
   ];
+
+  useEffect(() => {
+    let timerInterval;
+    if (sessionActive) {
+      timerInterval = setInterval(() => {
+        setTimer((prevTime) => prevTime + 1);
+      }, 1000);
+
+      // Auto end session after 60 seconds
+      if (timer >= 60) {
+        clearInterval(timerInterval);
+        autoEndSession();
+      }
+    }
+
+    return () => clearInterval(timerInterval);
+  }, [timer, sessionActive]);
 
   const sendMessage = () => {
     if (message.trim()) {
@@ -58,19 +80,22 @@ const LiveChat = ({navigation}) => {
     ]);
   };
 
-  useEffect(() => {
-    let timerInterval;
-    if (sessionActive) {
-      timerInterval = setInterval(() => {
-        setTimer((prevTime) => prevTime + 1);
-      }, 1000);
-    }
-    return () => clearInterval(timerInterval);
-  }, [sessionActive]);
+  const submitReview = () => {
+    console.log('Rating:', rating);
+    console.log('Review:', review);
+    setReviewModalVisible(false);
+  };
+
 
   const handleEndSession = () => {
     setSessionActive(false);
-    setModalVisible(false);
+    setEndSessionModalVisible(false);
+    setReviewModalVisible(true);
+  };
+
+  const autoEndSession = () => {
+    setSessionActive(false);
+    setReviewModalVisible(true);
   };
 
   const handleCategorySelect = (category) => {
@@ -99,7 +124,7 @@ const LiveChat = ({navigation}) => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.header}>
-        <TouchableOpacity onPress={() =>navigation.navigate('App_Drawer_Navigation')}>
+        <TouchableOpacity onPress={() => navigation.navigate('App_Drawer_Navigation')}>
           <Icon name="arrow-back" size={wp('6%')} color="#000" />
         </TouchableOpacity>
 
@@ -108,12 +133,12 @@ const LiveChat = ({navigation}) => {
             source={require('../assets/image/jane.png')}
             style={styles.profileImage}
           />
-          <Text style={styles.profileName}>John Doe</Text>
+          <Text style={styles.userName}>{userName}</Text>
         </View>
 
         <View style={styles.sessionInfo}>
           <Text style={styles.timer}>{timer}s</Text>
-          <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.endSessionButton}>
+          <TouchableOpacity onPress={() => setEndSessionModalVisible(true)} style={styles.endSessionButton}>
             <Text style={styles.endSessionText}>End Session</Text>
           </TouchableOpacity>
         </View>
@@ -130,15 +155,14 @@ const LiveChat = ({navigation}) => {
             ]}
           >
             <Text style={styles.message}>{item.text}</Text>
+            <Text style={styles.chatMessage}>{chat.message}</Text>
             <Text style={styles.timestamp}>{item.timestamp}</Text>
           </View>
         )}
       />
 
       <Text style={styles.focustext}>
-        {selectedCategory
-          ? `Focus: ${selectedCategory}`
-          : 'Choose your focus for the session'}
+        {selectedCategory ? `Focus: ${selectedCategory}` : 'Choose your focus for the session'}
       </Text>
 
       <View style={styles.categoryGrid}>
@@ -165,28 +189,22 @@ const LiveChat = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-
+      {/* End Session Confirmation Modal */}
       <Modal
-        visible={isModalVisible}
+        visible={isEndSessionModalVisible}
         transparent
         animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
+        onRequestClose={() => setEndSessionModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Icon name="warning" size={wp('12%')} color="#FFC107" />
-            <Text style={styles.modalText}>Do You Really Want to End the Session?</Text>
+            <Text style={styles.modalText}>Do you really want to end the session?</Text>
             <View style={styles.modalActions}>
-              <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={() => setModalVisible(false)}
-              >
+              <TouchableOpacity style={styles.cancelButton} onPress={() => setEndSessionModalVisible(false)}>
                 <Text style={styles.cancelButtonText}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.endButton}
-                onPress={handleEndSession}
-              >
+              <TouchableOpacity style={styles.endButton} onPress={handleEndSession}>
                 <Text style={styles.endButtonText}>End</Text>
               </TouchableOpacity>
             </View>
@@ -194,12 +212,54 @@ const LiveChat = ({navigation}) => {
         </View>
       </Modal>
 
+      {/* Rating & Review Modal */}
+      <Modal
+        visible={isReviewModalVisible}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setReviewModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            {/* Close Button */}
+            <TouchableOpacity style={styles.closeButton} onPress={() => setReviewModalVisible(false)}>
+              <Icon name="close" size={24} color="#000" />
+            </TouchableOpacity>
 
+            {/* Review Heading */}
+            <Text style={styles.modalText}>Rate Your Chat Experience</Text>
+
+            {/* Star Rating */}
+            <View style={styles.starContainer}>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <TouchableOpacity key={star} onPress={() => setRating(star)}>
+                  <Icon name="star" size={30} color={star <= rating ? '#FFD700' : '#E0E0E0'} />
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Review Input */}
+            <TextInput
+              style={styles.reviewInput}
+              placeholder="Write your feedback..."
+              value={review}
+              onChangeText={setReview}
+              multiline
+            />
+
+            {/* Submit Button */}
+            <TouchableOpacity style={styles.submitButton} onPress={submitReview}>
+              <Text style={styles.submitButtonText}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
 
     </KeyboardAvoidingView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -230,7 +290,7 @@ const styles = StyleSheet.create({
     height: wp('12%'),
     borderRadius: wp('6%'),
   },
-  profileName: {
+  userName: {
     fontSize: wp('4.5%'),
     marginLeft: wp('2%'),
     color: '#000',
@@ -259,7 +319,7 @@ const styles = StyleSheet.create({
     padding: hp('1.5%'),
     borderRadius: wp('3%'),
     maxWidth: '70%',
-    color:'#000',
+    color: '#000',
   },
   myMessage: {
     backgroundColor: '#CFF7D3',
@@ -271,7 +331,7 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: wp('4%'),
-    color:'#000'
+    color: '#000'
   },
   inputContainer: {
     flexDirection: 'row',
@@ -330,19 +390,6 @@ const styles = StyleSheet.create({
     marginTop: hp('0.5%'),
     textAlign: 'right',
   },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    width: '80%',
-    backgroundColor: '#fff',
-    borderRadius: wp('3%'),
-    padding: wp('5%'),
-    alignItems: 'center',
-  },
   modalText: {
     fontSize: wp('4.5%'),
     textAlign: 'center',
@@ -378,6 +425,53 @@ const styles = StyleSheet.create({
     color: '#FF0000',
     fontSize: wp('4%'),
   },
+  starContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  reviewInput: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    color: '#000',
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 10,
+    textAlignVertical: 'top',
+  },
+  submitButton: {
+    marginTop: 15,
+    backgroundColor: '#FFD700',
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+  },
+  submitButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '85%',
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    elevation: 10,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+
 });
 
 export default LiveChat;

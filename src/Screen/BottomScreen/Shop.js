@@ -22,6 +22,7 @@ const Shop = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [visibleProducts, setVisibleProducts] = useState(4);
+  const [isExpanded, setIsExpanded] = useState(false);
   const inputRef = useRef(null);
 
   const { t } = useTranslation();
@@ -48,12 +49,14 @@ const Shop = ({ navigation }) => {
       : allProducts.filter((product) => product.category === selectedCategory);
 
   const handleShowMoreToggle = () => {
-    if (visibleProducts < filteredProducts.length) {
-      setVisibleProducts(filteredProducts.length);
+    if (isExpanded) {
+      setVisibleProducts(4); // Show fewer items
     } else {
-      setVisibleProducts(4);
+      setVisibleProducts(filteredProducts.length); // Show all items
     }
+    setIsExpanded(!isExpanded);
   };
+
   useEffect(() => {
     i18n.changeLanguage(lang);
   }, [lang]);
@@ -134,7 +137,7 @@ const Shop = ({ navigation }) => {
           />
 
           <TouchableOpacity onPress={handleShowMoreToggle} style={styles.showMoreButton}>
-            <Text style={styles.showMoreText}>Show more</Text>
+            <Text style={styles.showMoreText}>{isExpanded ? 'Show Less' : 'Show More'}</Text>
           </TouchableOpacity>
 
           {/* Combo Offers Section */}
@@ -230,19 +233,21 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#000',
     marginLeft: wp('4%'),
-    marginTop: hp('1%'),
+
   },
   categoryItem: {
     height: hp('5%'),
     paddingHorizontal: wp('3%'),
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ccc',
     borderRadius: wp(2),
-    marginRight: wp('3%'),
+    marginRight: hp('5%'),
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: hp('1%')
   },
   selectedCategory: {
     backgroundColor: '#FFD700',
+    marginTop: hp('1%')
   },
   categoryRow: {
     flexDirection: 'row',

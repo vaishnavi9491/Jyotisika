@@ -21,12 +21,7 @@ const PanchangScreen = ({ navigation }) => {
                     <AntDesign name="arrowleft" size={20} color="#000" />
                 </TouchableOpacity>
                 <Text style={styles.Jtext}>Panchang</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-                    <Text style={styles.balance}>₹ 50</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.settings}>
-                    <Fontisto name="language" size={15} />
-                </TouchableOpacity>
+
                 <TouchableOpacity>
                     <AntDesign name="customerservice" size={22} color='#000' />
                 </TouchableOpacity>
@@ -116,7 +111,7 @@ const styles = StyleSheet.create({
         color: "#000",
     },
     Jtext: {
-        marginRight: hp("20%"),
+        marginRight: hp("25%"),
         color: "#000",
         fontWeight: "bold",
     },
