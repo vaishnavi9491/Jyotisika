@@ -52,7 +52,7 @@ const UserBottomTabNavigation = () => {
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => (
-              <Text style={[styles.label, focused && styles.labelFocused]}>Home</Text>
+              <Text style={[styles.label, focused && styles.labelFocused]}>{t('Home')}</Text>
             ),
             tabBarIcon: ({ focused }) => (
               <View style={styles.iconWrapper}>
@@ -74,7 +74,7 @@ const UserBottomTabNavigation = () => {
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => (
-              <Text style={[styles.label, focused && styles.labelFocused]}>Astro</Text>
+              <Text style={[styles.label, focused && styles.labelFocused]}>{t('Astro')}</Text>
             ),
             tabBarIcon: ({ focused }) => (
               <View style={styles.iconWrapper}>
@@ -96,7 +96,7 @@ const UserBottomTabNavigation = () => {
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => (
-              <Text style={[styles.label, focused && styles.labelFocused]}>Live</Text>
+              <Text style={[styles.label, focused && styles.labelFocused]}>{t('Live')}</Text>
             ),
             tabBarIcon: ({ focused }) => (
               <View style={styles.iconWrapper}>
@@ -118,7 +118,7 @@ const UserBottomTabNavigation = () => {
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => (
-              <Text style={[styles.label, focused && styles.labelFocused]}>Pujari</Text>
+              <Text style={[styles.label, focused && styles.labelFocused]}>{t('Pujari')}</Text>
             ),
             tabBarIcon: ({ focused }) => (
               <View style={styles.iconWrapper}>
@@ -140,7 +140,7 @@ const UserBottomTabNavigation = () => {
           options={{
             headerShown: false,
             tabBarLabel: ({ focused }) => (
-              <Text style={[styles.label, focused && styles.labelFocused]}>Shop</Text>
+              <Text style={[styles.label, focused && styles.labelFocused]}>{t('Shop')}</Text>
             ),
             tabBarIcon: ({ focused }) => (
               <View style={styles.iconWrapper}>
