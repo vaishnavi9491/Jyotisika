@@ -8,24 +8,19 @@ import RecentRequest from '../../Component/PujariHome/RescentRequest';
 import PoojaReminders from '../../Component/PujariHome/PoojaReminders ';
 import MonthlyEarnings from '../../Component/PujariHome/MonthlyEarnings';
 import Feedback from '../../Component/PujariHome/Feedback';
+import HeadingPart from '../../Component/PujariHome/HeadingPart';
 
 const PujariHomeScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
-            <View style={styles.heading}>
-                <TouchableOpacity onPress={() => navigation.navigate('PujariProfileScreen')}>
-                    <Image source={require('../../assets/image/john.png')} style={styles.headerImage} />
-                </TouchableOpacity>
-                <Text style={styles.headTeaxt}>Jyotisika</Text>
-                <FontAwesome name="bell" size={24} color="black" style={styles.notificationIcon} />
-            </View>
+       <HeadingPart navigation={navigation}/>
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContainer}>
                 <View style={{ paddingHorizontal: hp('0.5%') }}>
                     <View style={styles.actionRow}>
                         {[
                             {
                                 title: "Today's Schedule",
-                                screen: "ScheduleScreen",
+                                screen: "PujariTodaysSchedule",
                                 color: "#CFF7D3",
                                 icon: "calendar-alt",
                                 iconLib: FontAwesome5,
@@ -34,7 +29,7 @@ const PujariHomeScreen = ({navigation}) => {
                             },
                             {
                                 title: "Upcoming Pooja",
-                                screen: "UpcomingPoojaScreen",
+                                screen: "AllRescentRequest",
                                 color: "#E8DEF8",
                                 icon: "event",
                                 iconLib: MaterialIcons,
@@ -52,7 +47,7 @@ const PujariHomeScreen = ({navigation}) => {
                             },
                             {
                                 title: "Add Pooja",
-                                screen: "AddPoojaScreen",
+                                screen: "AddPooja",
                                 color: "#FFF1C2",
                                 icon: "calendar-plus",
                                 iconLib: FontAwesome5,
@@ -63,7 +58,13 @@ const PujariHomeScreen = ({navigation}) => {
                             <TouchableOpacity
                                 key={index}
                                 style={[styles.actionButton, { backgroundColor: item.color }]}
-                                onPress={() => navigation.navigate(item.screen)}
+                                onPress={() => {
+                                    if (item.title === "Add Pooja") {
+                                        navigation.navigate("PujariProfileScreen", { screen: "Advanced" }); // Navigate to Advanced tab
+                                    } else {
+                                        navigation.navigate(item.screen);
+                                    }
+                                }}
                             >
                                 <item.iconLib
                                     name={item.icon}
@@ -82,7 +83,8 @@ const PujariHomeScreen = ({navigation}) => {
                     {/* MonthlyEarnings Component */}
                     <MonthlyEarnings  navigation={navigation} limit={1}/>
                     {/* Feedback Component */}
-                    <Feedback />
+                    <Feedback navigation={navigation} limit={3} vertical={false} />
+
                 </View>
             </ScrollView>
         </View>
@@ -95,30 +97,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginBottom: hp('7%'),
-    },
-    heading: {
-        backgroundColor: '#fff',
-        padding: hp('1.5%'),
-        elevation: 8,
-        flexDirection: 'row',
-    },
-    headerImage: {
-        width: wp('12%'),
-        height: wp('12%'),
-        borderRadius: wp('5%'),
-        marginLeft: hp('1.5%')
-    },
-    headTeaxt: {
-        color: '#000',
-        alignSelf: 'center',
-        fontWeight: 'bold',
-        fontSize: hp('2.3%'),
-        marginLeft: hp('2%')
-    },
-    notificationIcon: {
-        marginLeft: 'auto',
-        marginRight: wp('5%'),
-        alignSelf: 'center'
     },
     scrollContainer: {
         padding: hp('1.4%')

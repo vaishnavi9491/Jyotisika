@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View ,StatusBar} from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeIcon from 'react-native-vector-icons/Ionicons';
@@ -15,6 +15,8 @@ const Tab = createBottomTabNavigator();
 
 const AstrologerBottomTabNavigation = () => {
   return (
+    <>
+    <StatusBar backgroundColor='#94CAF4' barStyle="light-content" />
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: true,
@@ -118,6 +120,7 @@ const AstrologerBottomTabNavigation = () => {
         }}
       />
     </Tab.Navigator>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeIcon from 'react-native-vector-icons/Ionicons';
@@ -18,131 +18,134 @@ const Tab = createBottomTabNavigator();
 
 const AstrologerBottomTabNavigation = () => {
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarShowLabel: true,
-        tabBarHideOnKeyboard: true,
-        tabBarStyle: {
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          elevation: 10,
-          backgroundColor: '#FFCC00',
-          height: '7%',
-          // Add shadow styles if needed
-        }
-      }}>
-      <Tab.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Home</Text>
-          ),
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconWrapper}>
-              <View style={[styles.iconContainer, focused && styles.iconFocused]}>
-                <HomeIcon
-                  name='home'
-                  color={focused ? '#000' : 'white'}
-                  size={28}
-                  style={{ alignSelf: 'center' }}
-                />
+    <>
+      <StatusBar backgroundColor='#FFCC00' barStyle="light-content" />
+      <Tab.Navigator
+        screenOptions={{
+          tabBarShowLabel: true,
+          tabBarHideOnKeyboard: true,
+          tabBarStyle: {
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            elevation: 10,
+            backgroundColor: '#FFCC00',
+            height: '7%',
+            // Add shadow styles if needed
+          }
+        }}>
+        <Tab.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => (
+              <Text style={[styles.label, focused && styles.labelFocused]}>Home</Text>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.iconWrapper}>
+                <View style={[styles.iconContainer, focused && styles.iconFocused]}>
+                  <HomeIcon
+                    name='home'
+                    color={focused ? '#000' : 'white'}
+                    size={28}
+                    style={{ alignSelf: 'center' }}
+                  />
+                </View>
               </View>
-            </View>
-          )
-        }}
-      />
-      <Tab.Screen
-        name="Astrology"
-        component={Astrology}
-        options={{
-          headerShown: false,
-          tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Astro</Text>
-          ),
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconWrapper}>
-              <View style={[styles.iconContainer, focused && styles.iconFocused]}>
-                <FontAwesome6
-                  name="user-astronaut"
-                  color={focused ? '#000' : 'white'}
-                  size={27}
-                  style={{ alignSelf: 'center' }}
-                />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Astrology"
+          component={Astrology}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => (
+              <Text style={[styles.label, focused && styles.labelFocused]}>Astro</Text>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.iconWrapper}>
+                <View style={[styles.iconContainer, focused && styles.iconFocused]}>
+                  <FontAwesome6
+                    name="user-astronaut"
+                    color={focused ? '#000' : 'white'}
+                    size={27}
+                    style={{ alignSelf: 'center' }}
+                  />
+                </View>
               </View>
-            </View>
-          )
-        }}
-      />
-      <Tab.Screen
-        name="Live"
-        component={Live}
-        options={{
-          headerShown: false,
-          tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Live</Text>
-          ),
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconWrapper}>
-              <View style={[styles.iconContainer, focused && styles.iconFocused]}>
-                <Foundation
-                  name="play-video"
-                  color={focused ? '#000' : 'white'}
-                  size={28}
-                  style={{ alignSelf: 'center' }}
-                />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Live"
+          component={Live}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => (
+              <Text style={[styles.label, focused && styles.labelFocused]}>Live</Text>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.iconWrapper}>
+                <View style={[styles.iconContainer, focused && styles.iconFocused]}>
+                  <Foundation
+                    name="play-video"
+                    color={focused ? '#000' : 'white'}
+                    size={28}
+                    style={{ alignSelf: 'center' }}
+                  />
+                </View>
               </View>
-            </View>
-          )
-        }}
-      />
-      <Tab.Screen
-        name="Pujari"
-        component={Pujari}
-        options={{
-          headerShown: false,
-          tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Pujari</Text>
-          ),
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconWrapper}>
-              <View style={[styles.iconContainer, focused && styles.iconFocused]}>
-                <FontAwesome6
-                  name="user-tie"
-                  color={focused ? '#000' : 'white'}
-                  size={28}
-                  style={{ alignSelf: 'center' }}
-                />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Pujari"
+          component={Pujari}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => (
+              <Text style={[styles.label, focused && styles.labelFocused]}>Pujari</Text>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.iconWrapper}>
+                <View style={[styles.iconContainer, focused && styles.iconFocused]}>
+                  <FontAwesome6
+                    name="user-tie"
+                    color={focused ? '#000' : 'white'}
+                    size={28}
+                    style={{ alignSelf: 'center' }}
+                  />
+                </View>
               </View>
-            </View>
-          )
-        }}
-      />
-      <Tab.Screen
-        name="Shop"
-        component={Shop}
-        options={{
-          headerShown: false,
-          tabBarLabel: ({ focused }) => (
-            <Text style={[styles.label, focused && styles.labelFocused]}>Shop</Text>
-          ),
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconWrapper}>
-              <View style={[styles.iconContainer, focused && styles.iconFocused]}>
-                <FontAwesome6
-                  name="cart-shopping"
-                  color={focused ? '#000' : 'white'}
-                  size={28}
-                  style={{ alignSelf: 'center' }}
-                />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="Shop"
+          component={Shop}
+          options={{
+            headerShown: false,
+            tabBarLabel: ({ focused }) => (
+              <Text style={[styles.label, focused && styles.labelFocused]}>Shop</Text>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.iconWrapper}>
+                <View style={[styles.iconContainer, focused && styles.iconFocused]}>
+                  <FontAwesome6
+                    name="cart-shopping"
+                    color={focused ? '#000' : 'white'}
+                    size={28}
+                    style={{ alignSelf: 'center' }}
+                  />
+                </View>
               </View>
-            </View>
-          )
-        }}
-      />
-    </Tab.Navigator>
+            )
+          }}
+        />
+      </Tab.Navigator>
+    </>
   );
 };
 

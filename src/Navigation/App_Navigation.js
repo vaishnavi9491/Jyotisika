@@ -52,7 +52,11 @@ import AllRescentRequest from '../Screen/PujariBottomTabScreen/PujariModule/AllR
 import RateChart from '../Screen/PujariBottomTabScreen/PujariModule/RateChart';
 import AllPoojaRemainder from '../Screen/PujariBottomTabScreen/PujariModule/AllPoojaRemainder';
 import AllMonthlyEarning from '../Screen/PujariBottomTabScreen/PujariModule/AllMonthlyEarning';
-
+import PujariNotification from '../Screen/PujariBottomTabScreen/PujariModule/PujariNotification';
+import AllPujariFeedBack from '../Screen/PujariBottomTabScreen/PujariModule/AllPujariFeedBack';
+import CompletedPoojaScreen from '../Screen/PujariBottomTabScreen/PujariModule/CompletedPoojaScreen';
+import EarningBreakdown from '../Screen/PujariBottomTabScreen/PujariModule/EarningBreakdown';
+import PujariTodaysSchedule from '../Screen/PujariBottomTabScreen/PujariModule/PujariTodaysSchedule';
 
 
 
@@ -316,6 +320,11 @@ const App_Navigation = () => {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
+                name='PujariNotification'
+                component={PujariNotification}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
                 name='AllRescentRequest'
                 component={AllRescentRequest}
                 options={{ headerShown: false }}
@@ -331,8 +340,28 @@ const App_Navigation = () => {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
+                name='AllPujariFeedBack'
+                component={AllPujariFeedBack}
+                options={{ headerShown: false }}
+            />
+             <Stack.Screen
+                name='PujariTodaysSchedule'
+                component={PujariTodaysSchedule}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
                 name='RateChart'
                 component={RateChart}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='CompletedPoojaScreen'
+                component={CompletedPoojaScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='EarningBreakdown'
+                component={EarningBreakdown}
                 options={{ headerShown: false }}
             />
 
